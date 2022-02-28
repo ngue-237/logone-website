@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock %}</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
+        <link rel="icon" href="{{asset('assetF/')}}img/favicon.png" type="image/png">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="{{asset('assetF/')}}css/bootstrap.css">
+        <link rel="stylesheet" href="{{asset('assetF/')}}css/font-awesome.min.css">
+        <link rel="stylesheet" href="{{asset('assetF/')}}vendors/linericon/style.css">
+        <link rel="stylesheet" href="{{asset('assetF/')}}vendors/owl-carousel/owl.carousel.min.css">
+        <link rel="stylesheet" href="{{asset('assetF/')}}css/magnific-popup.css">
+        <link rel="stylesheet" href="{{asset('assetF/')}}vendors/nice-select/css/nice-select.css">
+        <!-- main css -->
+        <link rel="stylesheet" href="{{asset('assetF/')}}css/style.css">
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+        {% block body %}
+        {% block content %} {% endblock %}
+        {% endblock %}
+        <script src="{{asset('assetF/')}}js/jquery-3.2.1.min.js"></script>
+        <script src="{{asset('assetF/')}}js/popper.js"></script>
+        <script src="{{asset('assetF/')}}js/bootstrap.min.js"></script>
+        <script src="{{asset('assetF/')}}js/stellar.js"></script>
+        <script src="{{asset('assetF/')}}js/jquery.magnific-popup.min.js"></script>
+        <script src="{{asset('assetF/')}}vendors/nice-select/js/jquery.nice-select.min.js"></script>
+        <script src="{{asset('assetF/')}}vendors/isotope/imagesloaded.pkgd.min.js"></script>
+        <script src="{{asset('assetF/')}}vendors/isotope/isotope-min.js"></script>
+        <script src="{{asset('assetF/')}}vendors/owl-carousel/owl.carousel.min.js"></script>
+        <script src="{{asset('assetF/')}}js/jquery.ajaxchimp.min.js"></script>
+        <script src="{{asset('assetF/')}}js/mail-script.js"></script>
+        <!--gmaps Js-->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
+        <script src="{{asset('assetF/')}}js/gmaps.min.js"></script>
+        <script src="{{asset('assetF/')}}js/theme.js"></script>
+        </body>
+</html>
