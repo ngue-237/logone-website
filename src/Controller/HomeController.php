@@ -36,14 +36,7 @@ class HomeController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/contact", name="contact")
-     */
-    public function contact(){
-        return $this->render('frontoffice/contact.html.twig', [
-            
-        ]);
-    }
+
 
     /**
      * @Route("/services", name="services")
