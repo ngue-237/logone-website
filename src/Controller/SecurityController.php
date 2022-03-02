@@ -35,7 +35,7 @@ class SecurityController extends AbstractController
             $user->setPassword($hash);
             $em->persist($user);
             $em->flush();
-            return $this->redirectToRoute('blog');
+            return $this->redirectToRoute('security_login');
         }
         return $this->render('frontoffice/register.html.twig', [
         'form'=>$form->createView()

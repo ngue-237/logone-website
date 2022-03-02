@@ -23,7 +23,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Interface
+                Menu
             </div>
 
             <li class="nav-item">
@@ -57,18 +57,16 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{path('admin_dashboard')}}" data-toggle="collapse" data-target="#collapseTwo"
+                <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-cart-arrow-down"></i>
-                    <span>Ventes</span>
+                    <i class="fas fa-bars"></i>
+                    <span>Service</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Gestion des services</h6>
-                        <a class="collapse-item" href="{{path('admin_dashboard')}}">Commandes</a>
-                        <a class="collapse-item" href="{{path('admin_dashboard')}}">Factures</a>
-                        <a class="collapse-item" href="{{path('admin_dashboard')}}">Statistique vente</a>
-                    </div>
+                        <h6 class="collapse-header">Services & Cathégories</h6>
+                        <a class="collapse-item" href="{{path('category_service_list')}}">Services</a>
+                        <a class="collapse-item" href="{{path('category_service_list')}}">Cathégories</a>
                 </div>
             </li>
             <!-- Nav Item - Utilities Collapse Menu -->
