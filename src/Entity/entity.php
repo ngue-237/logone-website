@@ -5,14 +5,9 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- *  @UniqueEntity(
- *     fields = {"email"},
- *     message="This Email already exist"
- * )
  */
 class User
 {
@@ -31,10 +26,10 @@ class User
      *     minMessage="Your lastname must be at least {{ limit }} characters long",
      *     maxMessage = "Your lastname cannot be longer than {{ limit }} characters"
      * )
-     *  @Assert\Regex(
+     * * @Assert\Regex(
      *     pattern="/\d/",
      *     match=false,
-     *     message="Your lastname cannot contain a number"
+     *     message="Your firstname cannot contain a number"
      * )
      */
     private $lastName;
@@ -42,13 +37,13 @@ class User
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Length(
+     *  @Assert\Length(
      *     min=4,
      *     max=50,
      *     minMessage="Your first name must be at least {{ limit }} characters long",
      *     maxMessage = "Your first name cannot be longer than {{ limit }} characters"
      * )
-     *  @Assert\Regex(
+     * * @Assert\Regex(
      *     pattern="/\d/",
      *     match=false,
      *     message="Your firstname cannot contain a number"
@@ -61,13 +56,11 @@ class User
      * @Assert\Email(
      *     message = "The email '{{ value }}' is not a valid email."
      * )
-     *
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="New password can not be blank.")
      * @Assert\Length(
      *     min="8",
      *     minMessage="Votre mot de passe  doit faire au moins {{ limit }} caractères"
@@ -76,10 +69,9 @@ class User
     private $password;
 
     /**
-     * @Assert\NotBlank(message="New password can not be blank.")
-    * @Assert\EqualTo(
+     * @Assert\EqualTo(
      *     propertyPath="password",
-     *     message="Your password must match"
+     *     message="Le mot de passe doit être identique"
      * )
      */
     private $passwordConfirm;
