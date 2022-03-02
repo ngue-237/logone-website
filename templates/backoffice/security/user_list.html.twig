@@ -21,8 +21,10 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Gestion des commandes</h1>
-
+                        <h1 class="h3 mb-0 text-gray-800">Liste des utilisateur</h1>
+                        <a href="{{ path('add_admin') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                            <i class="fas fa-user-plus"></i>
+                            Ajouter un admin</a>
                     </div>
 
                     <div class="card shadow mb-4">
@@ -37,7 +39,6 @@
                                         <th>Nom</th>
                                         <th>Prénom</th>
                                         <th>Email</th>
-                                        <th>Rôle</th>
                                         <th>Date</th>
                                         <th>Options</th>
                                     </tr>
@@ -47,7 +48,6 @@
                                         <th>Nom</th>
                                         <th>Prénom</th>
                                         <th>Email</th>
-                                        <th>Téléphone</th>
                                         <th>Entreprise</th>
                                         <th>Options</th>
                                     </tr>
@@ -62,9 +62,7 @@
                                                 {{ user.firstName }}
                                             </td>
                                             <td>{{ user.email }}</td>
-                                            {% for role in user.role %}
-                                                <td>{{ role }}</td>
-                                            {% endfor %}
+
                                             <td>{{ user.createdAt | date('d/m/y ') }}</td>
                                             <td>
                                                 <a href="{{ path('user_edit', {'idUser':user.id}) }}" > <i class="far fa-edit"></i></a>&nbsp;

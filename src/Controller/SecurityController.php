@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     /**
@@ -43,6 +43,35 @@ class SecurityController extends AbstractController
     }
 
     /**
+     * permet à un administrateur d'ajouter un autre administrateur
+     * @param Request $req
+     * @param EntityManagerInterface $em
+     * @param UserPasswordEncoderInterface $encoder
+     * @return Response
+     * @Route("/admin/add_admin", name="add_admin")
+     */
+    public function adminAdd(Request $req, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder):Response{
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+        $form->add('password', PasswordType::class)
+            ->add('passwordConfirm', PasswordType::class);
+        $form->handleRequest($req);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $user->setRoles(['ROLE_ADMIN']);
+            $user->setCreatedAt(new \DateTime());
+            $hash = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($hash);
+            $em->persist($user);
+            $em->flush();
+            return $this->redirectToRoute('user_list');
+        }
+        return $this->render('backoffice/security/admin_register.html.twig', [
+            'form'=>$form->createView()
+        ]);
+    }
+
+    /**
      * @param UserRepository $rep
      * @return Response
      * @Route("/admin/user_list", name="user_list")
@@ -60,10 +89,10 @@ class SecurityController extends AbstractController
      * @param UserRepository $rep
      * @param EntityManagerInterface $em
      * @return Response
-     * @Route("/admini/user_delete/{idUser}", name="user_delete")
+     * @Route("/admin/user_delete/{idUser}", name="user_delete")
      */
     public function userDelete($idUser, UserRepository $rep, EntityManagerInterface $em):Response{
-        $em->remove($rep->find($idUser));
+        $em->remove($rep->find($idUser)) ;
         $em->flush();
     return $this->redirectToRoute('user_list');
     }
@@ -93,4 +122,24 @@ class SecurityController extends AbstractController
         'form'=>$form->createView()
         ]);
     }
+
+    /**
+     * Permet à un utilisateur de s'authentifier
+     * @param AuthenticationUtils $auth
+     * @param Request $req
+     * @return Response
+     * @Route("/login", name="security_login")
+     */
+    public function login(AuthenticationUtils $auth, Request $req):Response{
+        return $this->render('frontoffice/login.html.twig');
+    }
+
+    /**
+     * Permet à un utilisateur de se déconnecter
+     * @Route("/logout", name="security_logout")
+     */
+    public function logout(){
+
+    }
+
 }
