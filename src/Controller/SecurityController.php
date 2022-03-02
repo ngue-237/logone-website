@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class SecurityController extends AbstractController
 {
@@ -19,7 +20,7 @@ class SecurityController extends AbstractController
      * permet à un visiteur de s'inscrire via un formulaire d'inscription
      * @Route("/register", name="security_register")
      */
-    public function register(Request $req, EntityManagerInterface $em): Response
+    public function register(Request $req, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -28,8 +29,10 @@ class SecurityController extends AbstractController
         $form->handleRequest($req);
 
         if($form->isSubmitted() && $form->isValid()){
-            $user->setRole(['ROLE_USER']);
+            $user->setRoles(['ROLE_USER']);
             $user->setCreatedAt(new \DateTime());
+            $hash = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($hash);
             $em->persist($user);
             $em->flush();
             return $this->redirectToRoute('blog');

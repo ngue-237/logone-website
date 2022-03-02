@@ -6,6 +6,7 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -14,7 +15,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *     message="This Email already exist"
  * )
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -84,15 +85,17 @@ class User
      */
     private $passwordConfirm;
 
-    /**
-     * @ORM\Column(type="json")
-     */
-    private $role = [];
+
 
     /**
      * @ORM\Column(type="date")
      */
     private $createdAt;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
 
     public function getId(): ?int
     {
@@ -103,7 +106,9 @@ class User
     {
         return $this->lastName;
     }
-
+    public function getUsername(): ?string{
+        return $this->lastName;
+    }
     public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
@@ -159,17 +164,7 @@ class User
         return $this;
     }
 
-    public function getRole(): ?array
-    {
-        return $this->role;
-    }
 
-    public function setRole(array $role): self
-    {
-        $this->role = $role;
-
-        return $this;
-    }
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
@@ -181,5 +176,29 @@ class User
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    public function getSalt()
+    {
+
+    }
+
+    public function getRoles(): ?array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+    public function eraseCredentials()
+    {
     }
 }
