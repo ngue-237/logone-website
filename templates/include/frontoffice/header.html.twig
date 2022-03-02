@@ -13,26 +13,30 @@
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
 						<ul class="nav navbar-nav menu_nav justify-content-end">
-							<li class="nav-item active"><a class="nav-link" href="{{path('home')}}">Home</a></li>
-							<li class="nav-item"><a class="nav-link" href="{{path('about')}}">About</a></li>
+							<li class="nav-item "><a class="nav-link" href="{{path('home')}}">Accueil</a></li>
+							<li class="nav-item"><a class="nav-link" href="{{path('about')}}">Logone</a></li>
 							<li class="nav-item"><a class="nav-link" href="{{path('services')}}">Services</a></li>
-							<li class="nav-item"><a class="nav-link" href="{{path('portforlio')}}">Portfolio</a></li>
+							<li class="nav-item active"><a class="nav-link" href="{{path('portforlio')}}">Devis</a></li>
 							<li class="nav-item submenu dropdown">
 								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-								 aria-expanded="false">Pages</a>
-								<ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="elements.html">Elements</a></li>
-									<li class="nav-item"><a class="nav-link" href="{{path('portforlio_details')}}">Portfolio Details</a></li>
-								</ul>
-							</li>
-							<li class="nav-item submenu dropdown">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-								 aria-expanded="false">Blog</a>
+								   aria-expanded="false">Blog</a>
 								<ul class="dropdown-menu">
 									<li class="nav-item"><a class="nav-link" href="{{path('blog')}}">Blog</a></li>
 									<li class="nav-item"><a class="nav-link" href="{{path('security_register')}}">Inscription</a></li>
 								</ul>
 							</li>
+							<li class="nav-item "><a class="nav-link" href="{{path('portforlio')}}">Rejoignez-nous</a></li>
+							{#
+							<li class="nav-item submenu dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                             aria-expanded="false">Pages</a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item"><a class="nav-link" href="elements.html">Elements</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{path('portforlio_details')}}">Portfolio Details</a></li>
+                            </ul>
+                        </li>
+							#}
+
 							<li class="nav-item"><a class="nav-link" href="{{path('contact')}}">Contact</a></li>
 						</ul>
 					</div>

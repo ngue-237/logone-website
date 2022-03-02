@@ -19,6 +19,7 @@ class CategoryServiceController extends AbstractController
     public function index(CategoryServiceRepository $rep): Response
     {
         $catgs = $rep->findAll();
+
         return $this->render('backoffice/category/category_services_list.html.twig', [
             'catgs' => $catgs,
         ]);
