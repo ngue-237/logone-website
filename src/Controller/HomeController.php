@@ -38,14 +38,7 @@ class HomeController extends AbstractController
 
 
 
-    /**
-     * @Route("/services", name="services")
-     */
-    public function service(){
-        return $this->render('frontoffice/services.html.twig', [
-            
-        ]);
-    }
+
 
     /**
      * @Route("/about", name="about")

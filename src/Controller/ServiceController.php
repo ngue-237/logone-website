@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Service;
 use App\Form\ServiceType;
+use App\Repository\CategoryServiceRepository;
 use App\Repository\ServiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,6 +23,30 @@ class ServiceController extends AbstractController
         //dd($services);
         return $this->render('backoffice/services/service_list.html.twig', [
             'services' => $services,
+        ]);
+    }
+
+    /**
+     * @Route("/services/{id<\d+>?8}", name="services",
+     *  methods={"GET"} )
+     * 
+     */
+    public function serviceList(EntityManagerInterface $em, $id, CategoryServiceRepository $rep): Response
+    {
+        $categories = $rep->find($id);
+        if(!$categories){
+            throw $this->createNotFoundException("cette cathégorie n'existe pas");
+        }
+        
+        $query = $em->createQuery("select s From App\Entity\Service s where s.category = :id")
+            ->setParameter("id", $id);
+        $services = $query->getResult();
+        //dd($services);
+
+
+        return $this->render('frontoffice/services.html.twig', [
+            'services' => $services,
+            'categories'=>$categories,
         ]);
     }
 

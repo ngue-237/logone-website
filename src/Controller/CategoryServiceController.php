@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\CategoryService;
+use App\Entity\Images;
 use App\Form\CategoryServiceType;
 use App\Repository\CategoryServiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,6 +26,21 @@ class CategoryServiceController extends AbstractController
             'catgs' => $catgs,
         ]);
     }
+
+    /**
+     * @param CategoryServiceRepository $rep
+     * @return Response
+     * @Route("/categories_service", name="categorie_service_all")
+     */
+    public function allCatgService(CategoryServiceRepository $rep):Response{
+        $catgs = $rep->findAll();
+
+        return $this->render('frontoffice/category_services.html.twig', [
+            'catgs' => $catgs,
+        ]);
+    }
+
+
 
     /**
      * @param $id
@@ -44,13 +61,29 @@ class CategoryServiceController extends AbstractController
      * @param EntityManagerInterface $em
      * @param Request $req
      * @return Response
-     * @Route("/admin/add_category_service", name="category_service_add")
+     * @Route("/admin/add_category_service", name="category_service_add", methods={"GET","POST"})
      */
     public function addCategoryService(EntityManagerInterface $em, Request $req):Response{
         $catg = new CategoryService();
         $form = $this->createForm(CategoryServiceType::class, $catg);
         $form->handleRequest($req);
+
         if($form->isSubmitted() and $form->isValid()){
+            //on récupère les images transmises
+            $images = $form->get('images')->getData();
+
+            foreach($images as $image){
+                $fichier = md5(uniqid()).'.'.$image->guessExtension();
+
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $fichier
+                );
+                $img = new Images();
+                $img->setName($fichier);
+                $catg->addImage($img);
+                //on stock l'image dans la base de donnée
+            }
             $em->persist($catg);
             $em->flush();
             return $this->redirectToRoute('category_service_list');
@@ -74,12 +107,54 @@ class CategoryServiceController extends AbstractController
         $form = $this->createForm(CategoryServiceType::class, $catg);
         $form->handleRequest($req);
         if($form->isSubmitted() and $form->isValid()){
+            $images = $form->get('images')->getData();
+
+            foreach($images as $image){
+                $fichier = md5(uniqid()).'.'.$image->guessExtension();
+
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $fichier
+                );
+                $img = new Images();
+                $img->setName($fichier);
+                $catg->addImage($img);
+                //on stock l'image dans la base de donnée
+            }
             $em->flush();
             return $this->redirectToRoute('category_service_list');
         }
         return $this->render('backoffice/category/modify_category_service.html.twig',[
             'form'=>$form->createView(),
+            'categories'=>$catg
         ]);
+    }
+
+    /**
+     * @param Images $image
+     * @Route("/admin/delete/images_category_service{id}", name="category_service_delete_images", methods={"DELETE"})
+     */
+    public function deleteImageCategory(Images $image, Request $req){
+        $data = json_decode($req->getContent(), true);
+
+        // On vérifie si le token est valide
+        if($this->isCsrfTokenValid('delete'.$image->getId(), $data['_token'])){
+            // On récupère le nom de l'image
+            $nom = $image->getName();
+            // On supprime le fichier
+            unlink($this->getParameter('images_directory').'/'.$nom);
+
+            // On supprime l'entrée de la base
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($image);
+            $em->flush();
+
+            // On répond en json
+            return new JsonResponse(['success' => 1]);
+        }else{
+            return new JsonResponse(['error' => 'Token Invalide'], 400);
+        }
+
     }
 
 }

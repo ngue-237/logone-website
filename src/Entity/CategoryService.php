@@ -29,9 +29,20 @@ class CategoryService
      */
     private $services;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $description;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="categoryService", orphanRemoval=true, cascade={"persist"})
+     */
+    private $images;
+
     public function __construct()
     {
         $this->services = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -75,6 +86,48 @@ class CategoryService
             // set the owning side to null (unless already changed)
             if ($service->getCategory() === $this) {
                 $service->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Images>
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Images $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setCategoryService($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Images $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getCategoryService() === $this) {
+                $image->setCategoryService(null);
             }
         }
 

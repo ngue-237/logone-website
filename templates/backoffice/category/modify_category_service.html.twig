@@ -42,12 +42,38 @@
                                                     }
                                                 }) }}
                                             </div>
+                                            <div class="form-group">
+                                                {{ form_row(form.description, {
+                                                    'label': false,
+                                                    'attr':{
+                                                        'class':'form-control form-control-user',
+                                                        'placeholder':'Description'
+                                                    }
+                                                }) }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form_row(form.images, {
+                                                    'attr':{
+                                                        'class':'form-control form-control-user',
+                                                    }
+                                                }) }}
+                                            </div>
                                             <button type="submit" href="login.html" class="btn btn-primary btn-user btn-block">
                                                 Enregister
                                             </button>
                                         </div>
                                         <hr>
                                         {{ form_end(form) }}
+                                        <div class="row">
+                                            {% for image in categories.images %}
+                                                <div class="text-center">
+                                                    <img src="{{ asset('/uploads/' ~ image.name) }}" class="rounded" alt="images">
+                                                    <a href="{{ path('category_service_delete_images', {id:image.id}) }}"
+                                                       data-delete data-token="{{ csrf_token('delete' ~ image.id) }}"
+                                                    >Supprimer</a>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -66,14 +92,11 @@
             <!-- End of Footer -->
 
         </div>
-        <!-- End of Content Wrapper -->
-
     </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
+    {% block javascripts %}
+        <script src="{{ asset('assetB/js/images.js') }}"></script>
+    {% endblock %}
 {% endblock %}

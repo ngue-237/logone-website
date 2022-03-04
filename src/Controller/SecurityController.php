@@ -130,6 +130,7 @@ class SecurityController extends AbstractController
      * @return Response
      * @Route("/login", name="security_login")
      */
+    
     public function login(AuthenticationUtils $auth, Request $req):Response{
         return $this->render('frontoffice/login.html.twig');
     }
