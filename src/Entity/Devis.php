@@ -58,11 +58,12 @@ class Devis
     private $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Service::class, inversedBy="devis")
+     * @ORM\ManyToOne(targetEntity=CategoryService::class, inversedBy="devis")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $services;
+    private $categories;
 
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -164,15 +165,16 @@ class Devis
         return $this;
     }
 
-    public function getServices(): ?Service
+    public function getCategories(): ?CategoryService
     {
-        return $this->services;
+        return $this->categories;
     }
 
-    public function setServices(?Service $services): self
+    public function setCategories(?CategoryService $categories): self
     {
-        $this->services = $services;
+        $this->categories = $categories;
 
         return $this;
     }
+
 }

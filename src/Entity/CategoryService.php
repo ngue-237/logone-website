@@ -39,10 +39,16 @@ class CategoryService
      */
     private $images;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Devis::class, mappedBy="categories")
+     */
+    private $devis;
+
     public function __construct()
     {
         $this->services = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->devis = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -128,6 +134,36 @@ class CategoryService
             // set the owning side to null (unless already changed)
             if ($image->getCategoryService() === $this) {
                 $image->setCategoryService(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Devis>
+     */
+    public function getDevis(): Collection
+    {
+        return $this->devis;
+    }
+
+    public function addDevi(Devis $devi): self
+    {
+        if (!$this->devis->contains($devi)) {
+            $this->devis[] = $devi;
+            $devi->setCategories($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDevi(Devis $devi): self
+    {
+        if ($this->devis->removeElement($devi)) {
+            // set the owning side to null (unless already changed)
+            if ($devi->getCategories() === $this) {
+                $devi->setCategories(null);
             }
         }
 

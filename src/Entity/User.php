@@ -97,6 +97,9 @@ class User implements UserInterface
      */
     private $roles = [];
 
+ 
+ 
+
     public function getId(): ?int
     {
         return $this->id;
@@ -201,4 +204,7 @@ class User implements UserInterface
     public function eraseCredentials()
     {
     }
+
+
+    
 }
