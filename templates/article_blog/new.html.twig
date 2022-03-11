@@ -1,0 +1,45 @@
+{% extends 'baseB.html.twig' %}
+
+
+{% block content %}
+	<!-- Page Wrapper -->
+	<div
+		id="wrapper">
+
+		<!-- Sidebar -->
+		{{include('include/backoffice/sidebar.html.twig')}}
+		<!-- End of Sidebar -->
+
+		<!-- Content Wrapper -->
+			<div
+			id="content-wrapper" class="d-flex flex-column"> <!-- Main Content -->
+			<div
+				id="content">
+
+				<!-- Topbar -->
+				{{include('include/backoffice/navbar.html.twig')}}
+				<!-- End of Topbar -->
+
+				<!-- Begin Page Content -->
+					<div class="container-fluid"> <h1>ArticleBlog index</h1>
+					<h1>Create new ArticleBlog</h1>
+
+					{{ include('article_blog/_form.html.twig') }}
+
+					<a href="{{ path('app_article_blog_index') }}">back to list</a>
+				</div>
+				<!-- /.container-fluid -->
+
+			</div>
+			<!-- End of Main Content -->
+
+			<!-- Footer -->
+			{{include('include/backoffice/footer.html.twig')}}
+			<!-- End of Footer -->
+
+		</div>
+		<!-- End of Content Wrapper -->
+
+	</div>
+	<!-- End of Page Wrapper -->
+{% endblock %}

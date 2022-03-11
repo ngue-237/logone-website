@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -96,6 +98,16 @@ class User implements UserInterface
      * @ORM\Column(type="json")
      */
     private $roles = [];
+
+    /**
+     * @ORM\OneToMany(targetEntity=ArticleBlog::class, mappedBy="User")
+     */
+    private $articleBlogs;
+
+    public function __construct()
+    {
+        $this->articleBlogs = new ArrayCollection();
+    }
 
  
  
@@ -203,6 +215,36 @@ class User implements UserInterface
     }
     public function eraseCredentials()
     {
+    }
+
+    /**
+     * @return Collection<int, ArticleBlog>
+     */
+    public function getArticleBlogs(): Collection
+    {
+        return $this->articleBlogs;
+    }
+
+    public function addArticleBlog(ArticleBlog $articleBlog): self
+    {
+        if (!$this->articleBlogs->contains($articleBlog)) {
+            $this->articleBlogs[] = $articleBlog;
+            $articleBlog->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticleBlog(ArticleBlog $articleBlog): self
+    {
+        if ($this->articleBlogs->removeElement($articleBlog)) {
+            // set the owning side to null (unless already changed)
+            if ($articleBlog->getUser() === $this) {
+                $articleBlog->setUser(null);
+            }
+        }
+
+        return $this;
     }
 
 
