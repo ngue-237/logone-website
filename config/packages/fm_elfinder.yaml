@@ -1,0 +1,20 @@
+fm_elfinder:
+  #assets_path: / # default is /assets, this is where css/js elfinder files are
+  instances:
+    default:
+      locale: fr # defaults to current request locale
+      editor: ckeditor # other options are tinymce, tinymce4, fm_tinymce, form, simple, custom
+      relative_path: false
+
+      connector:
+        #debug: true|false # defaults to false
+        roots: # at least one root must be defined, defines root filemanager directories
+          uploads:
+            show_hidden: false # defaults to false, hides dotfiles
+            driver: LocalFileSystem
+            path: uploads/images
+            upload_allow: ["image/png", "image/jpg", "image/jpeg"]
+            upload_deny: ["all"]
+            upload_max_size: 2M # also file upload sizes restricted in php.ini
+            #attributes: example of setting attributes permission
+            #    - { pattern: '/(.*?)/', read: true, write: false, locked: true }

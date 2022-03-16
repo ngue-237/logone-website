@@ -2,16 +2,18 @@
 
 namespace App\Controller;
 
-use App\Entity\CategoryService;
 use App\Entity\Images;
+use App\Entity\CategoryService;
 use App\Form\CategoryServiceType;
-use App\Repository\CategoryServiceRepository;
+use App\services\ImageManagerService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Knp\Component\Pager\PaginatorInterface;
+use App\Repository\CategoryServiceRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CategoryServiceController extends AbstractController
 {
@@ -32,11 +34,16 @@ class CategoryServiceController extends AbstractController
      * @return Response
      * @Route("/categories_service", name="categorie_service_all")
      */
-    public function allCatgService(CategoryServiceRepository $rep):Response{
-        $catgs = $rep->findAll();
+    public function allCatgService(CategoryServiceRepository $rep,  PaginatorInterface $paginator, Request $req):Response{
+        
+        $pagination = $paginator->paginate(
+            $rep->findAll(), 
+            $req->query->getInt('page', 1), /*page number*/
+            4/*limit per page*/
+        );
 
         return $this->render('frontoffice/category_services.html.twig', [
-            'catgs' => $catgs,
+            'catgs' => $pagination,
         ]);
     }
 
@@ -63,7 +70,7 @@ class CategoryServiceController extends AbstractController
      * @return Response
      * @Route("/admin/add_category_service", name="category_service_add", methods={"GET","POST"})
      */
-    public function addCategoryService(EntityManagerInterface $em, Request $req):Response{
+    public function addCategoryService(EntityManagerInterface $em, Request $req, ImageManagerService $imageManager):Response{
         $catg = new CategoryService();
         $form = $this->createForm(CategoryServiceType::class, $catg);
         $form->handleRequest($req);
@@ -71,19 +78,9 @@ class CategoryServiceController extends AbstractController
         if($form->isSubmitted() and $form->isValid()){
             //on récupère les images transmises
             $images = $form->get('images')->getData();
-
-            foreach($images as $image){
-                $fichier = md5(uniqid()).'.'.$image->guessExtension();
-
-                $image->move(
-                    $this->getParameter('images_directory'),
-                    $fichier
-                );
-                $img = new Images();
-                $img->setName($fichier);
-                $catg->addImage($img);
-                //on stock l'image dans la base de donnée
-            }
+            
+            $imageManager->uploadImageCategory($images, $catg);//service permettant d'upload une image dans une cathégorie de services spécifique
+           
             $em->persist($catg);
             $em->flush();
             return $this->redirectToRoute('category_service_list');
@@ -101,7 +98,11 @@ class CategoryServiceController extends AbstractController
      * @return Response
      * @Route("/admin/edit_category_service/{idCatg}", name="category_service_edit")
      */
-    public function modifierCategoryService($idCatg, EntityManagerInterface $em, CategoryServiceRepository $rep, Request $req):Response
+    public function modifierCategoryService(
+        ImageManagerService $imageManager, 
+        $idCatg, EntityManagerInterface $em, 
+        CategoryServiceRepository $rep, 
+        Request $req):Response
     {
         $catg = $rep->find($idCatg);
         $form = $this->createForm(CategoryServiceType::class, $catg);
@@ -109,18 +110,8 @@ class CategoryServiceController extends AbstractController
         if($form->isSubmitted() and $form->isValid()){
             $images = $form->get('images')->getData();
 
-            foreach($images as $image){
-                $fichier = md5(uniqid()).'.'.$image->guessExtension();
+            $imageManager->uploadImageCategory($images, $catg);
 
-                $image->move(
-                    $this->getParameter('images_directory'),
-                    $fichier
-                );
-                $img = new Images();
-                $img->setName($fichier);
-                $catg->addImage($img);
-                //on stock l'image dans la base de donnée
-            }
             $em->flush();
             return $this->redirectToRoute('category_service_list');
         }
@@ -132,7 +123,7 @@ class CategoryServiceController extends AbstractController
 
     /**
      * @param Images $image
-     * @Route("/admin/delete/images_category_service{id}", name="category_service_delete_images", methods={"DELETE"})
+     * @Route("/admin/delete/images_category_service/{id}", name="category_service_delete_images", methods={"DELETE"})
      */
     public function deleteImageCategory(Images $image, Request $req){
         $data = json_decode($req->getContent(), true);

@@ -21,9 +21,10 @@ class ContactController extends AbstractController
     {
         $contact = new Contact();
         $form = $this->createForm(ContactType::class, $contact);
-
+        
         $form->handleRequest($req);
         if($form->isSubmitted() and $form->isValid()){
+            //dd($contact);
             $em->persist($contact);
             $em->flush();
             return $this->redirectToRoute('home');

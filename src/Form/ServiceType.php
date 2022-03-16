@@ -2,11 +2,12 @@
 
 namespace App\Form;
 
-use App\Entity\CategoryService;
 use App\Entity\Service;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\CategoryService;
 use Symfony\Component\Form\AbstractType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ServiceType extends AbstractType
@@ -15,8 +16,7 @@ class ServiceType extends AbstractType
     {
         $builder
             ->add('designation')
-            ->add('shortDescription')
-            ->add('description')
+            ->add('description', CKEditorType::class)
             ->add('category', EntityType::class,[
                 'class'=>CategoryService::class,
                 'choice_label'=>'designation'

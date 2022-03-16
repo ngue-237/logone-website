@@ -6,6 +6,7 @@ use App\Repository\CategoryServiceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryServiceRepository::class)
@@ -23,6 +24,11 @@ class CategoryService
      * @ORM\Column(type="string", length=255)
      */
     private $designation;
+    /**
+     * @Gedmo\Slug(fields={"designation"})
+     * @ORM\Column(length=255, unique=true)
+     */
+    private $slug;
 
     /**
      * @ORM\OneToMany(targetEntity=Service::class, mappedBy="category")
@@ -168,5 +174,13 @@ class CategoryService
         }
 
         return $this;
+    }
+
+    /**
+     * Get the value of slug
+     */ 
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }

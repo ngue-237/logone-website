@@ -57,6 +57,20 @@
                 </div>
             </li>
             <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseD"
+                    aria-expanded="true" aria-controls="collapse2">
+                    <i class="far fa-envelope"></i>
+                    <span>Devis</span>
+                </a>
+                <div id="collapseD" class="collapse" aria-labelledby="headingUt"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Gestion des devis</h6>
+                        <a class="collapse-item" href="{{ path('devis_lists') }}">Devis</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-bars"></i>
@@ -65,8 +79,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Services & Cathégories</h6>
-                        <a class="collapse-item" href="{{path('service_list')}}">Services</a>
                         <a class="collapse-item" href="{{path('category_service_list')}}">Cathégories</a>
+                        <a class="collapse-item" href="{{path('service_list')}}">Services</a>
                 </div>
             </li>
             <!-- Nav Item - Utilities Collapse Menu -->
@@ -80,7 +94,8 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Gestion du blog</h6>
-                        <a class="collapse-item" href="utilities-color.html">Articles</a>
+                        <a class="collapse-item" href="{{path('admin_category_article')}}">Cathégorie</a>
+                        <a class="collapse-item" href="{{path('article_list_admin')}}">Articles</a>
                         <a class="collapse-item" href="utilities-border.html">Commentaires</a>
                     </div>
                 </div>

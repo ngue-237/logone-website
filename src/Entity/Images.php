@@ -24,10 +24,14 @@ class Images
 
     /**
      * @ORM\ManyToOne(targetEntity=CategoryService::class, inversedBy="images")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $categoryService;
 
+    
+   
+
+   
     public function getId(): ?int
     {
         return $this->id;
@@ -56,4 +60,9 @@ class Images
 
         return $this;
     }
+
+    
+
+    
+
 }

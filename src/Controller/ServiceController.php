@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\CategoryService;
 use App\Entity\Service;
 use App\Form\ServiceType;
 use App\Repository\CategoryServiceRepository;
@@ -27,23 +28,21 @@ class ServiceController extends AbstractController
     }
 
     /**
-     * @Route("/services/{id<\d+>?8}", name="services",
-     *  methods={"GET"} )
+     * @Route("/services/{slug}", name="services", methods={"GET"} )
      * 
      */
-    public function serviceList(EntityManagerInterface $em, $id, CategoryServiceRepository $rep): Response
+    public function serviceList(EntityManagerInterface $em, $slug, CategoryServiceRepository $rep): Response
     {
-        $categories = $rep->find($id);
+        $categories = $rep->findOneBy(['slug'=>$slug]);
+        
         if(!$categories){
             throw $this->createNotFoundException("cette cathégorie n'existe pas");
         }
         
         $query = $em->createQuery("select s From App\Entity\Service s where s.category = :id")
-            ->setParameter("id", $id);
+            ->setParameter("id", $categories->getId());
         $services = $query->getResult();
-        //dd($services);
-
-
+       
         return $this->render('frontoffice/services.html.twig', [
             'services' => $services,
             'categories'=>$categories,
