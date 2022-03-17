@@ -3,6 +3,11 @@
 
 <!--================ Start Header Area =================-->
 {% include('include/frontoffice/header.html.twig')%}
+<div class="row justify-content-cente">
+  <div class="row justify-content-center d-flex">
+    <div class="alert alert-success"></div>
+  </div>
+</div>
 <section class="banner_area">
   <div class="banner_inner d-flex align-items-center">
     <div class="container">
@@ -37,25 +42,32 @@
           <div class="col-lg-3 col-md-3">
             <div class="blog_info text-right">
               <div class="post_tag">
-                <a href="#">Food,</a>
-                <a class="active" href="#">Technology,</a>
-                <a href="#">Politics,</a>
-                <a href="#">Lifestyle</a>
+                <a class="active">
+                  
+                </a>
               </div>
               <ul class="blog_meta list">
                 <li>
-                  <a href="#">Mark wiens<i class="lnr lnr-user"></i></a>
+                  <a>{{ article.author }} <i class="lnr lnr-user"></i></a>
                 </li>
                 <li>
-                  <a href="#"
-                    >12 Dec, 2017<i class="lnr lnr-calendar-full"></i
+                  <a>
+                    {{article.createdAt | date('d:m:Y')}}
+
+                    <i class="lnr lnr-calendar-full"></i
                   ></a>
                 </li>
+                {#
                 <li>
-                  <a href="#">1.2M Views<i class="lnr lnr-eye"></i></a>
+                  <a>1.2M Views<i class="lnr lnr-eye"></i></a>
                 </li>
+                #}
                 <li>
-                  <a href="#">06 Comments<i class="lnr lnr-bubble"></i></a>
+                  <a
+                    >{{ article.comments | length }} Comments<i
+                      class="lnr lnr-bubble"
+                    ></i
+                  ></a>
                 </li>
               </ul>
               <ul class="social-links">
@@ -129,144 +141,85 @@
           </div>
         </div>
         <div class="comments-area">
-          <h4>05 Comments</h4>
+          <h4>Commentaires : {{ article.comments | length }}</h4>
           <div class="comment-list">
+            {% for comment in article.comments %}
             <div class="single-comment justify-content-between d-flex">
               <div class="user justify-content-between d-flex">
                 <div class="thumb">
                   <img src="{{ asset('assetF/') }}img/blog/c1.jpg" alt="" />
                 </div>
                 <div class="desc">
-                  <h5><a href="#">Emilly Blunt</a></h5>
-                  <p class="date">December 4, 2017 at 3:12 pm</p>
-                  <p class="comment">Never say goodbye till the end comes!</p>
+                  <h5>
+                    <a href="#"
+                      >{{ comment.user.firstname }}&nbsp;{{
+                        comment.user.lastname
+                      }}</a
+                    >
+                  </h5>
+                  <p class="date">
+                    {{comment.createdAt | date('d:m:y')}}
+                  </p>
+                  <p class="comment">{{ comment.content }}</p>
                 </div>
               </div>
-              <div class="reply-btn">
-                <a href="" class="btn-reply text-uppercase">reply</a>
+              <div class="option_comment">
+                <a
+                  href=""
+                  class="{{
+                    path('comment_author_delete', {
+                      id: comment.id,
+                      slug: article.slug
+                    })
+                  }}"
+                  ><i class="fa-solid fa-trash-can"></i
+                ></a>
+                &nbsp;
+                <a href="" class=""
+                  ><i class="fa-solid fa-pen-to-square"></i
+                ></a>
               </div>
             </div>
-          </div>
-          <div class="comment-list left-padding">
-            <div class="single-comment justify-content-between d-flex">
-              <div class="user justify-content-between d-flex">
-                <div class="thumb">
-                  <img src="{{ asset('assetF/') }}img/blog/c2.jpg" alt="" />
-                </div>
-                <div class="desc">
-                  <h5><a href="#">Elsie Cunningham</a></h5>
-                  <p class="date">December 4, 2017 at 3:12 pm</p>
-                  <p class="comment">Never say goodbye till the end comes!</p>
-                </div>
-              </div>
-              <div class="reply-btn">
-                <a href="" class="btn-reply text-uppercase">reply</a>
-              </div>
-            </div>
-          </div>
-          <div class="comment-list left-padding">
-            <div class="single-comment justify-content-between d-flex">
-              <div class="user justify-content-between d-flex">
-                <div class="thumb">
-                  <img src="{{ asset('assetF/') }}img/blog/c3.jpg" alt="" />
-                </div>
-                <div class="desc">
-                  <h5><a href="#">Annie Stephens</a></h5>
-                  <p class="date">December 4, 2017 at 3:12 pm</p>
-                  <p class="comment">Never say goodbye till the end comes!</p>
-                </div>
-              </div>
-              <div class="reply-btn">
-                <a href="" class="btn-reply text-uppercase">reply</a>
-              </div>
-            </div>
-          </div>
-          <div class="comment-list">
-            <div class="single-comment justify-content-between d-flex">
-              <div class="user justify-content-between d-flex">
-                <div class="thumb">
-                  <img src="{{ asset('assetF/') }}img/blog/c4.jpg" alt="" />
-                </div>
-                <div class="desc">
-                  <h5><a href="#">Maria Luna</a></h5>
-                  <p class="date">December 4, 2017 at 3:12 pm</p>
-                  <p class="comment">Never say goodbye till the end comes!</p>
-                </div>
-              </div>
-              <div class="reply-btn">
-                <a href="" class="btn-reply text-uppercase">reply</a>
-              </div>
-            </div>
-          </div>
-          <div class="comment-list">
-            <div class="single-comment justify-content-between d-flex">
-              <div class="user justify-content-between d-flex">
-                <div class="thumb">
-                  <img src="{{ asset('assetF/') }}img/blog/c5.jpg" alt="" />
-                </div>
-                <div class="desc">
-                  <h5><a href="#">Ina Hayes</a></h5>
-                  <p class="date">December 4, 2017 at 3:12 pm</p>
-                  <p class="comment">Never say goodbye till the end comes!</p>
-                </div>
-              </div>
-              <div class="reply-btn">
-                <a href="" class="btn-reply text-uppercase">reply</a>
-              </div>
-            </div>
+            {%endfor%}
           </div>
         </div>
         {% if app.user %}
         <div class="comment-form">
-          <h4>Leave a Reply</h4>
-          <form>
-            <div class="form-group form-inline">
-              <div class="form-group col-lg-6 col-md-6 name">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="name"
-                  placeholder="Enter Name"
-                  onfocus="this.placeholder = ''"
-                  onblur="this.placeholder = 'Enter Name'"
-                />
-              </div>
-              <div class="form-group col-lg-6 col-md-6 email">
-                <input
-                  type="email"
-                  class="form-control"
-                  id="email"
-                  placeholder="Enter email address"
-                  onfocus="this.placeholder = ''"
-                  onblur="this.placeholder = 'Enter email address'"
-                />
-              </div>
-            </div>
+          <h4>Laissez un Commentaire</h4>
+          <div class="form">
+            {{ form_start(form) }}
             <div class="form-group">
-              <input
-                type="text"
-                class="form-control"
-                id="subject"
-                placeholder="Subject"
-                onfocus="this.placeholder = ''"
-                onblur="this.placeholder = 'Subject'"
-              />
+              {{
+                form_row(form.content, {
+                  label: false,
+                  attr: {
+                    class: "form-control mb-10",
+                    placeholder: "Message",
+                    onfocus: "this.placeholder = ''",
+                    onblur: "this.placeholder = 'Messege'"
+                  }
+                })
+              }}
             </div>
-            <div class="form-group">
-              <textarea
-                class="form-control mb-10"
-                rows="5"
-                name="message"
-                placeholder="Messege"
-                onfocus="this.placeholder = ''"
-                onblur="this.placeholder = 'Messege'"
-                required=""
-              ></textarea>
+
+            <div class="switch-wrap d-flex justify-content-between">
+              <p>Je confirm</p>
+              <div class="">
+                {{
+                  form_row(form.rgpd, {
+                    label: false,
+                    attr: {
+                      class: "confirm-switch-btn"
+                    }
+                  })
+                }}
+              </div>
             </div>
-            <a href="#" class="primary-btn primary_btn"
-              ><span>Post Comment</span></a
-            >
-          </form>
+            <button type="submit" class="primary-btn primary_btn">
+              <span>Post Comment</span>
+            </button>
+            {{ form_end(form) }}
+          </div>
         </div>
         {%else%}
         <p>

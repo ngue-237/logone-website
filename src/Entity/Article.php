@@ -62,16 +62,37 @@ class Article
 
     
 
+    
+
     /**
-     * @ORM\OneToMany(targetEntity=CategoryArticle::class, mappedBy="articles", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="article", orphanRemoval=true)
      */
-    private $categoryArticles;
+    private $comments;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $author;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=CategoryArticle::class, inversedBy="articles")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $categoryArticle;
+
+    
 
     
 
     public function __construct()
     {
-        $this->categoryArticles = new ArrayCollection();
+        
+        $this->comments = new ArrayCollection();
          
     }
 
@@ -115,35 +136,7 @@ class Article
         return $this->slug;
     }
 
-    /**
-     * @return Collection<int, CategoryArticle>
-     */
-    public function getCategoryArticles(): Collection
-    {
-        return $this->categoryArticles;
-    }
-
-    public function addCategoryArticle(CategoryArticle $categoryArticle): self
-    {
-        if (!$this->categoryArticles->contains($categoryArticle)) {
-            $this->categoryArticles[] = $categoryArticle;
-            $categoryArticle->setArticles($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCategoryArticle(CategoryArticle $categoryArticle): self
-    {
-        if ($this->categoryArticles->removeElement($categoryArticle)) {
-            // set the owning side to null (unless already changed)
-            if ($categoryArticle->getArticles() === $this) {
-                $categoryArticle->setArticles(null);
-            }
-        }
-
-        return $this;
-    }
+   
 
     public function setImageFile(File $image = null)
     {
@@ -172,6 +165,75 @@ class Article
     {
         return $this->image;
     }
+
+    /**
+     * @return Collection<int, Comments>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comments $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comments $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getArticle() === $this) {
+                $comment->setArticle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getAuthor(): ?string
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?string $author): self
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getCategoryArticle(): ?CategoryArticle
+    {
+        return $this->categoryArticle;
+    }
+
+    public function setCategoryArticle(?CategoryArticle $categoryArticle): self
+    {
+        $this->categoryArticle = $categoryArticle;
+
+        return $this;
+    }
+
+   
+
 
      
 }

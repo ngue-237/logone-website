@@ -62,9 +62,10 @@
                       {{ article.title }}
                     </td>
                     <td>
-                      {% for category in article.categoryArticles %}
+                      {{ article.categoryArticle }}
+                      {# {% for category in article.categoryArticle %}
                       {{ category.title }}
-                      {%endfor%}
+                      {%endfor%} #}
                     </td>
 
                     <td>

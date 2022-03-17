@@ -23,7 +23,7 @@
               <div class="col-lg-12">
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Modifier un article !</h1>
+                    <h1 class="h4 text-gray-900 mb-4">Modifier un article!</h1>
                   </div>
                   {{ form_start(form) }}
                   <div class="user">
@@ -40,7 +40,18 @@
                     </div>
                     <div class="form-group">
                       {{
-                        form_row(form.categoryArticles, {
+                        form_row(form.author, {
+                          label: false,
+                          attr: {
+                            class: "form-control form-control-user",
+                            placeholder: "Auteur"
+                          }
+                        })
+                      }}
+                    </div>
+                    <div class="form-group">
+                      {{
+                        form_row(form.categoryArticle,{
                           label: false,
                           attr: {
                             class: "form-control form-control-user",

@@ -175,6 +175,9 @@
     "liip/test-fixtures-bundle": {
         "version": "2.0.0"
     },
+    "mercuryseries/flashy-bundle": {
+        "version": "v4.0.0"
+    },
     "monolog/monolog": {
         "version": "2.3.5"
     },

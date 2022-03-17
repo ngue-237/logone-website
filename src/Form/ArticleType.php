@@ -17,10 +17,10 @@ class ArticleType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('categoryArticles', EntityType::class,[
-                'mapped'=>false,
+            ->add('author')
+            ->add('categoryArticle', EntityType::class,[
                 'label'=>false,
-                'required'=>false,
+                'required'=>true,
                 'class'=>CategoryArticle::class,
                 'choice_label'=>'title',
                 'placeholder'=>'Choisir une cathégorie'

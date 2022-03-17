@@ -3,8 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Comments;
 use App\Form\ArticleType;
+use App\Form\CommentType;
 use App\Repository\ArticleRepository;
+use App\Repository\CategoryArticleRepository;
+use App\services\CommentService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,14 +29,35 @@ class ArticleController extends AbstractController
 
     /**
      * permet d'afficher les détail d'un article
-     *
+     * permet également d'ajouter un commentaire via le service persistComment
      * @param Article $article
      * @return Response
-     * @Route("/blog/article/{slug}", name="article_detail")
+     * @Route("/blog/article/{slug}", name="article_detail", methods={"GET", "POST"})
      */
-    public function articleDetail(Article $article):Response{
-        return $this->render('frontoffice/blog_detail.html.twig', compact('article'));
+    public function articleDetail(
+        Article $article,
+         Request $req,
+         CommentService $commentService,
+         CategoryArticleRepository $categoryArtRepo 
+         ):Response
+         {
+             $comment = new Comments();//Créer un model de commentaire pour le formulaire
+            $categoryArticle = $categoryArtRepo->find($article->getId());
+            
+             $form = $this->createForm(CommentType::class, $comment);
+             $form->handleRequest($req);
+             if($form->isSubmitted() and $form->isValid()){
+                 //dd($form->getData());
+                $comment = $form->getData();
+                $commentService->persistComment($comment, $article);
+
+                return $this->redirectToRoute('article_detail', ['slug'=> $article->getSlug()]);
+             }
+
+        return $this->renderForm('frontoffice/blog_detail.html.twig', compact('article', 'form'));
     }
+
+    
 
     /**
      * permet d'ajouter un article de blog
@@ -42,12 +67,14 @@ class ArticleController extends AbstractController
      * @return void
      * @Route("/admin/article_add", name="article_add", methods={"GET","POST"} )
      */
-    public function addBlog(Request $req, EntityManagerInterface $em ){
+    public function addArticle(Request $req, EntityManagerInterface $em ){
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($req);
 
         if($form->isSubmitted() and $form->isValid()){
+            $article->setCreatedAt(new \DateTime('now'));
+            
             $em->persist($article);
             $em->flush();
             return $this->redirectToRoute('article_list_admin');

@@ -24,9 +24,10 @@ class BlogController extends AbstractController
     {
              $categories = $paginator->paginate(
                 $categoryArtRepo->findAll(), 
-            $req->query->getInt('page', 2), /*page number*/
+            $req->query->getInt('page', 1), /*page number*/
             3/*limit per page*/
         );
+        
              $articles = $paginator->paginate(
                 $articleRepo->findAll(), 
             $req->query->getInt('page', 1), /*page number*/

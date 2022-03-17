@@ -22,6 +22,7 @@
 <section class="blog_categorie_area section_gap_top">
   <div class="container">
     <div class="row">
+      
       {%for category in catgoriesArticle %}
       <div class="col-lg-4">
         <div class="categories_post">
@@ -86,7 +87,8 @@
             <div class="col-md-9">
               <div class="blog_post">
                 <img
-                  
+                  src="{{asset('uploads/images/article/' ~ article.image ) }}"
+                  alt="{{ article.title }}"
                 />
                 <div class="blog_details">
                   <a href="single-blog.html"

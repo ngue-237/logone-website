@@ -58,6 +58,20 @@ class CategoryArticle
      */
     private $updatedAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="categoryArticle", orphanRemoval=true)
+     */
+    private $articles;
+
+    public function __construct()
+    {
+        $this->articles = new ArrayCollection();
+    }
+
+    
+
+    
+
     // ...
 
     public function setImageFile(File $image = null)
@@ -87,14 +101,6 @@ class CategoryArticle
     {
         return $this->image;
     }
-    
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="categoryArticles")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $articles;
-
 
 
     public function getId(): ?int
@@ -142,17 +148,39 @@ class CategoryArticle
         return $this->slug;
     }
 
-    public function getArticles(): ?Article
+    /**
+     * @return Collection<int, Article>
+     */
+    public function getArticles(): Collection
     {
         return $this->articles;
     }
 
-    public function setArticles(?Article $articles): self
+    public function addArticle(Article $article): self
     {
-        $this->articles = $articles;
+        if (!$this->articles->contains($article)) {
+            $this->articles[] = $article;
+            $article->setCategoryArticle($this);
+        }
 
         return $this;
     }
+
+    public function removeArticle(Article $article): self
+    {
+        if ($this->articles->removeElement($article)) {
+            // set the owning side to null (unless already changed)
+            if ($article->getCategoryArticle() === $this) {
+                $article->setCategoryArticle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    
+
+   
 
     
 }
