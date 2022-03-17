@@ -42,6 +42,16 @@ class OffreEmploi
     /**
      * @ORM\Column(type="string", length=255)
      */
+    private $niveau;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $nbAnneeExperience;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private $location;
 
     /**
@@ -82,7 +92,7 @@ class OffreEmploi
 
         return $this;
     }
-
+    
     public function getTitre(): ?string
     {
         return $this->titre;
@@ -91,6 +101,18 @@ class OffreEmploi
     public function setTitre(string $titre): self
     {
         $this->titre = $titre;
+
+        return $this;
+    }
+
+    public function getNiveau(): ?string
+    {
+        return $this->niveau;
+    }
+
+    public function setNiveau(string $niveau): self
+    {
+        $this->niveau = $niveau;
 
         return $this;
     }
@@ -115,6 +137,18 @@ class OffreEmploi
     public function setNbPoste(int $nbPoste): self
     {
         $this->nbPoste = $nbPoste;
+
+        return $this;
+    }
+
+    public function getNbAnneeExperience(): ?int
+    {
+        return $this->nbAnneeExperience;
+    }
+
+    public function setNbAnneeExperience(int $nbAnneeExperience): self
+    {
+        $this->nbAnneeExperience = $nbAnneeExperience;
 
         return $this;
     }

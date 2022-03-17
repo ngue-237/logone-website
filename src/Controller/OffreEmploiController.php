@@ -37,6 +37,20 @@ class OffreEmploiController extends AbstractController
             'jobs' => $jobs
         ]);
     }
+
+    /**
+     * @Route("/list_jobs", name="front_offre_list")
+     */
+    public function displayjobsFront(Request $request, PaginatorInterface $pag, OffreEmploiRepository $rep)
+    {
+        $data = $rep->findAll();
+
+        $jobs = $pag->paginate($data, $request->query->getInt('page', 1), 4);
+
+        return $this->render('offre_emploi/display_offres.html.twig', [
+            'jobs' => $jobs
+        ]);
+    }
     
     /**
      * @Route("/addoffre", name="add_offre")

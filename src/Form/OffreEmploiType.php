@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\NiveauScolaire;
 use App\Entity\OffreEmploi;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,6 +23,8 @@ class OffreEmploiType extends AbstractType
             ->add('location')
             ->add('file',FileType::class, array('data_class'=> null))
             ->add('nbPoste')
+            ->add('niveau', EntityType::class, ['class'=>NiveauScolaire::class])
+            ->add('nbAnneeExperience')
             ->add('Add', SubmitType::class)
         ;
     }
