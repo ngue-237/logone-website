@@ -1,0 +1,28 @@
+Day 1: 16/03/2022 22h35
+
+    STEP 1:
+        *Complete the CRUD (offre emploi)
+    Notes:
+        *I cloned the repo (logone-website), created a new branch (mta)
+        *Pulled (security branch) into (mta branch)
+        *Installed and updated requirements (run cmd $composer update, $php bin/console d:database)
+        *Created entities (candidat and offre_emploi)
+        *Created controllers and forms for those entities
+         then i implemented read, add, delete methods for in offreEmploiController
+        *My computer started lagging, got sleepy
+    WORKTIME: 3h15
+Stopping time: 17/03/2022 02h45
+
+Day 2: 16/03/2022 9h35
+
+    STEP 1: IN PROGRESS
+    Notes:
+        *Created backoffice views for offre_emploi
+        *implemented edit method, tested all the methods (CRUD) worked perfectly
+        *Finished CRUD (need to reiview some details but everything is to be use )
+        *First commit (i committed, then pushed all things done above)
+    Break Time: 17/03/2022 11h15
+
+
+    WORKTIME: 3h15
+Stopping time: 17/03/2022 02h45
