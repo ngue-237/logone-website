@@ -179,8 +179,6 @@ class User implements UserInterface
         return $this;
     }
 
-
-
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -195,9 +193,14 @@ class User implements UserInterface
 
     public function getSalt()
     {
-
+        
     }
 
+    public function getUserIdentifier()
+    {
+        return null;
+    }
+    
     public function getRoles(): ?array
     {
         $roles = $this->roles;
@@ -246,7 +249,5 @@ class User implements UserInterface
 
         return $this;
     }
-
-
     
 }

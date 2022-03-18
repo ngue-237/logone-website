@@ -16,7 +16,6 @@
         "friendsofsymfony/ckeditor-bundle": "^2.4",
         "fzaninotto/faker": "^1.9",
         "helios-ag/fm-elfinder-bundle": "^12.1",
-        "knplabs/knp-paginator-bundle": "^5.8",
         "liip/imagine-bundle": "^2.7",
         "mercuryseries/flashy-bundle": "^4.0",
         "phpdocumentor/reflection-docblock": "^5.3",

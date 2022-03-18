@@ -1,6 +1,5 @@
 {% extends 'baseB.html.twig' %}
 {% block content %}
-
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -21,17 +20,28 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Jobs Offers Management</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Add a job</h1>
 
                     </div>
 
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Jobs</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Job</h6>
                         </div>
                         <div class="card-body">
-                            {{ form(formOffre) }}
-                           
+                            {{ form_start(formOffre) }}
+                                {{ form_row(formOffre.titre) }}
+                                {{ form_row(formOffre.description) }}
+                                {{ form_row(formOffre.location) }}
+                                {{ form_row(formOffre.file) }}
+                                {{ form_row(formOffre.nbPoste) }}
+                                {{ form_row(formOffre.nbAnneeExperience) }}
+                                    <div id="niveaux" data-prototype="{{ form_row(formOffre.niveaux.vars.prototype)|e('html_attr') }}">
+                                        {{ form_row(formOffre.niveaux)}}
+                                        <span></span>
+                                    </div>
+                                {{ form_row(formOffre.Add) }}
+                            {{ form_end(formOffre) }}
                         </div>
                     </div>
 
@@ -75,4 +85,53 @@
             </div>
         </div>
     </div>
+{% endblock %}
+{% block javascripts %} 
+    <script>
+        let collection, boutonAjout, span
+        window.onload = () => {
+            collection = document.querySelector("#niveaux");
+            span = collection.querySelector("span")
+
+            boutonAjout = document.createElement("button");
+            boutonAjout.classeName = "ajout-niveau btn secondary";
+            boutonAjout.innerText = "Ajouter un niveau";
+
+            let nouveauBouton = span.append(boutonAjout);
+
+            collection.dataset.index = collection.querySelector("input").length;
+
+            boutonAjout.addEventListener("click", function(){
+                addButton(collection, nouveauBouton);
+            });
+        }
+
+        function addButton(collection, nouveauBouton){
+            let prototype = collection.dataset.prototype;
+
+            let index = collection.dataset.index;
+
+            prototype = prototype.replace(/__name__/g, index);
+
+            let content = document.createElement("html");
+            content.innerHTML = prototype;
+            let newForm = content.querySelector("div");
+
+            let boutonSuppr = document.createElement("button");
+            boutonSuppr.type="button";
+            boutonSuppr.classeName="btn red";
+            boutonSuppr.id = "delete-niveau-"+index;
+
+            newForm.append(boutonSuppr);
+            collection.dataset.index++;
+
+            let boutonAjout = content.querySelector("ajout-niveau");
+
+            span.insertBefore(newForm, boutonAjout);
+
+            boutonSuppr.addEventListener("click", function(){
+                this.previousElementSibling.parent.remove();
+            })
+        }
+    </script>
 {% endblock %}

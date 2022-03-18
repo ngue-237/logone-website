@@ -22,7 +22,7 @@ class OffreEmploi
     /**
      * @ORM\ManyToMany(targetEntity=Candidat::class, inversedBy="offreEmplois")
      */
-    private $idCandidat;
+    private $candidats;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -40,11 +40,6 @@ class OffreEmploi
     private $nbPoste;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $niveau;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $nbAnneeExperience;
@@ -59,9 +54,15 @@ class OffreEmploi
      */
     private $file;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=NiveauScolaire::class, inversedBy="offreEmplois")
+     */
+    private $niveaux;
+
     public function __construct()
     {
-        $this->idCandidat = new ArrayCollection();
+        $this->candidats = new ArrayCollection();
+        $this->niveaux = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -72,23 +73,23 @@ class OffreEmploi
     /**
      * @return Collection<int, Candidat>
      */
-    public function getIdCandidat(): Collection
+    public function getCandidats(): Collection
     {
-        return $this->idCandidat;
+        return $this->candidats;
     }
 
-    public function addIdCandidat(Candidat $idCandidat): self
+    public function addCandidats(Candidat $candidats): self
     {
-        if (!$this->idCandidat->contains($idCandidat)) {
-            $this->idCandidat[] = $idCandidat;
+        if (!$this->candidats->contains($candidats)) {
+            $this->candidats[] = $candidats;
         }
 
         return $this;
     }
 
-    public function removeIdCandidat(Candidat $idCandidat): self
+    public function removeCandidats(Candidat $candidats): self
     {
-        $this->idCandidat->removeElement($idCandidat);
+        $this->candidats->removeElement($candidats);
 
         return $this;
     }
@@ -101,18 +102,6 @@ class OffreEmploi
     public function setTitre(string $titre): self
     {
         $this->titre = $titre;
-
-        return $this;
-    }
-
-    public function getNiveau(): ?string
-    {
-        return $this->niveau;
-    }
-
-    public function setNiveau(string $niveau): self
-    {
-        $this->niveau = $niveau;
 
         return $this;
     }
@@ -173,6 +162,30 @@ class OffreEmploi
     public function setFile(?string $file): self
     {
         $this->file = $file;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, NiveauScolaire>
+     */
+    public function getNiveaux(): Collection
+    {
+        return $this->niveaux;
+    }
+
+    public function addNiveau(NiveauScolaire $niveau): self
+    {
+        if (!$this->niveaux->contains($niveau)) {
+            $this->niveaux[] = $niveau;
+        }
+
+        return $this;
+    }
+
+    public function removeNiveau(NiveauScolaire $niveau): self
+    {
+        $this->niveaux->removeElement($niveau);
 
         return $this;
     }

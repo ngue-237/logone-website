@@ -63,8 +63,8 @@ class OffreEmploiController extends AbstractController
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                // $offre->setIdCandidat(null);
-                $em->persist($offre);
-                $em->flush();
+              /*  $em->persist($offre);
+                $em->flush();*/
                 return $this->redirectToRoute('offre_list');
             } else {
                 return $this->render('offre_emploi/post_offre.html.twig', [
