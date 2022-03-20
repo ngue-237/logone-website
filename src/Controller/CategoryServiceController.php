@@ -5,9 +5,9 @@ namespace App\Controller;
 use App\Entity\Images;
 use App\Entity\CategoryService;
 use App\Form\CategoryServiceType;
+use App\services\CategoryServices;
 use App\services\ImageManagerService;
 use Doctrine\ORM\EntityManagerInterface;
-use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\CategoryServiceRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,16 +34,9 @@ class CategoryServiceController extends AbstractController
      * @return Response
      * @Route("/categories_service", name="categorie_service_all")
      */
-    public function allCatgService(CategoryServiceRepository $rep,  PaginatorInterface $paginator, Request $req):Response{
-        
-        $pagination = $paginator->paginate(
-            $rep->findAll(), 
-            $req->query->getInt('page', 1), /*page number*/
-            4/*limit per page*/
-        );
-
+    public function allCategoriesService(CategoryServices $categoryService, Request $req):Response{
         return $this->render('frontoffice/category_services.html.twig', [
-            'catgs' => $pagination,
+            'catgs' => $categoryService->getAllCategoryService($req),
         ]);
     }
 
@@ -74,13 +67,7 @@ class CategoryServiceController extends AbstractController
         $catg = new CategoryService();
         $form = $this->createForm(CategoryServiceType::class, $catg);
         $form->handleRequest($req);
-
         if($form->isSubmitted() and $form->isValid()){
-            //on récupère les images transmises
-            $images = $form->get('images')->getData();
-            
-            $imageManager->uploadImageCategory($images, $catg);//service permettant d'upload une image dans une cathégorie de services spécifique
-           
             $em->persist($catg);
             $em->flush();
             return $this->redirectToRoute('category_service_list');
@@ -99,7 +86,6 @@ class CategoryServiceController extends AbstractController
      * @Route("/admin/edit_category_service/{idCatg}", name="category_service_edit")
      */
     public function modifierCategoryService(
-        ImageManagerService $imageManager, 
         $idCatg, EntityManagerInterface $em, 
         CategoryServiceRepository $rep, 
         Request $req):Response
@@ -108,10 +94,6 @@ class CategoryServiceController extends AbstractController
         $form = $this->createForm(CategoryServiceType::class, $catg);
         $form->handleRequest($req);
         if($form->isSubmitted() and $form->isValid()){
-            $images = $form->get('images')->getData();
-
-            $imageManager->uploadImageCategory($images, $catg);
-
             $em->flush();
             return $this->redirectToRoute('category_service_list');
         }
@@ -127,12 +109,12 @@ class CategoryServiceController extends AbstractController
      */
     public function deleteImageCategory(Images $image, Request $req){
         $data = json_decode($req->getContent(), true);
-
+        //dd($data);
         // On vérifie si le token est valide
         if($this->isCsrfTokenValid('delete'.$image->getId(), $data['_token'])){
             // On récupère le nom de l'image
             $nom = $image->getName();
-            // On supprime le fichier
+            // On supprime le fichier 
             unlink($this->getParameter('images_directory').'/'.$nom);
 
             // On supprime l'entrée de la base

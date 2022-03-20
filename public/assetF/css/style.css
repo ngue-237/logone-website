@@ -129,7 +129,7 @@ button:focus {
 }
 @media (max-width: 1199px) {
   .section_gap_bottom {
-    padding-bottom: 80px;
+    /* padding-bottom: 80px; */
   }
 }
 
@@ -4097,7 +4097,7 @@ h6 {
 }
 
 .footer_area {
-  padding: 120px 0;
+  /* padding: 120px 0; */
   position: relative;
 }
 .footer_area:before {

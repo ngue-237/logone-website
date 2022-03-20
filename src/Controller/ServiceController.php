@@ -62,7 +62,7 @@ class ServiceController extends AbstractController
         $form->handleRequest($req);
 
         if($form->isSubmitted() and $form->isValid()){
-            dd($service);
+            //dd($service);
             $em->persist($service);
             $em->flush();
             return $this->redirectToRoute('service_list');

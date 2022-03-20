@@ -50,19 +50,6 @@ class Contact
     private $company;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\Length(min = 8, max = 20, minMessage = "Min length is 8 caracters", maxMessage = "Max length is 20 caracters")
-     *
-     */
-    private $phoneNumber;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     *
-     */
-    private $country;
-
-    /**
      * @ORM\Column(type="text", nullable=true)
      * @Assert\Length(min = 8, max = 250, minMessage = "Min length is 8 caracters", maxMessage = "Max length is 20 caracters")
      */
@@ -121,29 +108,9 @@ class Contact
         return $this;
     }
 
-    public function getPhoneNumber(): ?string
-    {
-        return $this->phoneNumber;
-    }
+    
 
-    public function setPhoneNumber(string $phoneNumber): self
-    {
-        $this->phoneNumber = $phoneNumber;
-
-        return $this;
-    }
-
-    public function getCountry(): ?string
-    {
-        return $this->country;
-    }
-
-    public function setCountry(string $country): self
-    {
-        $this->country = $country;
-
-        return $this;
-    }
+   
 
     public function getMsg(): ?string
     {

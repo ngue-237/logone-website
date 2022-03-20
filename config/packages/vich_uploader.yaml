@@ -14,3 +14,7 @@ vich_uploader:
       namer:
         service: Vich\UploaderBundle\Naming\PropertyNamer
         options: { property: "slug" }
+    category_service_images:
+      uri_prefix: /images/categories_service
+      upload_destination: "%kernel.project_dir%/public/uploads/images/categories_service"
+      namer: Vich\UploaderBundle\Naming\SmartUniqueNamer

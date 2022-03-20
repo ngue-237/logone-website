@@ -18,9 +18,6 @@ class ContactType extends AbstractType
             ->add('lastName',TextType::class, ['label'=>false])
             ->add('firstName', TextType::class, ['label'=>false])
             ->add('email', TextType::class, ['label'=>false])
-            ->add('company', TextType::class, ['label'=>false])
-            ->add('phoneNumber', TelType::class, ['label'=>false])
-            ->add('country', TextType::class, ['label'=>false])
             ->add('msg', TextareaType::class, ['label'=>false])
         ;
     }

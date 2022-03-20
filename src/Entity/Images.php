@@ -22,11 +22,11 @@ class Images
      */
     private $name;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=CategoryService::class, inversedBy="images")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $categoryService;
+    // /**
+    //  * @ORM\ManyToOne(targetEntity=CategoryService::class, inversedBy="images")
+    //  * @ORM\JoinColumn(nullable=true)
+    //  */
+    // private $categoryService;
 
     
    
@@ -49,17 +49,17 @@ class Images
         return $this;
     }
 
-    public function getCategoryService(): ?CategoryService
-    {
-        return $this->categoryService;
-    }
+    // public function getCategoryService(): ?CategoryService
+    // {
+    //     return $this->categoryService;
+    // }
 
-    public function setCategoryService(?CategoryService $categoryService): self
-    {
-        $this->categoryService = $categoryService;
+    // public function setCategoryService(?CategoryService $categoryService): self
+    // {
+    //     $this->categoryService = $categoryService;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     
 

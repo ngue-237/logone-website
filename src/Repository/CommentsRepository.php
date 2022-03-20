@@ -69,6 +69,8 @@ class CommentsRepository extends ServiceEntityRepository
     public function findByAllComment()
     {
         return $this->createQueryBuilder('c')
+            ->andWhere('c.isPublished = :isPublished')
+            ->setParameter('isPublished', 1)
             ->orderBy('c.createdAt', 'DESC')
             ->setMaxResults(10)
             ->getQuery()

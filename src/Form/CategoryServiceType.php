@@ -6,6 +6,7 @@ use App\Entity\CategoryService;
 use Symfony\Component\Form\AbstractType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
@@ -16,12 +17,12 @@ class CategoryServiceType extends AbstractType
         $builder
             ->add('designation')
             ->add('description', CKEditorType::class)
-            ->add('images', FileType::class,
-            [
+            ->add('imageFile', VichImageType::class,[
                 'label'=>false,
-                'multiple'=>true,
-                'mapped'=>false,
-                'required'=> false
+                 'required'=>false,
+                 'allow_delete'=>true,
+                 'download_uri' => false,
+                'image_uri' => true,
             ])
         ;
     }

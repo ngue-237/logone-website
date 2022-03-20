@@ -1,13 +1,14 @@
 {% extends 'baseF.html.twig'%} {% block title %} Accueil | Logone {% endblock %}
 {% block content %} {% include('include/frontoffice/header.html.twig')%}
+
 <section class="banner_area">
   <div class="banner_inner d-flex align-items-center">
     <div class="container">
       <div class="banner_content text-center">
         <h2>Services</h2>
         <div class="page_link">
-          <a href="index.html">Home</a>
-          <a href="services.html">Services</a>
+          <a href="{{ path('home') }}">Accueil</a>
+          <a>Services</a>
         </div>
       </div>
     </div>
@@ -23,10 +24,16 @@
         <div class="main_title">
           <h2>Nos services</h2>
           <p>
-            Is give may shall likeness made yielding spirit a itself togeth
-            created after sea <br />
-            is in beast beginning signs open god you're gathering ithe
+            {{ categories.description | raw }}
           </p>
+          <div class="text-center">
+            <a
+              href="{{ path('devis_add', { slug: categories.slug }) }}"
+              class="primary_btn"
+            >
+              <span>Je suis intéressé</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -58,31 +65,27 @@
           </div>
         </div>
       </div>
-
       {% endfor %}
       <div class="col-lg-4">
-        {% for image in categories.images %}
-        <div class="text-center">
+        <div class="text-center mt-20">
           <img
-            src="{{ asset('/uploads/' ~ image.name) }}"
+            src="{{ asset('/uploads/images/categories_service/' ~ categories.image) }}"
             class="rounded"
             alt="images"
           />
         </div>
-        {% endfor %}
       </div>
     </div>
   </div>
 </section>
 <!--================ End Features Area =================-->
-
 <!--================ Start Testimonial Area =================-->
 <div class="testimonial_area section_gap_bottom">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-8 text-center">
         <div class="main_title">
-          <h2>client say about me</h2>
+          <h2>Ils nous font confiance</h2>
           <p>
             Is give may shall likeness made yielding spirit a itself togeth
             created after sea is in beast
@@ -194,50 +197,5 @@
     </div>
   </div>
 </div>
-<!--================ End Testimonial Area =================-->
-
-<!--================ Start Newsletter Area =================-->
-<section class="newsletter_area">
-  <div class="container">
-    <div class="row justify-content-center align-items-center">
-      <div class="col-lg-12">
-        <div class="subscription_box text-center">
-          <h2 class="text-uppercase text-white">get update from anywhere</h2>
-          <p class="text-white">
-            Bearing Void gathering light light his eavening unto dont afraid.
-          </p>
-          <div class="subcribe-form" id="mc_embed_signup">
-            <form
-              target="_blank"
-              novalidate="true"
-              action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-              method="get"
-              class="subscription relative"
-            >
-              <input
-                name="EMAIL"
-                placeholder="Email address"
-                onfocus="this.placeholder = ''"
-                onblur="this.placeholder = 'Email address'"
-                required=""
-                type="email"
-              />
-              <div style="position: absolute; left: -5000px">
-                <input
-                  name="b_36c4fd991d266f23781ded980_aefe40901a"
-                  tabindex="-1"
-                  value=""
-                  type="text"
-                />
-              </div>
-              <button class="primary-btn hover d-inline">Get Started</button>
-              <div class="info"></div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 {{ include("include/frontoffice/footer.html.twig") }}
 {% endblock %}

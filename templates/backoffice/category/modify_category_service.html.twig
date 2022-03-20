@@ -52,11 +52,17 @@
                       }}
                     </div>
                     <div class="form-group">
-                      {{ form_row(form.images, {
+                      {{ form_row(form.imageFile, {
                         'attr':{
                         'class':'form-control form-control-user',
                       } 
                       }) }}
+                    </div>
+                    <div class="text-center">
+                      <img
+                        src="{{ asset('/uploads/images/categories_service/' ~ categories.image) }}"
+                        alt="image parlant de {{ categories.designation }}"
+                      />
                     </div>
                     <button
                       type="submit"
@@ -68,27 +74,6 @@
                   </div>
                   <hr />
                   {{ form_end(form) }}
-                  <div class="row">
-                    {% for image in categories.images %}
-                    <div class="text-center">
-                      <img
-                        src="{{ asset('/uploads/' ~ image.name) }}"
-                        class="rounded"
-                        alt="images"
-                      />
-                      <a
-                        href="{{
-                          path('category_service_delete_images', {
-                            id: image.id
-                          })
-                        }}"
-                        data-delete
-                        data-token="{{ csrf_token('delete' ~ image.id) }}"
-                        >Supprimer</a
-                      >
-                    </div>
-                    {% endfor %}
-                  </div>
                 </div>
               </div>
             </div>

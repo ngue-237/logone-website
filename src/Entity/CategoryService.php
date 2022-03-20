@@ -2,14 +2,18 @@
 
 namespace App\Entity;
 
-use App\Repository\CategoryServiceRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Sluggable\Util\Urlizer;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\Common\Collections\Collection;
+use App\Repository\CategoryServiceRepository;
+use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\Collections\ArrayCollection;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryServiceRepository::class)
+ *  @Vich\Uploadable
  */
 class CategoryService
 {
@@ -40,10 +44,28 @@ class CategoryService
      */
     private $description;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="categoryService", orphanRemoval=true, cascade={"persist"})
+     /**
+     * @ORM\Column(type="string", length=255)
+     * @var string
      */
-    private $images;
+    private $image;
+
+    /**
+     * @Vich\UploadableField(mapping="category_service_images", fileNameProperty="image")
+     * @var File
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     */
+    private $updatedAt ;
+
+    // /**
+    //  * @ORM\OneToMany(targetEntity=Images::class, mappedBy="categoryService", orphanRemoval=true, cascade={"persist"})
+    //  */
+    // private $images;
 
     /**
      * @ORM\OneToMany(targetEntity=Devis::class, mappedBy="categories")
@@ -53,7 +75,7 @@ class CategoryService
     public function __construct()
     {
         $this->services = new ArrayCollection();
-        $this->images = new ArrayCollection();
+        // $this->images = new ArrayCollection();
         $this->devis = new ArrayCollection();
     }
 
@@ -104,6 +126,34 @@ class CategoryService
         return $this;
     }
 
+     public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($image) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
     public function getDescription(): ?string
     {
         return $this->description;
@@ -116,35 +166,35 @@ class CategoryService
         return $this;
     }
 
-    /**
-     * @return Collection<int, Images>
-     */
-    public function getImages(): Collection
-    {
-        return $this->images;
-    }
+    // /**
+    //  * @return Collection<int, Images>
+    //  */
+    // public function getImages(): Collection
+    // {
+    //     return $this->images;
+    // }
 
-    public function addImage(Images $image): self
-    {
-        if (!$this->images->contains($image)) {
-            $this->images[] = $image;
-            $image->setCategoryService($this);
-        }
+    // public function addImage(Images $image): self
+    // {
+    //     if (!$this->images->contains($image)) {
+    //         $this->images[] = $image;
+    //         $image->setCategoryService($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeImage(Images $image): self
-    {
-        if ($this->images->removeElement($image)) {
-            // set the owning side to null (unless already changed)
-            if ($image->getCategoryService() === $this) {
-                $image->setCategoryService(null);
-            }
-        }
+    // public function removeImage(Images $image): self
+    // {
+    //     if ($this->images->removeElement($image)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($image->getCategoryService() === $this) {
+    //             $image->setCategoryService(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * @return Collection<int, Devis>
@@ -181,6 +231,10 @@ class CategoryService
      */ 
     public function getSlug()
     {
+        if (!$this->slug) {
+            return Urlizer::urlize($this->getDesignation());
+        }
+
         return $this->slug;
     }
 }

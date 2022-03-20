@@ -38,11 +38,16 @@ class ArticleController extends AbstractController
         Article $article,
          Request $req,
          CommentService $commentService,
-         CategoryArticleRepository $categoryArtRepo 
+         CategoryArticleRepository $categoryArtRepo,
+         EntityManagerInterface $em,
+         ArticleRepository $articleRepo
          ):Response
          {
              $comment = new Comments();//Créer un model de commentaire pour le formulaire
-            $categoryArticle = $categoryArtRepo->find($article->getId());
+             $categoryArticle = $categoryArtRepo->find($article->getId());
+             $comments = $commentService->allCommentPublished();
+             $categoriesArticle = $categoryArtRepo->findAll();
+
             
              $form = $this->createForm(CommentType::class, $comment);
              $form->handleRequest($req);
@@ -53,8 +58,37 @@ class ArticleController extends AbstractController
 
                 return $this->redirectToRoute('article_detail', ['slug'=> $article->getSlug()]);
              }
+        $article->setView($article->getView() + 1);   
+        $em->flush() ;
+        $articleOrderByView = $articleRepo->findAllByView();
+        
 
-        return $this->renderForm('frontoffice/blog_detail.html.twig', compact('article', 'form'));
+        
+        return $this->renderForm('frontoffice/blog_detail.html.twig', 
+        compact(
+            'article', 
+            'form', 
+            'comments',
+            'categoriesArticle',
+            'articleOrderByView'
+        ));
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param Comments $comment
+     * @param Request $req
+     * @param EntityManagerInterface $em
+     * @return void
+     * @Route("/blog/article/{slug}/comment", name="article_comment_add")
+     */
+    public function addComment (Article $article , Request $req, EntityManagerInterface $em){
+        $validToken = $req->request->get('csrf_token');
+        if($this->isCsrfTokenValid('comment', $validToken)){
+            
+        }
+        return $this->json(['code'=>200, 'message'=>'ça marche bien!']);
     }
 
     
@@ -74,6 +108,7 @@ class ArticleController extends AbstractController
 
         if($form->isSubmitted() and $form->isValid()){
             $article->setCreatedAt(new \DateTime('now'));
+            //dd($article);
             
             $em->persist($article);
             $em->flush();

@@ -1,140 +1,124 @@
-
-{% extends 'baseF.html.twig'%}
-{% block title %} Contact | Logone {% endblock %}
-{% block content %}
-
-	{% include('include/frontoffice/header.html.twig')%}
-    <section class="banner_area">
-        <div class="banner_inner d-flex align-items-center">
-            <div class="container">
-                <div class="banner_content text-center">
-                    <h2>Nous Contacter</h2>
-                    <div class="page_link">
-                        <a href="{{ path('home') }}">Accueil</a>
-                        <a href="{{ path('contact') }}">Contact</a>
-                    </div>
-                </div>
-            </div>
+{% extends 'baseF.html.twig'%} {% block title %} Contact | Logone {% endblock %}
+{% block content %} {% include('include/frontoffice/header.html.twig')%}
+<section class="banner_area">
+  <div class="banner_inner d-flex align-items-center">
+    <div class="container">
+      <div class="banner_content text-center">
+        <h2>Nous Contacter</h2>
+        <div class="page_link">
+          <a href="{{ path('home') }}">Accueil</a>
+          <a>Contact</a>
         </div>
-    </section>
-    <!--================ End Banner Area =================-->
-    
-    <!--================Contact Area =================-->
-    <section class="contact_area section_gap">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="contact_info">
-                        <div class="info_item">
-                            <i class="lnr lnr-home"></i>
-                            <h6>Paris, France</h6>
-                            <p>Santa monica bullevard</p>
-                        </div>
-                        <div class="info_item">
-                            <i class="lnr lnr-phone-handset"></i>
-                            <h6><a href="#">00 (33) 9865 562</a></h6>
-                            <p> de Lundi à Samedi de 9 h à 17 h 30 </p>
-                        </div>
-                        <div class="info_item">
-                            <i class="lnr lnr-home"></i>
-                            <h6>Tunis, Tunisie</h6>
-                            <p>Montplaisir Mohamed Badra</p>
-                        </div>
-                        <div class="info_item">
-                            <i class="lnr lnr-phone-handset"></i>
-                            <h6><a href="#">00 (216) 52 739 385</a></h6>
-                            <p> de Lundi à Samedi de 9 h à 17 h 30 </p>
-                        </div>
-                        <div class="info_item">
-                            <i class="lnr lnr-envelope"></i>
-                            <h6><a href="#">sale@logone-digital.com</a></h6>
-                            <p>Send us your query anytime!</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-9">
-                    {{ form_start(formContact) }}
-                    <div class="row "  id="contactForm" novalidate="novalidate">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                {{ form_row(formContact.lastName, {
-                                    'attr':{'placeholder':"Nom",
-                                        'class':'form-control',
-                                        'id':'name'
-                                    }
-                                }) }}
+      </div>
+    </div>
+  </div>
+</section>
+<!--================ End Banner Area =================-->
 
-                            </div>
-                            <div class="form-group">
-                                {{ form_row(formContact.firstName, {
-                                    'attr':{'placeholder':"Prénom",
-                                        'class':'form-control',
-                                        'id':'name'
-                                    }
-                                }) }}
-                            </div>
-                            <div class="form-group">
-                                {{ form_row(formContact.email, {
-                                    'attr':{'placeholder':"Email",
-                                        'class':'form-control',
-                                        'id':'name'
-                                    }
-                                }) }}
-                            </div>
-                            <div class="form-group">
-                                {{ form_row(formContact.company, {
-                                    'attr':{'placeholder':"Entreprise",
-                                        'class':'form-control',
-                                        'id':'name'
-                                    }
-                                }) }}
-                            </div>
-                            <div class="form-group">
-                                {{ form_row(formContact.phoneNumber, {
-                                    'attr':{'placeholder':"Téléphone",
-                                        'class':'form-control',
-                                        'id':'name'
-                                    }
-                                }) }}
-                            </div>
-                            <div class="form-group">
-                                {{ form_row(formContact.country, {
-                                    'attr':{'placeholder':"Pays",
-                                        'class':'form-control',
-                                        'id':'name'
-                                    }
-                                }) }}
-
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                {{ form_row(formContact.msg, {
-                                    'attr':{'placeholder':"Message",
-                                        'class':'form-control',
-                                        'id':'name'
-                                    }
-                                }) }}
-                            </div>
-                        </div>
-                        <div class="col-md-12 text-right">
-                            <button type="submit" value="submit" class="primary_btn">
-                                <span>Send Message</span>
-                            </button>
-                        </div>
-                    </div>
-                    {{ form_end(formContact) }}
-                </div>
-            </div>
-            <div id="mapBox" class="mapBox" 
-                data-lat="40.701083" 
-                data-lon="-74.1522848" 
-                data-zoom="13" 
-                data-info="PO Box CT16122 Collins Street West, Victoria 8007, Australia."
-                data-mlat="40.701083"
-                data-mlon="-74.1522848">
-            </div>
+<!--================Contact Area =================-->
+<section class="contact_area section_gap">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="contact_info">
+          <div class="info_item">
+            <i class="lnr lnr-home"></i>
+            <h6>Paris, France</h6>
+            <p>Santa monica bullevard</p>
+          </div>
+          <div class="info_item">
+            <i class="lnr lnr-phone-handset"></i>
+            <h6><a href="#">00 (33) 9865 562</a></h6>
+            <p>de Lundi à Samedi de 9 h à 17 h 30</p>
+          </div>
+          <div class="info_item">
+            <i class="lnr lnr-home"></i>
+            <h6>Tunis, Tunisie</h6>
+            <p>Montplaisir Mohamed Badra</p>
+          </div>
+          <div class="info_item">
+            <i class="lnr lnr-phone-handset"></i>
+            <h6><a href="#">00 (216) 52 739 385</a></h6>
+            <p>de Lundi à Samedi de 9 h à 17 h 30</p>
+          </div>
+          <div class="info_item">
+            <i class="lnr lnr-envelope"></i>
+            <h6><a href="#">sale@logone-digital.com</a></h6>
+            <p>Send us your query anytime!</p>
+          </div>
         </div>
-    </section>
-    {{include('include/frontoffice/footer.html.twig')}}
-	{% endblock %}
+      </div>
+      <div class="col-lg-9">
+        {{ form_start(form) }}
+        <div class="row" id="contactForm" novalidate="novalidate">
+          <div class="col-md-6">
+            <div class="form-group">
+              {{
+                form_row(form.lastName, {
+                  attr: {
+                    placeholder: "Nom",
+                    class: "form-control",
+                    id: "name"
+                  }
+                })
+              }}
+            </div>
+            <div class="form-group">
+              {{
+                form_row(form.firstName, {
+                  attr: {
+                    placeholder: "Prénom",
+                    class: "form-control",
+                    id: "name"
+                  }
+                })
+              }}
+            </div>
+            <div class="form-group">
+              {{
+                form_row(form.email, {
+                  attr: {
+                    placeholder: "Email",
+                    class: "form-control",
+                    id: "name"
+                  }
+                })
+              }}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              {{
+                form_row(form.msg, {
+                  attr: {
+                    placeholder: "Message",
+                    class: "form-control",
+                    id: "name"
+                  }
+                })
+              }}
+            </div>
+          </div>
+          <div class="col-md-12 text-right">
+            <button type="submit" value="submit" class="primary_btn">
+              <span>Envoyer</span>
+            </button>
+          </div>
+        </div>
+        {{ form_end(form) }}
+      </div>
+    </div>
+    <div
+      id="mapBox"
+      class="mapBox"
+      data-lat="40.701083"
+      data-lon="-74.1522848"
+      data-zoom="13"
+      data-info="PO Box CT16122 Collins Street West, Victoria 8007, Australia."
+      data-mlat="40.701083"
+      data-mlon="-74.1522848"
+    ></div>
+  </div>
+</section>
+{{ include("include/frontoffice/footer.html.twig") }}
+{% endblock %}

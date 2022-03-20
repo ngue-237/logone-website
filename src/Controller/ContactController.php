@@ -23,15 +23,13 @@ class ContactController extends AbstractController
         $form = $this->createForm(ContactType::class, $contact);
         
         $form->handleRequest($req);
+
         if($form->isSubmitted() and $form->isValid()){
-            //dd($contact);
             $em->persist($contact);
             $em->flush();
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('contact');
         }
-        return $this->render('frontoffice/contact.html.twig', [
-            'formContact'=>$form->createView(),
-        ]);
+        return $this->renderForm('frontoffice/contact.html.twig', compact('form'));
     }
 
     /**
@@ -40,9 +38,9 @@ class ContactController extends AbstractController
      * @Route("/admin/contact_list", name="contact_list")
      */
     public function contactList(ContactRepository $rep):Response{
-        $contacts = $rep->findAll();
+       
         return $this->render('backoffice/contact/contactList.html.twig', [
-            'contacts'=>$contacts
+            'contacts'=>$rep->findAll()
         ]);
     }
 
@@ -52,11 +50,10 @@ class ContactController extends AbstractController
      * @param ContactRepository $rep
      * @param EntityManagerInterface $em
      * @return Response
-     * @Route("/admin/contact_delete/{idContact}", name="contact_delete")
+     * @Route("/admin/contact_delete/{id}", name="contact_delete")
      */
-    public function deleteContact($idContact, ContactRepository $rep, EntityManagerInterface $em):Response{
-        $contact = $rep->find($idContact);
-        $em->remove($contact);
+    public function deleteContact(Contact $conctact , ContactRepository $rep, EntityManagerInterface $em):Response{
+        $em->remove($conctact);
         $em->flush();
         return $this->redirectToRoute('contact_list');
     }

@@ -59,11 +59,6 @@ class Article
      */
     private $updatedAt;
 
-
-    
-
-    
-
     /**
      * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="article", orphanRemoval=true)
      */
@@ -84,6 +79,11 @@ class Article
      * @ORM\JoinColumn(nullable=false)
      */
     private $categoryArticle;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $view;
 
     
 
@@ -228,6 +228,18 @@ class Article
     public function setCategoryArticle(?CategoryArticle $categoryArticle): self
     {
         $this->categoryArticle = $categoryArticle;
+
+        return $this;
+    }
+
+    public function getView(): ?int
+    {
+        return $this->view;
+    }
+
+    public function setView(?int $view): self
+    {
+        $this->view = $view;
 
         return $this;
     }

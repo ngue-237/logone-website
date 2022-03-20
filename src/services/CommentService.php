@@ -51,10 +51,10 @@ class CommentService extends AbstractController
     public function removeComment(Comments $comment){
         $this->manager->remove($comment);
         $this->manager->flush();
-        $this->flash->success('Success delete!','');
+        $this->flash->success('Success delete !','');
     }
 
-    public function allComment():array{
+    public function allCommentPublished():array{
         
         return $this->commentRepo->findByAllComment();
     }
