@@ -1,0 +1,80 @@
+{% extends 'baseF.html.twig'%}
+{% block title %}
+	Accueil | Logone
+{% endblock %}
+{% block content %}
+
+	{% include('include/frontoffice/header.html.twig')%}
+	<section class="banner_area">
+		<div class="banner_inner d-flex align-items-center">
+			<div class="container">
+				<div class="banner_content text-center">
+					<h2>Offres d'emploi'</h2>
+					<div class="page_link">
+						<a href="index.html">Home</a>
+						<a href="services.html">Offres d'emploi</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================ End Banner Area =================-->
+	<div style="margin-left: 100px; margin-right:1000px;margin-top:0px;margin-bottom:0px;"></div>
+	<!--================ Start Features Area =================-->
+	<section class="features_area section_gap_top">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-8 text-center">
+					<div class="main_title">
+						<h2>Nos offres d'emploi</h2>
+						<p>
+							Is give may shall likeness made yielding spirit a itself togeth created 
+							                            after sea
+							<br>
+							is in beast beginning signs open god you're gathering ithe
+						</p>
+					</div>
+				</div>
+			</div>
+			<form id="filters">
+				<p>
+					<input type="text" name="searchaj" id="searchaj" class="form-control" placeholder="search by name"/>
+				</p>
+			</form>
+			<h5 class="font-weight-700 pull-left text-uppercase"></h5>
+			{% for job in list %}
+				{% if date(job.getDateExpiration()) > date() %}
+					<div class="row feature_inner">
+						<div class="col-lg-3 col-md-6">
+							<div class="feature_item">
+								{% set dateTime = date(job.getDateDebut()) %}
+								{% set mounth = dateTime|date('F')|number_format %}
+								{% set year = dateTime|date('y')|number_format %}
+								{% set Nmounth = date()|date('F')|number_format %}
+								{% set Nyear = date()|date('y')|number_format %}
+								<span class="fa fa-map-marker">{{ job.location }}</span>
+								<h4>
+									<a href="job-detail.html">{{ job.titre }}</a>
+								</h4>
+								<span>{{ job.nombrePoste }}Poste disponibles</span>
+								<h5>DT{{ job.min_salary }}
+									- DT{{ job.max_salary }}</h5>
+								<p>{{ job.description | raw }}</p>
+								<form action="{{path('apply',{id: job.id})}}">>
+									<button class="site-button">Postuler</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				{% endif %}
+			{% endfor %}
+			<div class="pagination-bx m-t30">
+				{{ knp_pagination_render(list) }}
+			</div>
+		</div>
+	</section>
+	<!--================ End Features Area =================-->
+
+	<!--================ Start Testimonial Area =================-->
+	<!--================ End Testimonial Area =================-->
+{{include('include/frontoffice/footer.html.twig')}}{% endblock %}

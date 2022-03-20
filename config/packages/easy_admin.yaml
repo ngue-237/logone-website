@@ -1,0 +1,11 @@
+easy_admin:
+    entities:
+        Candidature:
+            list:
+                fields:
+                    - { property: 'cv', type: 'vich_file', template: 'candidature/candidatures.html.twig' }
+        OffreEmploi:
+            list:
+                fields:
+                    - { property: 'file', type: 'vich_file', template: 'offre_emploi/listoffresback.html.twig' }
+                    - { property: 'file', type: 'vich_file', template: 'offre_emploi/listoffresfront.html.twig' }
