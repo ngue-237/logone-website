@@ -36,28 +36,27 @@
 							<div class="row">
 								<div class="col-lg-6 col-md-6">
 									{{ form_errors(form.titre) }}
-									{{ form_label(form.titre,"Titre") }}
 									{{ form_widget(form.titre,{'attr': {'placeholder': 'Titre'}}) }}
 								</div>
 								<div class="col-lg-6 col-md-6">
 									<div class="form-group">
-										<label>Nombre de Poste</label>
+										<!--<label>Nombre de Poste</label>-->
 										{{ form_errors(form.nombrePoste) }}
-										{{ form_widget(form.nombrePoste) }}
+										{{ form_widget(form.nombrePoste,{'attr': {'placeholder': 'Nombre de poste'}}) }}
 									</div>
 								</div>
 								<div class="col-lg-6 col-md-6">
 									<div class="form-group">
-										<label>Minimum Salary (DT):</label>
+										
 										{{ form_errors(form.min_salary) }}
-										{{ form_widget(form.min_salary,{'attr': {'placeholder': 'Minimum Salary'}}) }}
+										{{ form_widget(form.min_salary,{'attr': {'placeholder': 'Salaire min'}}) }}
 									</div>
 								</div>
 								<div class="col-lg-6 col-md-6">
 									<div class="form-group">
-										<label>Maximum Salary (DT):</label>
+										
 										{{ form_errors(form.max_salary) }}
-										{{ form_widget(form.max_salary,{'attr': {'placeholder': 'Maximum Salary'}}) }}
+										{{ form_widget(form.max_salary,{'attr': {'placeholder': 'Salaire max'}}) }}
 									</div>
 								</div>
 								<div class="col-lg-6 col-md-6">
@@ -69,7 +68,6 @@
 								</div>
 
 								<div class="col-lg-6 col-md-6">
-
 									<div class="form-group">
 										<label>Upload File</label>
 										<div class="custom-file">
@@ -82,14 +80,14 @@
 									<div class="form-group">
 										<label>Niveau</label>
 											{{ form_errors(form.niveauScolaire) }}
-											{{ form_widget(form.niveauScolaire) }}
+											{{ form_widget(form.niveauScolaire,{'attr': {'placeholder':'Ex: Bac, Master 1'}}) }}
 									</div>
 								</div>
 								<div class="col-lg-12 col-md-6">
 									<div class="form-group">
 										<label>Description</label>
 										{{ form_errors(form.description) }}
-										{{ form_widget(form.description,{'attr': {'placeholder': 'Description'}}) }}
+										{{ form_widget(form.description) }}
 
 									</div>
 								</div>
@@ -97,9 +95,9 @@
 								<div class="col-lg-12 col-md-6">
 
 									<div class="form-group">
-										<label>Location</label>
+										<label>Emplacement</label>
 										{{ form_errors(form.location) }}
-										{{ form_widget(form.location,{'attr': {'placeholder': 'Location'}}) }}
+										{{ form_widget(form.location,{'attr': {'placeholder': 'Ex: Rue George Sand, Tunis'}}) }}
 
 									</div>
 								</div>
@@ -107,8 +105,8 @@
 
 							</div>
 							<div class="col-lg-6 col-md-6">
-								<div class="form-group">
-									{{ form_widget(form.Add) }}
+								<div>
+									{{ form_widget(form.Add,{'attr': {'class':'d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm'}}) }}
 								</div>
 							</div>
 							{{ form_end(form) }}

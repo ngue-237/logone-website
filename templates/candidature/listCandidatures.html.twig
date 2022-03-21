@@ -51,14 +51,8 @@
 										{% for candidat in canditures %}
 											<tr>
 												<td>{{ candidat.email }}</td>
-												<td>{{ candidat.cv }}</td>
+												<td>{{ candidat.cv }} </td>
 												<td>{{ candidat.status ? 'Accepté' : 'En cours...' }}
-													{% if candidat.status == false %}
-													<a href="{{ path('valid_candidat', {'idCandidat':candidat.id,'idOffre':idOffre}) }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-														<i class="fas fa-plus"></i>
-														Valider
-													</a>
-													{% endif %}
 												</td>
 												<td>
 													<a href="{{ path('delete_job', {'id':candidat.id}) }}">
@@ -94,5 +88,4 @@
 	<a class="scroll-to-top rounded" href="#page-top">
 		<i class="fas fa-angle-up"></i>
 	</a>
-
 {% endblock %}

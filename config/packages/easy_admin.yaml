@@ -3,9 +3,9 @@ easy_admin:
         Candidature:
             list:
                 fields:
-                    - { property: 'cv', type: 'vich_file', template: 'candidature/candidatures.html.twig' }
+                    - { property: 'cv', type: 'vich_file', template: 'candidature/candidatures.html.twig', base_path: '%app.path.candidature_cv%' }
         OffreEmploi:
             list:
                 fields:
-                    - { property: 'file', type: 'vich_file', template: 'offre_emploi/listoffresback.html.twig' }
-                    - { property: 'file', type: 'vich_file', template: 'offre_emploi/listoffresfront.html.twig' }
+                    - { property: 'file', type: 'vich_file', template: 'offre_emploi/listoffresback.html.twig', base_path: '%app.path.offre_pdf%' }
+                    - { property: 'file', type: 'vich_file', template: 'offre_emploi/listoffresfront.html.twig', base_path: '%app.path.offre_pdf%' }

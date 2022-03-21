@@ -169,6 +169,10 @@ class OffreEmploi
         return $this;
     }
 
+    public function getDate_Expiration(): ?\DateTimeInterface
+    {
+        return $this->date_expiration;
+    }
     public function getDateExpiration(): ?\DateTimeInterface
     {
         return $this->date_expiration;

@@ -1,119 +1,129 @@
 {% extends 'baseB.html.twig' %}
 {% block content %}
 
-    <!-- Page Wrapper -->
-    <div id="wrapper">
+	<!-- Page Wrapper -->
+	<div
+		id="wrapper">
 
-        <!-- Sidebar -->
-        {{include('include/backoffice/sidebar.html.twig')}}
-        <!-- End of Sidebar -->
+		<!-- Sidebar -->
+		{{include('include/backoffice/sidebar.html.twig')}}
+		<!-- End of Sidebar -->
 
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+		<!-- Content Wrapper -->
+			<div
+			id="content-wrapper" class="d-flex flex-column"> <!-- Main Content -->
+			<div
+				id="content">
 
-            <!-- Main Content -->
-            <div id="content">
+				<!-- Topbar -->
+				{{include('include/backoffice/navbar.html.twig')}}
+				<!-- End of Topbar -->
 
-                <!-- Topbar -->
-                {{include('include/backoffice/navbar.html.twig')}}
-                <!-- End of Topbar -->
+				<!-- Begin Page Content -->
+					<div class="container-fluid"> <div class="d-sm-flex align-items-center justify-content-between mb-4">
+						<h1 class="h3 mb-0 text-gray-800">Jobs Offers Management</h1>
+						<a href="{{ path('add_job') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+							<i class="fas fa-plus"></i>
+                            Add job offer
+                        </a>
+					</div>
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Jobs Offers Management</h1>
+					<div class="card shadow mb-4">
+						<div class="card-header py-3">
+							<h6 class="m-0 font-weight-bold text-primary">Jobs</h6>
+						</div>
+						<div class="card-body">
+							<div class="table-responsive">
+								<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+									<thead>
+										<tr>
+											<th>Title</th>
+											<th>Location</th>
+											<th>File</th>
+											<th>NbPoste</th>
+											<th>Candidatures</th>
+											<th>Options</th>
+										</tr>
+									</thead>
+									<tfoot>
+										<tr>
+											<th>Title</th>
+											<th>Location</th>
+											<th>File</th>
+											<th>NbPoste</th>
+											<th>Candidatures</th>
+											<th>Options</th>
+										</tr>
+									</tfoot>
+									<tbody>
+										{% for job in jobs %}
+											<tr>
+												<td>
+													{{ job.titre }}
+												</td>
+												<td>{{ job.location }}</td>
+												<td>{{ job.file }}</td>
+												<td>{{ job.nombrePoste }}</td>
+												<td>
+													<a href="{{ path('candidats', {'id':job.id}) }}">
+														<i class="fas fa-eye"></i>
+													</a>
+												</td>
 
-                    </div>
+												<td>
+													<a href="{{ path('delete_job', {'id':job.id}) }}">
+														<i class="fas fa-trash-alt"></i>
+													</a>&nbsp;
+													<a href="{{ path('edit_job', {'id':job.id}) }}">
+														<i class="fas fa-edit"></i>
+													</a>&nbsp;
+												</td>
+											</tr>
+										{% endfor %}
 
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Jobs</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                    <tr>
-                                        <th>Title</th>
-                                        <th>Location</th>
-                                        <th>File</th>
-                                        <th>NbPoste</th>
-                                        <th>Candidatures</th>
-                                        <th>Options</th>
-                                    </tr>
-                                    </thead>
-                                    <tfoot>
-                                    <tr>
-                                        <th>Title</th>
-                                        <th>Location</th>
-                                        <th>File</th>
-                                        <th>NbPoste</th>
-                                        <th>Candidatures</th>
-                                        <th>Options</th>
-                                    </tr>
-                                    </tfoot>
-                                    <tbody>
-                                    {% for job in jobs %}
-                                        <tr>
-                                            <td>
-                                                {{ job.titre }}
-                                            </td>
-                                            <td>{{ job.location }}</td>
-                                            <td>{{ job.file }}</td>
-                                            <td>{{ job.nombrePoste }}</td>
-                                            <td></td>
-                                            
-                                            <td>
-                                                <a href="{{ path('delete_job', {'id':job.id}) }}" > <i class="fas fa-trash-alt"></i></a>&nbsp;
-                                                <a href="{{ path('edit_job', {'id':job.id}) }}" > <i class="fas fa-edit"></i></a>&nbsp;
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
 
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+				</div>
+				<!-- /.container-fluid -->
 
-                </div>
-                <!-- /.container-fluid -->
+			</div>
+			<!-- End of Main Content -->
 
-            </div>
-            <!-- End of Main Content -->
+			<!-- Footer -->
+			{{include('include/backoffice/footer.html.twig')}}
+			<!-- End of Footer -->
 
-            <!-- Footer -->
-            {{include('include/backoffice/footer.html.twig')}}
-            <!-- End of Footer -->
+		</div>
+		<!-- End of Content Wrapper -->
 
-        </div>
-        <!-- End of Content Wrapper -->
+	</div>
+	<!-- End of Page Wrapper -->
 
-    </div>
-    <!-- End of Page Wrapper -->
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top">
+		<i class="fas fa-angle-up"></i>
+	</a>
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
+	<!-- Logout Modal-->
+	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+					<a class="btn btn-primary" href="login.html">Logout</a>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

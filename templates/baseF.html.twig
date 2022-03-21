@@ -8,6 +8,7 @@
         
         <link rel="icon" href="{{asset('assetF/')}}img/favicon.png" type="image/png">
         <!-- Bootstrap CSS -->
+        {% block SS %}{% endblock %}
         <link rel="stylesheet" href="{{asset('assetF/')}}css/bootstrap.css">
         <link rel="stylesheet" href="{{asset('assetF/')}}css/font-awesome.min.css">
         <link rel="stylesheet" href="{{asset('assetF/')}}vendors/linericon/style.css">
@@ -21,11 +22,12 @@
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
-
+        {% block JS %}{% endblock %}
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
+    
     <body>
         {% block body %}
         {% block content %} {% endblock %}

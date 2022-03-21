@@ -1,0 +1,16 @@
+{{ form_start(form) }}
+<div class="col-lg-6 col-md-6">
+	{{ form_errors(form.email) }}
+	{{ form_label(form.email,"Your mail") }}
+	{{ form_widget(form.email,{'attr': {'placeholder': 'Email'}}) }}
+</div>
+<div class="col-lg-6 col-md-6">
+	<div class="form-group">
+		<label>Upload CV</label>
+		<div class="custom-file">
+			{{ form_errors(form.cvFile) }}
+			{{ form_widget(form.cvFile) }}
+		</div>
+	</div>
+</div>
+{{ form_end(form) }}

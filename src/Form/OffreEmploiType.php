@@ -26,8 +26,7 @@ class OffreEmploiType extends AbstractType
             ->add('location',TextType::class, ['attr' => ['id' => 'searchTextField','autocomplete'=>'on']
             ])
             ->add('fileFile', VichFileType::class, [
-                'required' => false,
-                'allow_delete' => true,
+                'required' => false,    
             ])
             ->add('niveauScolaire')
             ->add('description',CKEditorType::class)

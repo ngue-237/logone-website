@@ -21,7 +21,6 @@ class CandidatureType extends AbstractType
                 'allow_delete' => true,
                 'asset_helper' => true,
             ])
-            ->add('Send', SubmitType::class)
         ;
     }
 

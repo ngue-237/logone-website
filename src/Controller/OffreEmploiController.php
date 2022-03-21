@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Candidature;
 use App\Entity\OffreEmploi;
+use App\Form\CandidatureType;
 use App\Form\OffreEmploiType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\OffreEmploiRepository;
@@ -20,14 +22,11 @@ class OffreEmploiController extends AbstractController
      */
     public function readjobsBack(Request $request, PaginatorInterface $pag, OffreEmploiRepository $rep)
     {
-        $data = $rep->findAll();
-
-        $jobs = $pag->paginate($data, $request->query->getInt('page', 1), 4);
-
         return $this->render('offre_emploi/listoffresback.html.twig', [
-            'jobs' => $jobs
+            'jobs' => $rep->findAll()
         ]);
     }
+
 
     /**
      * @Route("/joblist", name="jobslist_front")
@@ -36,7 +35,8 @@ class OffreEmploiController extends AbstractController
     {
         //$offres = $rep->findAll();
         $filtre = $request->get("searchaj");
-
+        $candidature = new Candidature();
+        $form = $this->createForm(CandidatureType::class,$candidature);
         $data = $rep->getdata($filtre);
 
         $jobs = $pag->paginate($data, $request->query->getInt('page', 1), 4);
@@ -44,12 +44,14 @@ class OffreEmploiController extends AbstractController
         if ($request->get('ajax')) {
             return new JsonResponse([
                 'content' => $this->renderView('offre_emploi/listoffresfront.html.twig', [
-                    'list' => $jobs, 'nb' => $nb
+                    'list' => $jobs, 'nb' => $nb,
+                    'form' => $form->createView()
                 ])
             ]);
         }
         return $this->render('offre_emploi/listoffresfront.html.twig', [
-            'list' => $jobs, 'nb' => $nb
+            'list' => $jobs,
+            'form' => $form->createView()
         ]);
     }
 
@@ -91,6 +93,18 @@ class OffreEmploiController extends AbstractController
     }
 
     /**
+     * @Route("/jobdetails/{id}", name="jobdetails")
+     */
+    public function jobdetails($id, EntityManagerInterface $em)
+    {
+        $job = $em->getRepository(OffreEmploi::class)->find($id);
+
+        return $this->render('offre_emploi/jobdetails.html.twig', [
+            'job' => $job,
+        ]);
+    }
+
+    /**
      * @Route("/edit_offre/{id}", name="edit_job")
      */
     public function modifyjob(Request $request, $id)
@@ -114,5 +128,6 @@ class OffreEmploiController extends AbstractController
             'form' => $form->createView(), 'message' => ''
         ]);
     }
+
 
 }
