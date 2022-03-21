@@ -123,11 +123,13 @@
                 form_row(form.categories, {
                   attr: {
                     class: "form-control mb-3",
+                    value: categoryService.id
                   }
                 })
               }}
             </div>
 
+            {#
             <div class="form-group">
               {{
                 form_row(form.services, {
@@ -138,6 +140,7 @@
                 })
               }}
             </div>
+            #}
           </div>
           <div class="col-md-6">
             <div class="form-floating">

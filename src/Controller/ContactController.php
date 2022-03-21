@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Contact;
 use App\Form\ContactType;
 use App\Repository\ContactRepository;
+use App\services\MailerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +18,11 @@ class ContactController extends AbstractController
      * Permet d'envoyer une demande contacte
      * @Route("/contact", name="contact")
      */
-    public function index(Request $req, EntityManagerInterface $em): Response
+    public function index(
+        Request $req, 
+        EntityManagerInterface $em,
+        MailerService $mailer
+        ): Response
     {
         $contact = new Contact();
         $form = $this->createForm(ContactType::class, $contact);
@@ -25,8 +30,31 @@ class ContactController extends AbstractController
         $form->handleRequest($req);
 
         if($form->isSubmitted() and $form->isValid()){
+
+            $lastname = $form->get('lastName')->getData();
+            $firstname = $form->get('firstName')->getData();
+            $to = $form->get('email')->getData();
+            
+            $subject = "Demande contact";
+            $template = "email/contact.html.twig";
+            $from = "emmanuelbenjamin.nguetoungoum@esprit.tn";
+            $message = $form->get('msg')->getData();
+
+            //dd($form->getData());
             $em->persist($contact);
             $em->flush();
+            $mailer->send(
+                $subject,
+                $to,
+                $template,
+                [
+                "message"=> $message, 
+                "lastname"=> $lastname, 
+                "firstname"=> $firstname
+                ],
+                $from
+            );
+
             return $this->redirectToRoute('contact');
         }
         return $this->renderForm('frontoffice/contact.html.twig', compact('form'));

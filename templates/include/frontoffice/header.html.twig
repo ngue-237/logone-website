@@ -28,6 +28,33 @@
             <li class="nav-item">
               <a class="nav-link" href="{{ path('home') }}">Accueil</a>
             </li>
+            <li class="nav-item submenu dropdown">
+              <a
+                href="{{ path('about') }}"
+                class="nav-link dropdown-toggle"
+                data-toggle="dropdown"
+                role="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+                >Logone</a
+              >
+              <ul class="dropdown-menu">
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ path('about') }}"
+                    >Nous connaitre</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Notre Vision</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Notre Mission</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Nos Valeurs</a>
+                </li>
+              </ul>
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ path('categorie_service_all') }}"
                 >Services</a

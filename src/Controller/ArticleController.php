@@ -32,7 +32,7 @@ class ArticleController extends AbstractController
      * permet également d'ajouter un commentaire via le service persistComment
      * @param Article $article
      * @return Response
-     * @Route("/blog/article/{slug}", name="article_detail", methods={"GET", "POST"})
+     * @Route("/blog/{slug}", name="article_detail", methods={"GET", "POST"})
      */
     public function articleDetail(
         Article $article,
@@ -52,9 +52,9 @@ class ArticleController extends AbstractController
              $form = $this->createForm(CommentType::class, $comment);
              $form->handleRequest($req);
              if($form->isSubmitted() and $form->isValid()){
-                 //dd($form->getData());
+                 dd($form->getData());
                 $comment = $form->getData();
-                $commentService->persistComment($comment, $article);
+                $commentService->persistComment($form->getData(), $article);
 
                 return $this->redirectToRoute('article_detail', ['slug'=> $article->getSlug()]);
              }
@@ -81,7 +81,7 @@ class ArticleController extends AbstractController
      * @param Request $req
      * @param EntityManagerInterface $em
      * @return void
-     * @Route("/blog/article/{slug}/comment", name="article_comment_add")
+     * @Route("/blog/{slug}/comment", name="article_comment_add")
      */
     public function addComment (Article $article , Request $req, EntityManagerInterface $em){
         $validToken = $req->request->get('csrf_token');

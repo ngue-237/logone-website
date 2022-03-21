@@ -63,11 +63,7 @@ class Devis
      */
     private $categories;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Service::class, inversedBy="devis")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $services;
+    
 
     
     public function getId(): ?int
@@ -161,7 +157,7 @@ class Devis
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->createdAt;
+        return $this->createdAt = new \DateTime('now');
     }
 
     public function setCreatedAt(\DateTimeInterface $createdAt): self
@@ -183,16 +179,6 @@ class Devis
         return $this;
     }
 
-    public function getServices(): ?Service
-    {
-        return $this->services;
-    }
-
-    public function setServices(?Service $services): self
-    {
-        $this->services = $services;
-
-        return $this;
-    }
+    
 
 }

@@ -20,21 +20,11 @@ class HomeController extends AbstractController
         ]);
     }
 
-    /** 
-     * @Route("/blog/detail", name="blog_detail")
-     */
-    public function blogDetail(){
-        return $this->render('frontoffice/blog_detail.html.twig', [
-            
-        ]);
-    }
-
     /**
-     * @Route("/about", name="about")
+     * @Route("/entreprise", name="about")
      */
     public function about(){
-        return $this->render('frontoffice/about.html.twig', [
-            
+        return $this->render('frontoffice/about.html.twig', [   
         ]);
     }
 

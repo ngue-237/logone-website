@@ -79,21 +79,19 @@
       </div>
     </div>
     <div class="row feature_inner">
-      {% for item in categoriesService %}
-      <a href="{{ path('services', { slug: item.slug }) }}" class="text-font">
-        <div class="col-lg-3 col-md-6">
+      {% for catg in categoriesService %}
+      <div class="col-lg-3 col-md-6">
+        <a href="{{ path('services', { slug: catg.slug }) }}" class="text-font">
           <div class="feature_item">
             <img
-              src="{{ asset('/uploads/images/categories_service/' ~ item.image) }}"
-              alt="image parlant de {{ item.designation }}"
+              src="{{ asset('/uploads/images/categories_service/' ~ catg.image) }}"
+              alt="image parlant de {{ catg.designation }}"
             />
-            <h4>{{ item.designation }}</h4>
-            <p>
-              {{ item.description | raw }}
-            </p>
+            <h4>{{ catg.designation }}</h4>
+            <p>{{ catg.description | raw }}</p>
           </div>
-        </div>
-      </a>
+        </a>
+      </div>
       {% endfor %}
       <div class="pagination text-center">
         {{ knp_pagination_render(categoriesService) }}
@@ -218,9 +216,6 @@
     </div>
   </div>
 </div>
-<!--================ End Testimonial Area =================-->
-
-<!--================ Start Newsletter Area =================-->
 
 {{ include("include/frontoffice/footer.html.twig") }}
 {% endblock %}

@@ -31,15 +31,7 @@ class DevisType extends AbstractType
             ->add('company', TextType::class)
             ->add('country' )
             ->add('subject', TextareaType::class)
-            ->add('categories', EntityType::class,[
-                'class'=>CategoryService::class,
-                'choice_label'=>'designation',
-                'placeholder'=>'Choisir la Cathégorie du service',
-                'label'=>false,
-                'query_builder' =>function(CategoryServiceRepository $catgRep){
-                    return $catgRep->createQueryBuilder('c')->orderBy('c.designation', 'ASC');
-                }
-            ])
+            
             // ->add('services', EntityType::class,[
             //     'mapped'=>false,
             //     'class'=>Service::class,
@@ -53,48 +45,48 @@ class DevisType extends AbstractType
             // ]) 
         ;
 
-        $formModifier = function (FormInterface $form, CategoryService $category= null) {
-            $categories = null === $category ? [] : $category->getServices();
+        // $formModifier = function (FormInterface $form, CategoryService $category= null) {
+        //     $categories = null === $category ? [] : $category->getServices();
 
-            //dd($cities);
+        //     //dd($cities);
 
-            $form->add('services', EntityType::class, [
-                'class'=>Service::class,
-                'mapped'=>false,
-                //'displayed' => false,
-                'choice_label'=>'designation',
-                'placeholder'=>'Choisir un service',
-                'choices' => $categories,
-                'required'=>false,
-                'label'=>false,
-                'query_builder' =>function(ServiceRepository $servRep){
-                    return $servRep->createQueryBuilder('c')->orderBy('c.designation', 'ASC');
-                }
-            ]);
-        };
+        //     $form->add('services', EntityType::class, [
+        //         'class'=>Service::class,
+        //         'mapped'=>false,
+        //         //'displayed' => false,
+        //         'choice_label'=>'designation',
+        //         'placeholder'=>'Choisir un service',
+        //         'choices' => $categories,
+        //         'required'=>false,
+        //         'label'=>false,
+        //         'query_builder' =>function(ServiceRepository $servRep){
+        //             return $servRep->createQueryBuilder('c')->orderBy('c.designation', 'ASC');
+        //         }
+        //     ]);
+        // };
 
-        $builder->addEventListener(
-            FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) use ($formModifier) {
+        // $builder->addEventListener(
+        //     FormEvents::PRE_SET_DATA,
+        //     function (FormEvent $event) use ($formModifier) {
                 
-                $data = $event->getData();
+        //         $data = $event->getData();
 
-                $formModifier($event->getForm(), $data->getCategories());
-            }
-        );
+        //         $formModifier($event->getForm(), $data->getCategories());
+        //     }
+        // );
 
-        $builder->get('categories')->addEventListener(
-            FormEvents::POST_SUBMIT,
-            function (FormEvent $event) use ($formModifier) {
-                // It's important here to fetch $event->getForm()->getData(), as
-                // $event->getData() will get you the client data (that is, the ID)
-                $services = $event->getForm()->getData();
+        // $builder->get('categories')->addEventListener(
+        //     FormEvents::POST_SUBMIT,
+        //     function (FormEvent $event) use ($formModifier) {
+        //         // It's important here to fetch $event->getForm()->getData(), as
+        //         // $event->getData() will get you the client data (that is, the ID)
+        //         $services = $event->getForm()->getData();
 
-                // since we've added the listener to the child, we'll have to pass on
-                // the parent to the callback functions!
-                $formModifier($event->getForm()->getParent(), $services);
-            }
-        );
+        //         // since we've added the listener to the child, we'll have to pass on
+        //         // the parent to the callback functions!
+        //         $formModifier($event->getForm()->getParent(), $services);
+        //     }
+        // );
         
     }
 

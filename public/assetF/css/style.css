@@ -132,6 +132,35 @@ button:focus {
     /* padding-bottom: 80px; */
   }
 }
+/*---------------------------------------------------- */
+/*----------------------------------------------------*/
+.section_gapAbout {
+  padding: 200px 0;
+  margin: 50px;
+}
+@media (max-width: 1199px) {
+  .section_gapAbout {
+    padding: 80px 0;
+  }
+}
+
+.section_gapAbout_top {
+  padding-top: 200px;
+}
+@media (max-width: 1199px) {
+  .section_gapAbout_top {
+    padding-top: 80px;
+  }
+}
+
+.section_gapAbout_bottom {
+  padding-bottom: 200px;
+}
+@media (max-width: 1199px) {
+  .section_gapAbout_bottom {
+    /* padding-bottom: 80px; */
+  }
+}
 
 /* Main Title Area css
 ============================================================================================ */

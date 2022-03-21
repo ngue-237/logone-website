@@ -45,22 +45,19 @@ class DevisRepository extends ServiceEntityRepository
         }
     }
 
-    // /**
-    //  * @return Devis[] Returns an array of Devis objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Devis[] Returns an array of Devis objects
+     */
+    
+    public function findAllOderDesc()
     {
         return $this->createQueryBuilder('d')
-            ->andWhere('d.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('d.id', 'ASC')
-            ->setMaxResults(10)
+            ->orderBy('d.createdAt', 'DESC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?Devis
