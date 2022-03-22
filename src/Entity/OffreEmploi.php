@@ -2,13 +2,17 @@
 
 namespace App\Entity;
 
-use App\Repository\OffreEmploiRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use App\Repository\OffreEmploiRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=OffreEmploiRepository::class)
+ * @Vich\Uploadable
  */
 class OffreEmploi
 {
@@ -20,34 +24,60 @@ class OffreEmploi
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Candidat::class, inversedBy="offreEmplois")
-     */
-    private $candidats;
-
-    /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=32)
      */
     private $titre;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="smallint")
+     */
+    private $nombrePoste;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $description;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="date", nullable=true)
      */
-    private $nbPoste;
+    private $date_debut;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="date", nullable=true)
      */
-    private $nbAnneeExperience;
+    private $date_expiration;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $max_salary;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $min_salary;
+
+    /**
+     * @ORM\Column(type="string", length=32, nullable=true)
      */
     private $location;
+
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Candidature::class, inversedBy="offreEmplois")
+     */
+    private $candidatures;
+
+    /**
+     * @ORM\Column(type="string", length=125, nullable=true)
+     */
+    private $niveauScolaire;
+
+    public function __construct()
+    {
+        $this->candidatures = new ArrayCollection();
+    }
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -55,14 +85,35 @@ class OffreEmploi
     private $file;
 
     /**
-     * @ORM\ManyToMany(targetEntity=NiveauScolaire::class, inversedBy="offreEmplois")
+     * @Vich\UploadableField(mapping="offre_pdf", fileNameProperty="file")
+     * @var File
      */
-    private $niveaux;
+    private $fileFile;
 
-    public function __construct()
+    /**
+     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     */
+    private $updatedAt;
+
+    // ...
+
+    public function setFileFile(File $file = null)
     {
-        $this->candidats = new ArrayCollection();
-        $this->niveaux = new ArrayCollection();
+        $this->fileFile = $file;
+
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($file) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    public function getFileFile(): ?File
+    {
+        return $this->fileFile;
     }
 
     public function getId(): ?int
@@ -70,30 +121,6 @@ class OffreEmploi
         return $this->id;
     }
 
-    /**
-     * @return Collection<int, Candidat>
-     */
-    public function getCandidats(): Collection
-    {
-        return $this->candidats;
-    }
-
-    public function addCandidats(Candidat $candidats): self
-    {
-        if (!$this->candidats->contains($candidats)) {
-            $this->candidats[] = $candidats;
-        }
-
-        return $this;
-    }
-
-    public function removeCandidats(Candidat $candidats): self
-    {
-        $this->candidats->removeElement($candidats);
-
-        return $this;
-    }
-    
     public function getTitre(): ?string
     {
         return $this->titre;
@@ -102,6 +129,18 @@ class OffreEmploi
     public function setTitre(string $titre): self
     {
         $this->titre = $titre;
+
+        return $this;
+    }
+
+    public function getNombrePoste(): ?int
+    {
+        return $this->nombrePoste;
+    }
+
+    public function setNombrePoste(int $nombrePoste): self
+    {
+        $this->nombrePoste = $nombrePoste;
 
         return $this;
     }
@@ -118,26 +157,62 @@ class OffreEmploi
         return $this;
     }
 
-    public function getNbPoste(): ?int
+    public function getDateDebut(): ?\DateTimeInterface
     {
-        return $this->nbPoste;
+        return $this->date_debut;
     }
 
-    public function setNbPoste(int $nbPoste): self
+    public function setDateDebut(?\DateTimeInterface $date_debut): self
     {
-        $this->nbPoste = $nbPoste;
+        $this->date_debut = $date_debut;
 
         return $this;
     }
 
-    public function getNbAnneeExperience(): ?int
+    public function getDate_Expiration(): ?\DateTimeInterface
     {
-        return $this->nbAnneeExperience;
+        return $this->date_expiration;
+    }
+    public function getDateExpiration(): ?\DateTimeInterface
+    {
+        return $this->date_expiration;
     }
 
-    public function setNbAnneeExperience(int $nbAnneeExperience): self
+    public function setDateExpiration(?\DateTimeInterface $date_expiration): self
     {
-        $this->nbAnneeExperience = $nbAnneeExperience;
+        $this->date_expiration = $date_expiration;
+
+        return $this;
+    }
+
+    public function getMax_Salary(): ?int
+    {
+        return $this->max_salary;
+    }
+    public function getMaxSalary(): ?int
+    {
+        return $this->max_salary;
+    }
+
+    public function setMaxSalary(?int $max_salary): self
+    {
+        $this->max_salary = $max_salary;
+
+        return $this;
+    }
+
+    public function getMin_Salary(): ?int
+    {
+        return $this->min_salary;
+    }
+    public function getMinSalary(): ?int
+    {
+        return $this->min_salary;
+    }
+
+    public function setMinSalary(?int $min_salary): self
+    {
+        $this->min_salary = $min_salary;
 
         return $this;
     }
@@ -147,7 +222,7 @@ class OffreEmploi
         return $this->location;
     }
 
-    public function setLocation(string $location): self
+    public function setLocation(?string $location): self
     {
         $this->location = $location;
 
@@ -167,25 +242,37 @@ class OffreEmploi
     }
 
     /**
-     * @return Collection<int, NiveauScolaire>
+     * @return Collection<int, Candidature>
      */
-    public function getNiveaux(): Collection
+    public function getCandidatures(): Collection
     {
-        return $this->niveaux;
+        return $this->candidatures;
     }
 
-    public function addNiveau(NiveauScolaire $niveau): self
+    public function addCandidature(Candidature $candidature): self
     {
-        if (!$this->niveaux->contains($niveau)) {
-            $this->niveaux[] = $niveau;
+        if (!$this->candidatures->contains($candidature)) {
+            $this->candidatures[] = $candidature;
         }
 
         return $this;
     }
 
-    public function removeNiveau(NiveauScolaire $niveau): self
+    public function removeCandidature(Candidature $candidature): self
     {
-        $this->niveaux->removeElement($niveau);
+        $this->candidatures->removeElement($candidature);
+
+        return $this;
+    }
+
+    public function getNiveauScolaire(): ?string
+    {
+        return $this->niveauScolaire;
+    }
+
+    public function setNiveauScolaire(?string $niveauScolaire): self
+    {
+        $this->niveauScolaire = $niveauScolaire;
 
         return $this;
     }

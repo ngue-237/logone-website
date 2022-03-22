@@ -2,37 +2,34 @@
 
 namespace App\Form;
 
-use App\Entity\NiveauScolaire;
 use App\Entity\OffreEmploi;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class OffreEmploiType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('titre',TextType::class, ['label'=>false])
-            ->add('description',TextareaType::class, ['label'=>false])
-            ->add('location')
-            ->add('file',FileType::class, array('data_class'=> null))
-            ->add('nbPoste')
-            ->add('nbAnneeExperience')
-            ->add('niveaux', CollectionType::class, [
-                'entry_type' => NiveauScolaireType::class,
-                'label'=>'NiveauScolaire',
-                'entry_options' => ['label' => false],
-                'allow_add'=>true,
-                'allow_delete'=>true,
-                'by_reference'=>false
+            ->add('titre')
+            ->add('nombrePoste')
+            ->add('date_expiration')
+            ->add('max_salary')
+            ->add('min_salary')
+            ->add('location',TextType::class, ['attr' => ['id' => 'searchTextField','autocomplete'=>'on']
             ])
+            ->add('fileFile', VichFileType::class, [
+                'required' => false,    
+            ])
+            ->add('niveauScolaire')
+            ->add('description',CKEditorType::class)
             ->add('Add', SubmitType::class)
         ;
     }

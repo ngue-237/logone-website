@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Candidature;
 use App\Entity\OffreEmploi;
+use App\Form\CandidatureType;
 use App\Form\OffreEmploiType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\OffreEmploiRepository;
@@ -10,50 +12,51 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class OffreEmploiController extends AbstractController
 {
     /**
-     * @Route("/offre_emploi", name="app_offre_emploi")
+     * @Route("/jobslist", name="jobslist_back")
      */
-    public function index(): Response
+    public function readjobsBack(Request $request, PaginatorInterface $pag, OffreEmploiRepository $rep)
     {
-        return $this->render('offre_emploi/index.html.twig', [
-            'controller_name' => 'OffreEmploiController',
+        return $this->render('offre_emploi/listoffresback.html.twig', [
+            'jobs' => $rep->findAll()
         ]);
     }
 
+
     /**
-     * @Route("/list_offre", name="offre_list")
+     * @Route("/joblist", name="jobslist_front")
      */
-    public function readjob(Request $request, PaginatorInterface $pag, OffreEmploiRepository $rep)
+    public function readjobsFront(Request $request, PaginatorInterface $pag, OffreEmploiRepository $rep)
     {
-        $data = $rep->findAll();
+        //$offres = $rep->findAll();
+        $filtre = $request->get("searchaj");
+        $candidature = new Candidature();
+        $form = $this->createForm(CandidatureType::class,$candidature);
+        $data = $rep->getdata($filtre);
 
         $jobs = $pag->paginate($data, $request->query->getInt('page', 1), 4);
-
-        return $this->render('offre_emploi/manage_offres.html.twig', [
-            'jobs' => $jobs
+        $nb = $rep->countday($filtre);
+        if ($request->get('ajax')) {
+            return new JsonResponse([
+                'content' => $this->renderView('offre_emploi/listoffresfront.html.twig', [
+                    'list' => $jobs, 'nb' => $nb,
+                    'form' => $form->createView()
+                ])
+            ]);
+        }
+        return $this->render('offre_emploi/listoffresfront.html.twig', [
+            'list' => $jobs,
+            'form' => $form->createView()
         ]);
     }
 
     /**
-     * @Route("/list_jobs", name="front_offre_list")
-     */
-    public function displayjobsFront(Request $request, PaginatorInterface $pag, OffreEmploiRepository $rep)
-    {
-        $data = $rep->findAll();
-
-        $jobs = $pag->paginate($data, $request->query->getInt('page', 1), 4);
-
-        return $this->render('offre_emploi/display_offres.html.twig', [
-            'jobs' => $jobs
-        ]);
-    }
-    
-    /**
-     * @Route("/addoffre", name="add_offre")
+     * @Route("/add_job", name="add_job")
      */
     public function addoffer(Request $request, EntityManagerInterface $em)
     {
@@ -63,33 +66,48 @@ class OffreEmploiController extends AbstractController
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                // $offre->setIdCandidat(null);
-              /*  $em->persist($offre);
-                $em->flush();*/
-                return $this->redirectToRoute('offre_list');
+                $offre->setDateDebut(new \DateTime('now'));
+                $em->persist($offre);
+                $em->flush();
+                return $this->redirectToRoute('jobslist_back');
             } else {
-                return $this->render('offre_emploi/post_offre.html.twig', [
-                    'formOffre' => $form->createView(), 'message' => 'Check your fields !'
+                return $this->render('offre_emploi/add_offre.html.twig', [
+                    'form' => $form->createView(), 'message' => 'Check your fields !'
                 ]);
             }
         }
-        return $this->render('offre_emploi/post_offre.html.twig', [
-            'formOffre' => $form->createView()
+        return $this->render('offre_emploi/add_offre.html.twig', [
+            'form' => $form->createView(), 'message'=> ''
         ]);
     }
 
     /**
-     * @Route("/delete_offre/{id}", name="delete_offre")
+     * @Route("/delete_job/{id}", name="delete_job")
      */
     public function deletejob($id, EntityManagerInterface $em)
     {
         $job = $em->getRepository(OffreEmploi::class)->find($id);
+        
         $em->remove($job);
+        dd($job);
         $em->flush();
-        return $this->redirectToRoute('offre_list');
+        return $this->redirectToRoute('jobslist_back');
     }
 
     /**
-     * @Route("/edit_offre/{id}", name="edit_offre")
+     * @Route("/jobdetails/{id}", name="jobdetails")
+     */
+    public function jobdetails($id, EntityManagerInterface $em)
+    {
+        $job = $em->getRepository(OffreEmploi::class)->find($id);
+
+        return $this->render('offre_emploi/jobdetails.html.twig', [
+            'job' => $job,
+        ]);
+    }
+
+    /**
+     * @Route("/edit_offre/{id}", name="edit_job")
      */
     public function modifyjob(Request $request, $id)
     {
@@ -101,15 +119,17 @@ class OffreEmploiController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($job);
                 $em->flush();
-                return $this->redirectToRoute('offre_list');
+                return $this->redirectToRoute('jobslist_back');
             } else {
-                return $this->render('offre_emploi/post_offre.html.twig', [
-                    'formOffre' => $form->createView(), 'message' => 'Check your fields !'
+                return $this->render('offre_emploi/add_offre.html.twig', [
+                    'form' => $form->createView(), 'message' => 'Check your fields !'
                 ]);
             }
         }
-        return $this->render('offre_emploi/post_offre.html.twig', [
-            'formOffre' => $form->createView(), 'message' => ''
+        return $this->render('offre_emploi/add_offre.html.twig', [
+            'form' => $form->createView(), 'message' => ''
         ]);
     }
+
+
 }

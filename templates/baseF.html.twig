@@ -22,6 +22,7 @@
       href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}"
     />
     <!-- Bootstrap CSS -->
+    {% block SS %} {% endblock %}
     <link rel="stylesheet" href="{{ asset('assetF/') }}css/bootstrap.css" />
     <link
       rel="stylesheet"
@@ -68,7 +69,9 @@
     {{
       encore_entry_link_tags("app")
     }}
-    #} {% endblock %} {% block javascripts %} {#
+    #} {% endblock %} 
+    {% block JS %} {% endblock %}
+    {% block javascripts %} {#
     {{
       encore_entry_script_tags("app")
     }}

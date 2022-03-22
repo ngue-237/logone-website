@@ -73,4 +73,29 @@ class OffreEmploiRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function countday($filtre = null)
+    {
+        return $this->createQueryBuilder('u')
+            ->select('count(u)')
+            ->where('u.date_expiration > CURRENT_DATE() and u.titre LIKE :fil')
+            ->setParameter('fil', '%' . $filtre . '%')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function getdata($filtre = null)
+    {
+        $query = $this->createQueryBuilder('u')
+            ->where(' u.date_expiration > CURRENT_DATE()');
+
+        if ($filtre != null) {
+            $query->andWhere('u.titre LIKE :t')
+                ->setParameter(':t', '%' . $filtre . '%');
+        }
+
+        return $query->orderBy('u.date_debut', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }
