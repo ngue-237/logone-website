@@ -69,6 +69,20 @@ class CandidatureController extends AbstractController
     }
 
     /**
+     * @Route("/delete_candidat/{id}", name="delete_candidat")
+     */
+    public function deleteCandidat($id, EntityManagerInterface $em)
+    {
+        $candidature = $em->getRepository(Candidature::class)->find($id);
+        //dd($candidature);
+        $em->remove($candidature);
+        //dd($candidature);
+        $em->flush();
+        
+        return $this->redirectToRoute('jobslist_back');
+    }
+
+    /**
      * @Route("/offres_candidatures/{id}", name="candidats")
      */
     public function listCandidatsForAJob($id, OffreEmploiRepository $rep,EntityManagerInterface $em){
@@ -102,7 +116,7 @@ class CandidatureController extends AbstractController
 
     }
 
-        /**
+    /**
      * @Route("/listCandidatures", name="listCandidatures")
      */
     public function readCandidatsBack(Request $request, PaginatorInterface $pag, CandidatureRepository $rep)

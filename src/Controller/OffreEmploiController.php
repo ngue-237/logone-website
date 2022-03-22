@@ -87,7 +87,9 @@ class OffreEmploiController extends AbstractController
     public function deletejob($id, EntityManagerInterface $em)
     {
         $job = $em->getRepository(OffreEmploi::class)->find($id);
+        
         $em->remove($job);
+        dd($job);
         $em->flush();
         return $this->redirectToRoute('jobslist_back');
     }

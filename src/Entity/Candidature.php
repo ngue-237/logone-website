@@ -38,7 +38,7 @@ class Candidature
     private $offreEmplois;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $cv;
 
@@ -69,7 +69,7 @@ class Candidature
         }
     }
 
-    public function getCvFile()
+    public function getCvFile(): ?File
     {
         return $this->cvFile;
     }
@@ -89,7 +89,7 @@ class Candidature
         return $this->cv;
     }
 
-    public function setCv(string $cv): self
+    public function setCv(?string $cv): self
     {
         $this->cv = $cv;
 

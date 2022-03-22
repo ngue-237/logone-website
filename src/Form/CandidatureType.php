@@ -8,7 +8,6 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class CandidatureType extends AbstractType
 {
@@ -18,8 +17,6 @@ class CandidatureType extends AbstractType
             ->add('email', EmailType::class)
             ->add('cvFile', VichFileType::class, [
                 'required' => false,
-                'allow_delete' => true,
-                'asset_helper' => true,
             ])
         ;
     }
