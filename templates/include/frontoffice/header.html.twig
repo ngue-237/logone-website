@@ -1,42 +1,81 @@
 <header class="header_area">
-		<div class="main_menu">
-			<nav class="navbar navbar-expand-lg navbar-light">
-				<div class="container">
-					<!-- Brand and toggle get grouped for better mobile display -->
-					<a class="navbar-brand logo_h" href="{{path('home')}}"><img src="{{asset('assetF/')}}img/logo.png" alt=""></a>
-					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-					 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<!-- Collect the nav links, forms, and other content for toggling -->
-					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-						<ul class="nav navbar-nav menu_nav justify-content-end">
-							<li class="nav-item active"><a class="nav-link" href="{{path('home')}}">Home</a></li>
-							<li class="nav-item"><a class="nav-link" href="{{path('about')}}">About</a></li>
-							<li class="nav-item"><a class="nav-link" href="{{path('services')}}">Services</a></li>
-							<li class="nav-item"><a class="nav-link" href="{{path('portforlio')}}">Portfolio</a></li>
-							<li class="nav-item submenu dropdown">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-								 aria-expanded="false">Pages</a>
-								<ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="elements.html">Elements</a></li>
-									<li class="nav-item"><a class="nav-link" href="{{path('portforlio_details')}}">Portfolio Details</a></li>
-								</ul>
-							</li>
-							<li class="nav-item submenu dropdown">
-								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-								 aria-expanded="false">Blog</a>
-								<ul class="dropdown-menu">
-									<li class="nav-item"><a class="nav-link" href="{{path('blog')}}">Blog</a></li>
-									<li class="nav-item"><a class="nav-link" href="{{path('blog_detail')}}">Blog Details</a></li>
-								</ul>
-							</li>
-							<li class="nav-item"><a class="nav-link" href="{{path('contact')}}">Contact</a></li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-		</div>
-	</header>
+  <div class="main_menu">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <a class="navbar-brand logo_h" href="{{ path('home') }}"
+          ><img src="{{ asset('assetF/') }}img/logo.png" alt=""
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div
+          class="collapse navbar-collapse offset"
+          id="navbarSupportedContent"
+        >
+          <ul class="nav navbar-nav menu_nav justify-content-end">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ path('home') }}">Accueil</a>
+            </li>
+            <li class="nav-item submenu dropdown">
+              <a
+                href="{{ path('about') }}"
+                class="nav-link dropdown-toggle"
+                data-toggle="dropdown"
+                role="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+                >Logone</a
+              >
+              <ul class="dropdown-menu">
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ path('about') }}"
+                    >Nous connaitre</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Notre Vision</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Notre Mission</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Nos Valeurs</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ path('categorie_service_all') }}"
+                >Services</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ path('blog') }}">Blog</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{{ path('portforlio') }}"
+                >Rejoignez-nous</a
+              >
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{{ path('contact') }}">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>

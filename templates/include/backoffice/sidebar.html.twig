@@ -5,7 +5,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Culture Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">Culture Admin<sup>2</sup></div>
             </a>
 
             <!-- Divider -->
@@ -23,7 +23,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Interface
+                Menu
             </div>
 
             <li class="nav-item">
@@ -36,7 +36,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Gestion des utilisteurs</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
+                        <a class="collapse-item" href="{{ path('user_list') }}">Utilisateurs</a>
                     </div>
                 </div>
             </li>
@@ -45,32 +45,42 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUt"
                     aria-expanded="true" aria-controls="collapseUt">
-                    <i class="fab fa-product-hunt"></i>
-                    <span>Produits</span>
+                    <i class="far fa-address-book"></i>
+                    <span>Contact</span>
                 </a>
                 <div id="collapseUt" class="collapse" aria-labelledby="headingUt"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Gestion des produits</h6>
-                        <a class="collapse-item" href="utilities-color.html">Cathégories</a>
-                        <a class="collapse-item" href="utilities-border.html">Produits</a>
-                        <a class="collapse-item" href="utilities-animation.html">Commentaires</a>
+                        <h6 class="collapse-header">Gestion des contactes</h6>
+                        <a class="collapse-item" href="{{ path('contact_list') }}">Contact</a>
                     </div>
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{path('admin_dashboard')}}" data-toggle="collapse" data-target="#collapseTwo"
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseD"
+                    aria-expanded="true" aria-controls="collapse2">
+                    <i class="far fa-envelope"></i>
+                    <span>Devis</span>
+                </a>
+                <div id="collapseD" class="collapse" aria-labelledby="headingUt"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Gestion des devis</h6>
+                        <a class="collapse-item" href="{{ path('devis_lists') }}">Devis</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-cart-arrow-down"></i>
-                    <span>Ventes</span>
+                    <i class="fas fa-bars"></i>
+                    <span>Service</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Gestion des services</h6>
-                        <a class="collapse-item" href="{{path('admin_dashboard')}}">Commandes</a>
-                        <a class="collapse-item" href="{{path('admin_dashboard')}}">Factures</a>
-                        <a class="collapse-item" href="{{path('admin_dashboard')}}">Statistique vente</a>
-                    </div>
+                        <h6 class="collapse-header">Services & Cathégories</h6>
+                        <a class="collapse-item" href="{{path('category_service_list')}}">Cathégories</a>
+                        <a class="collapse-item" href="{{path('service_list')}}">Services</a>
                 </div>
             </li>
             <!-- Nav Item - Utilities Collapse Menu -->
@@ -84,8 +94,9 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Gestion du blog</h6>
-                        <a class="collapse-item" href="utilities-color.html">Articles</a>
-                        <a class="collapse-item" href="utilities-border.html">Commentaires</a>
+                        <a class="collapse-item" href="{{path('admin_category_article')}}">Cathégorie</a>
+                        <a class="collapse-item" href="{{path('article_list_admin')}}">Articles</a>
+                        <a class="collapse-item" href="{{path('admin_comments_list')}}">Commentaires</a>
                     </div>
                 </div>
             </li>

@@ -1,4 +1,8 @@
 security:
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+            cost: 12
     enable_authenticator_manager: true
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
@@ -6,14 +10,25 @@ security:
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         users_in_memory: { memory: null }
+        in_database:
+            entity:
+                class: App\Entity\User
+                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             lazy: true
-            provider: users_in_memory
+            provider: in_database
 
+            form_login:
+                login_path: security_login
+                check_path: security_login
+
+            logout:
+                path: security_logout
+                target : blog
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 
@@ -23,8 +38,8 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/profile, roles: ROLE_USER }
 
 when@test:
     security:

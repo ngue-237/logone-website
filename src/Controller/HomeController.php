@@ -2,64 +2,29 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\services\CategoryServices;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
      */
-    public function index(): Response
+    public function index(CategoryServices $categoryService, Request $req): Response
     {
         return $this->render('frontoffice/index.html.twig', [
-            
+           'categoriesService'=>$categoryService->getAllCategoryService($req)
         ]);
     }
 
     /**
-     * @Route("/blog", name="blog")
-     */
-    public function blog(){
-        return $this->render('frontoffice/blog.html.twig', [
-            
-        ]);
-    }
-
-    /**
-     * @Route("/blog/detail", name="blog_detail")
-     */
-    public function blogDetail(){
-        return $this->render('frontoffice/blog_detail.html.twig', [
-            
-        ]);
-    }
-
-    /**
-     * @Route("/contact", name="contact")
-     */
-    public function contact(){
-        return $this->render('frontoffice/contact.html.twig', [
-            
-        ]);
-    }
-
-    /**
-     * @Route("/services", name="services")
-     */
-    public function service(){
-        return $this->render('frontoffice/services.html.twig', [
-            
-        ]);
-    }
-
-    /**
-     * @Route("/about", name="about")
+     * @Route("/entreprise", name="about")
      */
     public function about(){
-        return $this->render('frontoffice/about.html.twig', [
-            
+        return $this->render('frontoffice/about.html.twig', [   
         ]);
     }
 

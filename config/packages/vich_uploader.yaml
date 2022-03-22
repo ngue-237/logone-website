@@ -1,0 +1,20 @@
+vich_uploader:
+  db_driver: orm
+
+  mappings:
+    article_images:
+      uri_prefix: /images/article
+      upload_destination: "%kernel.project_dir%/public/uploads/images/article"
+      namer:
+        service: Vich\UploaderBundle\Naming\PropertyNamer
+        options: { property: "slug" }
+    category_article_images:
+      uri_prefix: /images/categories_article
+      upload_destination: "%kernel.project_dir%/public/uploads/images/categories_article"
+      namer:
+        service: Vich\UploaderBundle\Naming\PropertyNamer
+        options: { property: "slug" }
+    category_service_images:
+      uri_prefix: /images/categories_service
+      upload_destination: "%kernel.project_dir%/public/uploads/images/categories_service"
+      namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
