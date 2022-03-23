@@ -44,8 +44,7 @@
                 form_row(form.lastName, {
                   attr: {
                     placeholder: "Nom",
-                    class: "form-control",
-                    id: "name"
+                    class: "form-control"
                   }
                 })
               }}
@@ -55,8 +54,7 @@
                 form_row(form.firstName, {
                   attr: {
                     placeholder: "Prénom",
-                    class: "form-control",
-                    id: "name"
+                    class: "form-control"
                   }
                 })
               }}
@@ -67,7 +65,6 @@
                   attr: {
                     placeholder: "Email",
                     class: "form-control",
-                    id: "name"
                   }
                 })
               }}
@@ -80,8 +77,15 @@
                   attr: {
                     placeholder: "Message",
                     class: "form-control",
-                    id: "name"
                   }
+                })
+              }}
+            </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              {{
+                form_row(form.rgpd, {
+                  label:"J'accepte les conditions générales d'utilisation !",
                 })
               }}
             </div>

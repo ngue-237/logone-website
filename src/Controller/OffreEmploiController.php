@@ -18,11 +18,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class OffreEmploiController extends AbstractController
 {
     /**
-     * @Route("/jobslist", name="jobslist_back")
+     * @Route("/admin/jobslist", name="jobslist_back")
      */
     public function readjobsBack(Request $request, PaginatorInterface $pag, OffreEmploiRepository $rep)
     {
-        return $this->render('frontoffice/offre_emploi/listoffresback.html.twig', [
+        return $this->render('backoffice/offre_emploi/listoffresback.html.twig', [
             'jobs' => $rep->findAll()
         ]);
     }
@@ -58,7 +58,7 @@ class OffreEmploiController extends AbstractController
     }
 
     /**
-     * @Route("/add_job", name="add_job")
+     * @Route("/admin/add_job", name="add_job")
      */
     public function addoffer(Request $request, EntityManagerInterface $em)
     {
@@ -73,18 +73,18 @@ class OffreEmploiController extends AbstractController
                 $em->flush();
                 return $this->redirectToRoute('jobslist_back');
             } else {
-                return $this->render('frontoffice/offre_emploi/add_offre.html.twig', [
+                return $this->render('backoffice/offre_emploi/add_offre.html.twig', [
                     'form' => $form->createView(), 'message' => 'Check your fields !'
                 ]);
             }
         }
-        return $this->render('frontoffice/offre_emploi/add_offre.html.twig', [
+        return $this->render('backoffice/offre_emploi/add_offre.html.twig', [
             'form' => $form->createView(), 'message'=> ''
         ]);
     }
 
     /**
-     * @Route("/delete_job/{id}", name="delete_job")
+     * @Route("/admin/delete_job/{id}", name="delete_job")
      */
     public function deletejob($id, EntityManagerInterface $em)
     {
@@ -109,7 +109,7 @@ class OffreEmploiController extends AbstractController
     }
 
     /**
-     * @Route("/edit_offre/{id}", name="edit_job")
+     * @Route("/admin/edit_offre/{id}", name="edit_job")
      */
     public function modifyjob(Request $request, $id)
     {
@@ -123,12 +123,12 @@ class OffreEmploiController extends AbstractController
                 $em->flush();
                 return $this->redirectToRoute('jobslist_back');
             } else {
-                return $this->render('frontoffice/offre_emploi/add_offre.html.twig', [
+                return $this->render('backoffice/offre_emploi/add_offre.html.twig', [
                     'form' => $form->createView(), 'message' => 'Check your fields !'
                 ]);
             }
         }
-        return $this->render('frontoffice/offre_emploi/add_offre.html.twig', [
+        return $this->render('backoffice/offre_emploi/add_offre.html.twig', [
             'form' => $form->createView(), 'message' => ''
         ]);
     }

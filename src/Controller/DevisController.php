@@ -21,6 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Regex;
 
@@ -104,6 +105,11 @@ class DevisController extends AbstractController
                     "max" => 600,
                     "maxMessage"=>"Your message  cannot be longer than {{ limit }} characters",
                     ])
+                ]
+            ])
+            ->add("rgpd", CheckboxType::class, [
+                "constraints"=>[
+                    new NotBlank()
                 ]
             ])
             ->add('categories', EntityType::class,[

@@ -4,11 +4,12 @@ namespace App\Form;
 
 use App\Entity\Contact;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TelType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ContactType extends AbstractType
 {
@@ -19,6 +20,11 @@ class ContactType extends AbstractType
             ->add('firstName', TextType::class, ['label'=>false])
             ->add('email', TextType::class, ['label'=>false])
             ->add('msg', TextareaType::class, ['label'=>false])
+            ->add('rgpd', CheckboxType::class, [
+                "constraints"=>[
+                    new NotBlank()
+                ]
+            ])
         ;
     }
 

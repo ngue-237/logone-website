@@ -1,100 +1,121 @@
-{% extends 'baseB.html.twig' %}
-{% block title %}Admin| Logone{% endblock %}
-{% block content %}
-    <!-- Page Wrapper -->
-    <div id="wrapper">
+{% extends 'baseB.html.twig' %} {% block title %}Admin| Logone{% endblock %} {%
+block content %}
+<!-- Page Wrapper -->
+<div id="wrapper">
+  <!-- Sidebar -->
+  {{ include("include/backoffice/sidebar.html.twig") }}
+  <!-- End of Sidebar -->
 
-        <!-- Sidebar -->
-        {{include('include/backoffice/sidebar.html.twig') }}
-        <!-- End of Sidebar -->
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
+    <!-- Main Content -->
+    <div id="content">
+      <!-- Topbar -->
+      {{ include("include/backoffice/navbar.html.twig") }}
+      <!-- End of Topbar -->
 
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+      <!-- Begin Page Content -->
+      <div class="container-fluid">
+        <!-- Page Heading -->
 
-            <!-- Main Content -->
-            <div id="content">
-
-                <!-- Topbar -->
-                {{include('include/backoffice/navbar.html.twig')}}
-                <!-- End of Topbar -->
-
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-
-                    <!-- Page Heading -->
-
-                    <div class="row justify-content-center">
-                        <div class="col-lg-6">
-                            <div class="p-5">
-                                <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">Modifier les informations d'un utilisateur</h1>
-                                </div>
-                                {{ form_start(form) }}
-                                {{ form_row(form.lastName, {'label':false,
-                                    'attr':{'placeholder':"Modifier votre nom",
-                                        'class':'form-control'
-                                    }
-                                }) }}
-                                &nbsp;&nbsp;
-                                {{ form_row(form.firstName, {'label':false,
-                                    'attr':{'placeholder':"Modifier votre prénom",
-                                        'class':'form-control'
-                                    }
-                                }) }}
-                                &nbsp;&nbsp;
-                                {{ form_row(form.email, {'label':false,
-                                    'attr':{'placeholder':"Modifier votre email",
-                                        'class':'form-control'
-                                    }
-                                }) }}
-                                &nbsp;&nbsp;
-                                <button type="submit" class="btn btn-primary btn-user btn-block">
-                                    Enregistrer
-                                </button>
-                                {{ form_end(form) }}
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- /.container-fluid -->
-
+        <div class="row justify-content-center">
+          <div class="col-lg-6">
+            <div class="p-5">
+              <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">
+                  Modifier les informations d'un utilisateur
+                </h1>
+              </div>
+              {% form_theme form 'bootstrap_4_layout.html.twig' %}
+              {{ form_start(form) }}
+              {{
+                form_row(form.lastName, {
+                  label: false,
+                  attr: {
+                    placeholder: "Modifier votre nom",
+                    class: "form-control"
+                  }
+                })
+              }}
+              &nbsp;&nbsp;
+              {{
+                form_row(form.firstName, {
+                  label: false,
+                  attr: {
+                    placeholder: "Modifier votre prénom",
+                    class: "form-control"
+                  }
+                })
+              }}
+              &nbsp;&nbsp;
+              {{
+                form_row(form.email, {
+                  label: false,
+                  attr: {
+                    placeholder: "Modifier votre email",
+                    class: "form-control"
+                  }
+                })
+              }}
+              &nbsp;&nbsp;
+              <button type="submit" class="btn btn-primary btn-user btn-block">
+                Enregistrer
+              </button>
+              {{ form_end(form) }}
             </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            {{include('include/backoffice/footer.html.twig')}}
-            <!-- End of Footer -->
-
+          </div>
         </div>
-        <!-- End of Content Wrapper -->
-
+      </div>
+      <!-- /.container-fluid -->
     </div>
-    <!-- End of Page Wrapper -->
+    <!-- End of Main Content -->
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+    <!-- Footer -->
+    {{ include("include/backoffice/footer.html.twig") }}
+    <!-- End of Footer -->
+  </div>
+  <!-- End of Content Wrapper -->
+</div>
+<!-- End of Page Wrapper -->
 
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-            </div>
-        </div>
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+  <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div
+  class="modal fade"
+  id="logoutModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+        <button
+          class="close"
+          type="button"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Select "Logout" below if you are ready to end your current session.
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">
+          Cancel
+        </button>
+        <a class="btn btn-primary" href="login.html">Logout</a>
+      </div>
     </div>
+  </div>
+</div>
 
 {% endblock %}

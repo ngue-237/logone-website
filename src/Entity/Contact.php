@@ -25,9 +25,11 @@ class Contact
      *     match=false,
      *     message="Your lastname cannot contain a number"
      * )
-     * @Assert\length(
-     * min = 4,
-     * minMessage = "Your first name must be at least {{ limit }} characters long"
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "Your lastname must be at least {{ limit }} characters long",
+     *      maxMessage = "Your lastname cannot be longer than {{ limit }} characters"
      * )
      */
     private $lastName;
@@ -50,11 +52,7 @@ class Contact
      */
     private $email;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     *
-     */
-    private $company;
+
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -66,6 +64,11 @@ class Contact
      * )
      */
     private $msg;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $rgpd;
 
     public function getId(): ?int
     {
@@ -108,21 +111,6 @@ class Contact
         return $this;
     }
 
-    public function getCompany(): ?string
-    {
-        return $this->company;
-    }
-
-    public function setCompany(?string $company): self
-    {
-        $this->company = $company;
-
-        return $this;
-    }
-
-    
-
-   
 
     public function getMsg(): ?string
     {
@@ -132,6 +120,18 @@ class Contact
     public function setMsg(?string $msg): self
     {
         $this->msg = $msg;
+
+        return $this;
+    }
+
+    public function getRgpd(): ?bool
+    {
+        return $this->rgpd;
+    }
+
+    public function setRgpd(bool $rgpd): self
+    {
+        $this->rgpd = $rgpd;
 
         return $this;
     }

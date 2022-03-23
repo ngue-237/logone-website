@@ -1,75 +1,96 @@
-{% extends 'baseF.html.twig'%}
-{% block title %} Contact | Logone {% endblock %}
+{% extends 'baseF.html.twig'%} {% block title %} Contact | Logone {% endblock %}
 {% block content %}
 
-
 <section class="contact_area section_gap">
-        <div class="container">
-            <div class="row justify-content-center">
-
-                <div class="col-lg-12 ">
-                    <h1>Je m'inscris !</h1>
-                    {{ form_start(form) }}
-                    <div class="row "  id="contactForm" novalidate="novalidate">
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                {{ form_row(form.lastName, {
-                                    'label':false,
-                                    'attr':{'placeholder':"Nom",
-                                        'class':'form-control',
-                                        'id':'name'
-                                    }
-                                }) }}
-
-                            </div>
-                            <div class="form-group">
-                                {{ form_row(form.firstName, {
-                                    'label':false,
-                                    'attr':{'placeholder':"Prénom",
-                                        'class':'form-control',
-                                        'id':'name'
-                                    }
-                                }) }}
-                            </div>
-                            <div class="form-group">
-                                {{ form_row(form.email, {
-                                    'label':false,
-                                    'attr':{'placeholder':"Email",
-                                        'class':'form-control',
-                                        'id':'name'
-                                    }
-                                }) }}
-                            </div>
-
-                            <div class="form-group">
-                                {{ form_row(form.password, {
-                                    'label':false,
-                                    'attr':{'placeholder':"Mot de passe",
-                                        'class':'form-control',
-                                        'id':'name'
-                                    }
-                                }) }}
-                            </div>
-                            <div class="form-group">
-                                {{ form_row(form.passwordConfirm, {
-                                    'label':false,
-                                    'attr':{'placeholder':"Confirmer le mot de passe",
-                                        'class':'form-control',
-                                        'id':'name'
-                                    }
-                                }) }}
-                            </div>
-                        </div>
-
-                        <div class="col-lg-12 ">
-                            <button type="submit" value="submit" class="primary_btn">
-                                <span>Je m'inscris</span>
-                            </button>
-                        </div>
-                    </div>
-                    {{ form_end(form) }}
-                </div>
-            </div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-12">
+        <h1>Je m'inscris !</h1>
+        <div class="row alert-danger">
+          {% form_theme form 'bootstrap_4_layout.html.twig' %}
         </div>
-    </section>
+        {{ form_start(form) }}
+        <div class="row" id="contactForm" novalidate="novalidate">
+          <div class="col-lg-6">
+            <div class="form-group">
+              {{
+                form_row(form.lastName, {
+                  label: false,
+                  attr: {
+                    placeholder: "Nom",
+                    class: "form-control",
+                    id: "name"
+                  }
+                })
+              }}
+            </div>
+            <div class="form-group">
+              {{
+                form_row(form.firstName, {
+                  label: false,
+                  attr: {
+                    placeholder: "Prénom",
+                    class: "form-control",
+                    id: "name"
+                  }
+                })
+              }}
+            </div>
+            <div class="form-group">
+              {{
+                form_row(form.email, {
+                  label: false,
+                  attr: {
+                    placeholder: "Email",
+                    class: "form-control",
+                    id: "name"
+                  }
+                })
+              }}
+            </div>
+
+            <div class="form-group">
+              {{
+                form_row(form.password, {
+                  label: false,
+                  attr: {
+                    placeholder: "Mot de passe",
+                    class: "form-control",
+                    id: "name"
+                  }
+                })
+              }}
+            </div>
+            <div class="form-group">
+              {{
+                form_row(form.passwordConfirm, {
+                  label: false,
+                  attr: {
+                    placeholder: "Confirmer le mot de passe",
+                    class: "form-control",
+                    id: "name"
+                  }
+                })
+              }}
+            </div>
+            <div class="form-group">
+              {{
+                form_row(form.rgpd, {
+                  label: "J'accepte les conditions générales d'utilisation !",
+                })
+              }}
+            </div>
+          </div>
+
+          <div class="col-lg-12">
+            <button type="submit" value="submit" class="primary_btn">
+              <span>Je m'inscris</span>
+            </button>
+          </div>
+        </div>
+        {{ form_end(form) }}
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}

@@ -38,11 +38,11 @@ class CandidatureController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('jobslist_front',['list'=>$jobs]);
         }else{
-            return $this->render('candidature/add_candidature.html.twig', [
+            return $this->render('frontoffice/candidature/add_candidature.html.twig', [
                 'form' => $form->createView(), 'message' => 'Check fields'
             ]);         
         }
-        return $this->render('candidature/add_candidature.html.twig', [
+        return $this->render('frontoffice/candidature/add_candidature.html.twig', [
             'form' => $form->createView(), 'message' => ''
         ]);
     }
@@ -70,7 +70,7 @@ class CandidatureController extends AbstractController
     }
 
     /**
-     * @Route("/delete_candidat/{id}", name="delete_candidat")
+     * @Route("/admin/delete_candidat/{id}", name="delete_candidat")
      */
     public function deleteCandidat($id, EntityManagerInterface $em)
     {
@@ -84,20 +84,20 @@ class CandidatureController extends AbstractController
     }
 
     /**
-     * @Route("/offres_candidatures/{id}", name="candidats")
+     * @Route("/admin/offres_candidatures/{id}", name="candidats")
      */
     public function listCandidatsForAJob($id, OffreEmploiRepository $rep,EntityManagerInterface $em){
         $offre = $em->getRepository(OffreEmploi::class)->find($id);
         $canditures = $offre->getCandidatures();
         
-        return $this->render('candidature/candidatures.html.twig', [
+        return $this->render('backoffice/candidature/candidatures.html.twig', [
             'canditures' => $canditures,
             'idOffre'=>$id
         ]);
         
     }
     /**
-     * @Route("/valid_candidat/{idCandidat}/{idOffre}", name="valid_candidat")
+     * @Route("/admin/valid_candidat/{idCandidat}/{idOffre}", name="valid_candidat")
      */
     public function valid_candidat($idCandidat, $idOffre, EntityManagerInterface $em){
         
@@ -110,7 +110,7 @@ class CandidatureController extends AbstractController
         $em->flush();
 
         $canditures = $offre->getCandidatures();
-        return $this->redirectToRoute('candidature/candidatures.html.twig', [
+        return $this->redirectToRoute('backoffice/candidature/candidatures.html.twig', [
             'canditures' => $canditures,
             'idOffre'=>$idOffre
         ]);
@@ -118,12 +118,12 @@ class CandidatureController extends AbstractController
     }
 
     /**
-     * @Route("/listCandidatures", name="listCandidatures")
+     * @Route("/admin/listCandidatures", name="listCandidatures")
      */
     public function readCandidatsBack(Request $request, PaginatorInterface $pag, CandidatureRepository $rep)
     {
 
-        return $this->render('candidature/listCandidatures.html.twig', [
+        return $this->render('backoffice/candidature/listCandidatures.html.twig', [
             'canditures' => $rep->findAll()
         ]);
     }

@@ -61,6 +61,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="New password can not be blank.")
      * @Assert\Email(
      *     message = "The email '{{ value }}' is not a valid email."
      * )
@@ -79,7 +80,6 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @Assert\NotBlank(message="New password can not be blank.")
     * @Assert\EqualTo(
      *     propertyPath="password",
      *     message="Your password must match"
@@ -103,6 +103,11 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="user", orphanRemoval=true)
      */
     private $comments;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $rgpd;
 
     public function __construct()
     {
@@ -243,6 +248,18 @@ class User implements UserInterface
                 $comment->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRgpd(): ?bool
+    {
+        return $this->rgpd;
+    }
+
+    public function setRgpd(?bool $rgpd): self
+    {
+        $this->rgpd = $rgpd;
 
         return $this;
     }

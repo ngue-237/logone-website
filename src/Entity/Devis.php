@@ -67,6 +67,11 @@ class Devis
      */
     private $categories;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $rgpd;
+
     
 
     
@@ -179,6 +184,18 @@ class Devis
     public function setCategories(?CategoryService $categories): self
     {
         $this->categories = $categories;
+
+        return $this;
+    }
+
+    public function getRgpd(): ?bool
+    {
+        return $this->rgpd;
+    }
+
+    public function setRgpd(?bool $rgpd): self
+    {
+        $this->rgpd = $rgpd;
 
         return $this;
     }
