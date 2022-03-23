@@ -82,7 +82,8 @@ class CommentController extends AbstractController
         $slug,
         $id
         ):Response{
-            
+            $this->denyAccessUnlessGranted('POST_DELETE',$commentRepo->find($id));
+
             $commentService->removeComment($commentRepo->find($id));
             return $this->redirectToRoute('article_detail', ['slug'=> $articleRepo->findOneBy(['slug'=>$slug])->getSlug()]);
     }
@@ -105,6 +106,7 @@ class CommentController extends AbstractController
         EntityManagerInterface $em
     ):JsonResponse{
         //dd();
+        dd($this->denyAccessUnlessGranted('POST_DELETE',$comment));
         $data = json_decode($req->getContent(),true);
         //dd($data);
         // $validToken = $req->request->get('token');

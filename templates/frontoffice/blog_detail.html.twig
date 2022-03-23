@@ -1,236 +1,223 @@
-{% extends 'baseF.html.twig'%} {% block title %} Accueil | Logone {% endblock %}
+{% extends 'baseF.html.twig'%}
+{% block title %}
+	Blog_Details | Logone
+{% endblock %}
 {% block content %}
 
-<!--================ Start Header Area =================-->
-{% include('include/frontoffice/header.html.twig')%}
-<div class="row justify-content-cente">
-  <div class="row justify-content-center d-flex">
-    <div class="alert alert-success"></div>
-  </div>
-</div>
-<section class="banner_area">
-  <div class="banner_inner d-flex align-items-center">
-    <div class="container">
-      <div class="banner_content text-center">
-        <h2>Blog Details</h2>
-        <div class="page_link">
-          <a href="index.html">Home</a>
-          <a href="blog.html">Blog</a>
-          <a href="single-blog.html">Blog Details</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!--================ End Banner Area =================-->
+	<!--================ Start Header Area =================-->
+	{% include('include/frontoffice/header.html.twig')%}
+	<div class="row justify-content-cente">
+		<div class="row justify-content-center d-flex">
+			<div class="alert alert-success"></div>
+		</div>
+	</div>
+	<section class="banner_area">
+		<div class="banner_inner d-flex align-items-center">
+			<div class="container">
+				<div class="banner_content text-center">
+					<h2>Blog Details</h2>
+					<div class="page_link">
+						<a href="index.html">Home</a>
+						<a href="blog.html">Blog</a>
+						<a href="single-blog.html">Blog Details</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================ End Banner Area =================-->
 
-<!--================Blog Area =================-->
-<section class="blog_area single-post-area section_gap">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 posts-list">
-        <div class="single-post row">
-          <div class="col-lg-12">
-            <div class="feature-img">
-              <img
-                class="img-fluid"
-                src="{{asset('uploads/images/article/' ~ article.image ) }}"
-                alt="{{ article.title }}"
-              />
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-3">
-            <div class="blog_info text-right">
-              <div class="post_tag">
-                <a class="active">
-                  {{ article.categoryArticle.title }}
-                </a>
-                <i class="fas fa-newspaper"></i>
-              </div>
-              <ul class="blog_meta list">
-                <li>
-                  <a>{{ article.author }} <i class="lnr lnr-user"></i></a>
-                </li>
-                <li>
-                  <a>
-                    {{article.createdAt | date('d:m:Y')}}
+	<!--================Blog Area =================-->
+	<section class="blog_area single-post-area section_gap">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 posts-list">
+					<div class="single-post row">
+						<div class="col-lg-12">
+							<div class="feature-img">
+								<img class="img-fluid" src="{{asset('uploads/images/article/' ~ article.image ) }}" alt="{{ article.title }}"/>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3">
+							<div class="blog_info text-right">
+								<div class="post_tag">
+									<a class="active">
+										{{ article.categoryArticle.title }}
+									</a>
+									<i class="fas fa-newspaper"></i>
+								</div>
+								<ul class="blog_meta list">
+									<li>
+										<a>{{ article.author }}
+											<i class="lnr lnr-user"></i>
+										</a>
+									</li>
+									<li>
+										<a>
+											{{article.createdAt | date('d:m:Y')}}
 
-                    <i class="lnr lnr-calendar-full"></i
-                  ></a>
-                </li>
+											<i class="lnr lnr-calendar-full"></i>
+										</a>
+									</li>
 
-                <li>
-                  <a>{{ article.view }} Vues<i class="lnr lnr-eye"></i></a>
-                </li>
+									<li>
+										<a>{{ article.view }}
+											Vues<i class="lnr lnr-eye"></i>
+										</a>
+									</li>
 
-                <li>
-                  <a
-                    >{{ comments | length }} Comments<i
-                      class="lnr lnr-bubble"
-                    ></i
-                  ></a>
-                </li>
-              </ul>
-              <ul class="social-links">
-                <li>
-                  <a href="#"><i class="fa fa-facebook"></i></a>
-                </li>
-                <li>
-                  <a href="#"><i class="fa fa-twitter"></i></a>
-                </li>
-                <li>
-                  <a href="#"><i class="fa fa-github"></i></a>
-                </li>
-                <li>
-                  <a href="#"><i class="fa fa-behance"></i></a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-9 col-md-9 blog_details">
-            <h2>{{ article.title }}</h2>
-            <p class="excert">
-              {{ article.content | raw }}
-            </p>
-          </div>
-          <div class="col-lg-12"></div>
-        </div>
-        <div class="navigation-area">
-          <div class="row">
-            <div
-              class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center"
-            >
-              <div class="thumb">
-                <a href="#"
-                  ><img
-                    class="img-fluid"
-                    src="{{ asset('assetF/') }}img/blog/prev.jpg"
-                    alt=""
-                /></a>
-              </div>
-              <div class="arrow">
-                <a href="#"
-                  ><span class="lnr text-white lnr-arrow-left"></span
-                ></a>
-              </div>
-              <div class="detials">
-                <p>Prev Post</p>
-                <a href="#"><h4>Space The Final Frontier</h4></a>
-              </div>
-            </div>
-            <div
-              class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center"
-            >
-              <div class="detials">
-                <p>Next Post</p>
-                <a href="#"><h4>Telescopes 101</h4></a>
-              </div>
-              <div class="arrow">
-                <a href="#"
-                  ><span class="lnr text-white lnr-arrow-right"></span
-                ></a>
-              </div>
-              <div class="thumb">
-                <a href="#"
-                  ><img
-                    class="img-fluid"
-                    src="{{ asset('assetF/') }}img/blog/next.jpg"
-                    alt=""
-                /></a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="comments-area">
-          <h4>Commentaires : {{ comments | length }}</h4>
-          <div class="comment-list">
-            {% for comment in comments %}
-            <div class="single-comment justify-content-between d-flex">
-              <div class="user justify-content-between d-flex">
-                <div class="thumb">
-                  <img src="{{ asset('assetF/') }}img/blog/c1.jpg" alt="" />
-                </div>
-                <div class="desc">
-                  <h5>
-                    <a href="#"
-                      >{{ comment.user.firstname }}&nbsp;{{
+									<li>
+										<a>{{ article.comments | length }}
+											Comments<i class="lnr lnr-bubble"></i>
+										</a>
+									</li>
+									<li>
+										<a href="{{ path('post_like',{'id': article.id }) }}" class="btn js-like">
+											<span class="js-likes">{{ article.likes | length }}</span>
+											<span class="js-label">J'aime</span>
+											{% if app.user and article.isLikedByUser(app.user) %}
+
+												<i class="fa-solid fa-thumbs-down"></i>
+											{% else %}
+												<i class="fa-regular fa-thumbs-up"></i>
+											{% endif %}
+										</a>
+									</li>
+								</li>
+							</ul>
+							<ul class="social-links">
+								<li>
+									<a href="#">
+										<i class="fa fa-facebook"></i>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<i class="fa fa-twitter"></i>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<i class="fa fa-github"></i>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<i class="fa fa-behance"></i>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-lg-9 col-md-9 blog_details">
+						<h2>{{ article.title }}</h2>
+						<p class="excert">
+							{{ article.content | raw }}
+						</p>
+					</div>
+					<div class="col-lg-12"></div>
+				</div>
+				<div class="navigation-area">
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+							<div class="thumb">
+								<a href="#"><img class="img-fluid" src="{{ asset('assetF/') }}img/blog/prev.jpg" alt=""/></a>
+							</div>
+							<div class="arrow">
+								<a href="#">
+									<span class="lnr text-white lnr-arrow-left"></span>
+								</a>
+							</div>
+							<div class="detials">
+								<p>Prev Post</p>
+								<a href="#">
+									<h4>Space The Final Frontier</h4>
+								</a>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+							<div class="detials">
+								<p>Next Post</p>
+								<a href="#">
+									<h4>Telescopes 101</h4>
+								</a>
+							</div>
+							<div class="arrow">
+								<a href="#">
+									<span class="lnr text-white lnr-arrow-right"></span>
+								</a>
+							</div>
+							<div class="thumb">
+								<a href="#"><img class="img-fluid" src="{{ asset('assetF/') }}img/blog/next.jpg" alt=""/></a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="comments-area">
+					<h4>Commentaires :
+						{{ article.comments | length }}</h4>
+					<div class="comment-list">
+						{% for comment in article.comments %}
+							<div class="single-comment justify-content-between d-flex">
+								<div class="user justify-content-between d-flex">
+									<div class="thumb">
+										<img src="{{ asset('assetF/') }}img/blog/c1.jpg" alt=""/>
+									</div>
+									<div class="desc">
+										<h5>
+											<a href="#">{{ comment.user.firstname }}&nbsp;{{
                         comment.user.lastname
-                      }}</a
-                    >
-                  </h5>
-                  <p class="date">
-                    {{comment.createdAt | date('d:m:y')}}
-                  </p>
-                  <p class="comment">{{ comment.content }}</p>
-                </div>
-              </div>
-              <div class="option_comment">
-                <a
-                  id="btn-delete-comment"
-                  data-token="{{ csrf_token('comment-delete') }} "
-                  href="{{
-                    path('comment_author_delete_ajax', {
-                      id: comment.id
-                    })
-                  }} "
-                >
-                  <i class="fa-solid fa-trash-can"></i>
-                </a>
-                {#
-                <a
-                  id="btn-delete-comment"
-                  href="{{
-                    path('comment_author_delete', {
-                      id: comment.id,
-                      slug: article.slug,
-                      _token: csrf_token('comment-delete')
-                    })
-                  }}"
-                  class=""
-                  ><i class="fa-solid fa-trash-can"></i
-                ></a>
-                #} {#
+                      }}</a>
+										</h5>
+										<p class="date">
+											{{comment.createdAt | date('d:m:y')}}
+										</p>
+										<p class="comment">{{ comment.content }}</p>
+									</div>
+								</div>
+								<div
+									class="option_comment">
+									{#
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																	<a id="btn-delete-comment" data-token="{{ csrf_token('comment-delete') }} " href="{{ path('comment_author_delete', { id: comment.id }) }} ">
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																		<i class="fa-solid fa-trash-can"></i>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																	</a>#}
 
-                <a
-                  id="btn-delete-comment"
-                  data-token="{{ csrf_token('comment-delete') }} "
-                  title="supprimer votre commentaire"
-                  href="{{
-                    path('comment_author_delete_ajax', {
-                      id: comment.id
-                    })
-                  }}"
-                  class=""
-                  ><i class="fa-solid fa-trash-can"></i
-                ></a>
-                #} &nbsp;
-                <a href="" class=""
-                  ><i class="fa-solid fa-pen-to-square"></i
-                ></a>
-              </div>
-            </div>
-            {%endfor%}
-          </div>
-        </div>
-        {% if app.user %}
-        <div class="comment-form">
-          <h4>Laissez un Commentaire</h4>
-          <a
-            id="test"
-            href="{{
-              path(
-                'article_comment_add',
+									{% if is_granted('POST_DELETE', comment) %}
+										<a id="btn-delete-comment" href="{{ path('comment_author_delete', { id: comment.id, slug: article.slug, _token: csrf_token('comment-delete') }) }}" class="">
+											<i class="fa-solid fa-trash-can"></i>
+										</a>
+									{% endif %}
+									{#
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				                <a
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				                  id="btn-delete-comment"
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				                  data-token="{{ csrf_token('comment-delete') }} "
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				                  title="supprimer votre commentaire"
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				                  href="{{
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				                    path('comment_author_delete_ajax', {
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				                      id: comment.id
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				                    })
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				                  }}"
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				                  class=""
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				                  ><i class="fa-solid fa-trash-can"></i
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				                ></a>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				                #}
+									&nbsp;
 
-                { slug: article.slug, csrf_token: csrf_token('comment') }
-              )
-            }}"
-          >
-            test ajax</a
-          >
-          <div class="form">
-            {{ form_start(form) }}
-            <div class="form-group">
-              {{
+								</div>
+							</div>
+							{%endfor%}
+						</div>
+					</div>
+					{% if app.user %}
+						<div class="comment-form">
+							<h4>Laissez un Commentaire</h4>
+							<a id="test" href="{{ path( 'article_comment_add', { slug: article.slug, csrf_token: csrf_token('comment') } ) }}">
+								test ajax</a>
+							<div class="form">
+								{{ form_start(form) }}
+								<div class="form-group">
+									{{
                 form_row(form.content, {
                   label: false,
                   attr: {
@@ -241,12 +228,12 @@
                   }
                 })
               }}
-            </div>
+								</div>
 
-            <div class="switch-wrap d-flex justify-content-between">
-              <p>Je confirm</p>
-              <div class="">
-                {{
+								<div class="switch-wrap d-flex justify-content-between">
+									<p>Je confirm</p>
+									<div class="">
+										{{
                   form_row(form.rgpd, {
                     label: false,
                     attr: {
@@ -254,165 +241,148 @@
                     }
                   })
                 }}
-              </div>
-            </div>
-            <button type="submit" class="primary-btn primary_btn">
-              <span>Post Comment</span>
-            </button>
-            {{ form_end(form) }}
-          </div>
-        </div>
-        {%else%}
-        <p>
-          Connectez vous pour laissez un commentaire,
-          <a href="{{ path('security_login') }} ">cliquez-ici</a>
-        </p>
-        {%endif%}
-      </div>
-      <div class="col-lg-4">
-        <div class="blog_right_sidebar">
-          <aside class="single_sidebar_widget search_widget">
-            <div class="input-group">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Search Posts"
-              />
-              <span class="input-group-btn">
-                <button class="btn btn-default" type="button">
-                  <i class="lnr lnr-magnifier"></i>
-                </button>
-              </span>
-            </div>
-            <!-- /input-group -->
-            <div class="br"></div>
-          </aside>
-          <aside class="single_sidebar_widget author_widget">
-            <img
-              class="author_img rounded-circle"
-              src="{{ asset('assetF/') }}img/blog/author.png"
-              alt=""
-            />
-            <h4>{{ article.author }}</h4>
-            <p>Auteur</p>
-            {#
-            <div class="social_icon">
-              <a href="#"><i class="fa fa-facebook"></i></a>
-              <a href="#"><i class="fa fa-twitter"></i></a>
-              <a href="#"><i class="fa fa-github"></i></a>
-              <a href="#"><i class="fa fa-behance"></i></a>
-            </div>
-            #}
+									</div>
+								</div>
+								<button type="submit" class="primary-btn primary_btn">
+									<span>Post Comment</span>
+								</button>
+								{{ form_end(form) }}
+							</div>
+						</div>
+						{%else%}
+						<p>
+							Connectez vous pour laissez un commentaire,
+							<a href="{{ path('security_login') }} ">cliquez-ici</a>
+						</p>
+						{%endif%}
+					</div>
+					<div class="col-lg-4">
+						<div class="blog_right_sidebar">
+							<aside class="single_sidebar_widget search_widget">
+								<div class="input-group">
+									<input type="text" class="form-control" placeholder="Search Posts"/>
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button">
+											<i class="lnr lnr-magnifier"></i>
+										</button>
+									</span>
+								</div>
+								<!-- /input-group -->
+								<div class="br"></div>
+							</aside>
+							<aside class="single_sidebar_widget author_widget">
+								<img class="author_img rounded-circle" src="{{ asset('assetF/') }}img/blog/author.png" alt=""/>
+								<h4>{{ article.author }}</h4>
+								<p>Auteur</p>
+								{#
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																						            <div class="social_icon">
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																						              <a href="#"><i class="fa fa-facebook"></i></a>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																						              <a href="#"><i class="fa fa-twitter"></i></a>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																						              <a href="#"><i class="fa fa-github"></i></a>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																						              <a href="#"><i class="fa fa-behance"></i></a>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																						            </div>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																						            #}
 
-            <div class="br"></div>
-          </aside>
-          <aside class="single_sidebar_widget popular_post_widget">
-            <h3 class="widget_title">Popular Posts</h3>
-            {% for articleByView in articleOrderByView %}
+								<div class="br"></div>
+							</aside>
+							<aside class="single_sidebar_widget popular_post_widget">
+								<h3 class="widget_title">Popular Posts</h3>
+								{% for articleByView in articleOrderByView %}
 
-            <div class="media post_item">
-              <img
-                with="100"
-                height="60"
-                src="{{asset('uploads/images/article/' ~ articleByView.image ) }}"
-                alt="post"
-              />
-              <div class="media-body">
-                <a href="blog-details.html"
-                  ><h3>Space The Final Frontier</h3></a
-                >
-                <p>publié le {{articleByView.createdAt | date('d/m/y')}}</p>
-              </div>
-            </div>
-            {% endfor %}
+									<div class="media post_item">
+										<img with="100" height="60" src="{{asset('uploads/images/article/' ~ articleByView.image ) }}" alt="post"/>
+										<div class="media-body">
+											<a href="blog-details.html">
+												<h3>Space The Final Frontier</h3>
+											</a>
+											<p>publié le
+												{{articleByView.createdAt | date('d/m/y')}}</p>
+										</div>
+									</div>
+								{% endfor %}
 
-            <div class="br"></div>
-          </aside>
-          <aside class="single_sidebar_widget ads_widget">
-            <a href="#"
-              ><img
-                class="img-fluid"
-                src="{{ asset('assetF/') }}img/blog/add.jpg"
-                alt=""
-            /></a>
-            <div class="br"></div>
-          </aside>
-          <aside class="single_sidebar_widget post_category_widget">
-            <h4 class="widget_title">Post Catgories</h4>
-            <ul class="list cat-list">
-              {% for categoryArticle in categoriesArticle %}
-              <li>
-                <a class="d-flex justify-content-between">
-                  <p>{{ categoryArticle.title }}</p>
-                  <p>{{ loop.index }}</p>
-                </a>
-              </li>
-              {% endfor %}
-            </ul>
-            <div class="br"></div>
-          </aside>
-          <aside class="single-sidebar-widget newsletter_widget">
-            <h4 class="widget_title">Newsletter</h4>
-            <p>
-              Here, I focus on a range of items and features that we use in life
-              without giving them a second thought.
-            </p>
-            <div class="form-group d-flex flex-row">
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <div class="input-group-text">
-                    <i class="fa fa-envelope" aria-hidden="true"></i>
-                  </div>
-                </div>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="inlineFormInputGroup"
-                  placeholder="Enter email"
-                  onfocus="this.placeholder = ''"
-                  onblur="this.placeholder = 'Enter email'"
-                />
-              </div>
-              <a href="#" class="bbtns">Subcribe</a>
-            </div>
-            <p class="text-bottom">You can unsubscribe at any time</p>
-            <div class="br"></div>
-          </aside>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-{{ include("include/frontoffice/footer.html.twig") }}
-<script>
-  window.onload = () => {
-    let btnDeleteComment = document.querySelectorAll("#btn-delete-comment");
-    // console.log(btnDeleteComment);
-    btnDeleteComment.forEach((link) => {
-      link.addEventListener("click", function (e) {
-        e.preventDefault();
-        let ancienLien = this.parentElement;
-        fetch(this.getAttribute("href"), {
-          method: "DELETE",
-          headers: {
-            "X-Requested-With": "XMLHttpRequest",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ _token: this.dataset.token }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.success) {
-              ancienLien.style.display = "none";
-            }
-          })
-          .catch((error) => console.log(error));
-      });
-    });
-  };
-</script>
-{#
-<script src="{{ asset('assetF/') }}js/comment.js"></script>
-#} {#
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-#} {% endblock %}
+								<div class="br"></div>
+							</aside>
+							<aside class="single_sidebar_widget ads_widget">
+								<a href="#"><img class="img-fluid" src="{{ asset('assetF/') }}img/blog/add.jpg" alt=""/></a>
+								<div class="br"></div>
+							</aside>
+							<aside class="single_sidebar_widget post_category_widget">
+								<h4 class="widget_title">Post Catgories</h4>
+								<ul class="list cat-list">
+									{% for categoryArticle in categoriesArticle %}
+										<li>
+											<a class="d-flex justify-content-between">
+												<p>{{ categoryArticle.title }}</p>
+												<p>{{ loop.index }}</p>
+											</a>
+										</li>
+									{% endfor %}
+								</ul>
+								<div class="br"></div>
+							</aside>
+							<aside class="single-sidebar-widget newsletter_widget">
+								<h4 class="widget_title">Newsletter</h4>
+								<p>
+									Here, I focus on a range of items and features that we use in life
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				              without giving them a second thought.
+								</p>
+								<div class="form-group d-flex flex-row">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<div class="input-group-text">
+												<i class="fa fa-envelope" aria-hidden="true"></i>
+											</div>
+										</div>
+										<input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Enter email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email'"/>
+									</div>
+									<a href="#" class="bbtns">Subcribe</a>
+								</div>
+								<p class="text-bottom">You can unsubscribe at any time</p>
+								<div class="br"></div>
+							</aside>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		{{ include("include/frontoffice/footer.html.twig") }}
+		<script></script>
+		{#
+																																																																																																																																																																																																																																		<script src="{{ asset('assetF/') }}js/comment.js"></script>
+																																																																																																																																																																																																																																		#}
+		{#
+																																																																																																																																																																																																																																		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+																																																																																																																																																																																																																																		#}
+	{% endblock %}
+	{% block javascripts %}
+		<script>
+
+			const LIKE_ICON = 'far fa-thumbs-up';
+const UNLIKE_ICON = 'fas fa-thumbs-down';
+const UNLIKE_LABEL = 'Je n\'aime plus';
+const LIKE_LABEL = 'J\'aime';
+Array.from(document.querySelectorAll('a.js-like')).forEach(function (link) {
+
+link.addEventListener('click', onClickLink);
+});
+async function onClickLink(event) {
+event.preventDefault();
+const url = this.href;
+const icone = this.querySelector('i');
+const count = this.querySelector('span.js-likes');
+const label = this.querySelector('span.js-label');
+try {
+const result = await axios.post(url);
+const data = result.data;
+icone.className = icone.className === UNLIKE_ICON ? LIKE_ICON : UNLIKE_ICON;
+count.textContent = data.likes;
+label.textContent = label.textContent === UNLIKE_LABEL ? LIKE_LABEL : UNLIKE_LABEL;
+} catch (error) {
+if (error.response.status === 403) {
+window.location = '/login'
+}
+}
+}
+		</script>
+	{% endblock %}
