@@ -18,3 +18,10 @@ vich_uploader:
       uri_prefix: /images/categories_service
       upload_destination: "%kernel.project_dir%/public/uploads/images/categories_service"
       namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+    candidature_cv:
+      uri_prefix: '%app.path.candidature_cv%'
+      upload_destination: '%kernel.project_dir%/public%app.path.candidature_cv%'
+    offre_pdf:
+      uri_prefix: '%app.path.offre_pdf%'
+      upload_destination: '%kernel.project_dir%/public%app.path.offre_pdf%'

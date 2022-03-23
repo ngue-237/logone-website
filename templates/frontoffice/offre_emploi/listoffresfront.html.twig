@@ -1,0 +1,150 @@
+{% extends 'baseF.html.twig'%}
+{% block title %}
+	Accueil | Logone
+{% endblock %}
+{% block SS %}
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+{% endblock %}
+{% block content %}
+
+	{% include('include/frontoffice/header.html.twig')%}
+	<section class="banner_area">
+		<div class="banner_inner d-flex align-items-center">
+			<div class="container">
+				<div class="banner_content text-center">
+					<h2>Offres d'emploi</h2>
+					<div class="page_link">
+						<a href="index.html">Home</a>
+						<a href="services.html">Offres d'emploi</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================ End Banner Area =================-->
+
+	<!--================ Start Features Area =================-->
+	<section class="features_area section_gap_top">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-8 text-center">
+					<div class="main_title">
+						<h2>Nos offres d'emploi</h2>
+						<p>
+							Is give may shall likeness made yielding spirit a itself togeth created 
+																																			                            after sea
+							<br>
+							is in beast beginning signs open god you're gathering ithe
+						</p>
+					</div>
+				</div>
+			</div>
+			<form id="filters">
+					<input type="search" name="searchaj" id="searchaj" class="form-control" placeholder="search"/>
+			</form>
+
+			<div class="row feature_inner">
+				{% set i= 0 %}
+				{% for job in list %}
+					{% set i= i+1 %}
+					{% if job.nombrePoste > 0 %}
+					<div class="col-lg-3 col-md-6">
+						<div class="feature_item">
+							
+							<h4>
+								<a href="job-detail.html"> {{ job.titre }}</a>
+							</h4>
+							<span>{{ job.nombrePoste }}
+								Poste disponibles</span>
+							<h5>{{ job.min_salary }}DT
+																	-
+								{{ job.max_salary }}DT</h5>
+							{% set read_more_link %}
+							<a href="{{ path('jobdetails', {id: job.id}) }}">... Voir plus</a>
+							{% endset %}
+
+							<p>{{ job.description|u.truncate(100, read_more_link,true)|raw }}</p>
+							<form action="{{path('apply',{id: job.id})}}">
+								<button class="btn btn-primary">Postuler</button>
+							</form>
+							<button id="jobId"  value="{{job.id}}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+								Apply
+							</button>
+							
+						</div>
+					</div>
+					
+					{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+	</section>
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="contactForm" name="contact" action="" role="form" method="post">
+						{{ form_start(form) }}
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="email">Email</label>
+								{{ form_widget(form.email,{'attr': {'placeholder': 'Email'}}) }}
+							</div>
+							<div class="form-group">
+								<label for="message">Upload CV</label>
+								{{ form_errors(form.cvFile) }}
+								{{ form_widget(form.cvFile) }}
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary">Apply</button>
+						</div>
+						{{ form_end(form) }}
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--================ End Features Area =================-->
+
+<!--================ Start Testimonial Area =================-->
+<!--================ End Testimonial Area =================-->
+{{include('include/frontoffice/footer.html.twig')}}{% endblock %}
+{% block JS %}<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"> </script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script>
+function submitForm() {
+var value = document.getElementById("jobId").value;
+
+$.ajax({
+type: "POST",
+url: "",
+cache: false,
+data: $('form#contactForm').serialize(),
+success: function (response) {
+$("#contact").html(response)
+$("#contact-modal").modal('hide');
+},
+error: function () {
+alert("Error");
+}
+});
+}
+	$(document).ready(function () {
+$("#contactForm").submit(function (event) {
+submitForm();
+return false;
+});
+});
+
+</script>{% endblock %}
