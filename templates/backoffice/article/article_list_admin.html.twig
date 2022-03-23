@@ -20,7 +20,7 @@
 				<!-- Begin Page Content -->
 					<div class="container-fluid"> <div class="d-sm-flex align-items-center justify-content-between mb-4">
 						<h1 class="h3 mb-0 text-gray-800">Gestion des articles</h1>
-						<a href="{{ path('article_view_add') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+						<a href="{{ path('article_add') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
 							<i class="fas fa-plus"></i>
 							Ajouter un article</a>
 					</div>
@@ -59,8 +59,8 @@
 												<td>
 													{{ article.categoryArticle }}
 													{# {% for category in article.categoryArticle %}
-																																																				                      {{ category.title }}
-																																																				                      {%endfor%} #}
+																										                      {{ category.title }}
+																										                      {%endfor%} #}
 												</td>
 
 												<td>

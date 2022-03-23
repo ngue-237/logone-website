@@ -94,14 +94,15 @@ class ArticleController extends AbstractController
         return $this->json(['code'=>200, 'message'=>'ça marche bien!']);
     }
 
-   /**
+     /**
      * permet d'ajouter un article de blog
      *
      * @param Request $req
+     * @param EntityManagerInterface $em
      * @return void
-     * @Route("/admin/article_view_add", name="article_view_add", methods={"GET","POST"} )
+     * @Route("/admin/article_add", name="article_add", methods={"GET","POST"} )
      */
-    public function viewAddArticle(Request $req){
+    public function addArticle(Request $req, EntityManagerInterface $em ){
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($req);
@@ -110,31 +111,12 @@ class ArticleController extends AbstractController
             $article->setCreatedAt(new \DateTime('now'));
             //dd($article);
             
-            return $this->render('backoffice/article/article_view_add.html.twig', [
-                'article' => $article,
-            ]);
+            $em->persist($article);
+            $em->flush();
+            return $this->redirectToRoute('article_list_admin');
         }
 
         return $this->renderForm("backoffice/article/article_add.html.twig", compact('form'));
-    } 
-
-    /**
-     * permet d'ajouter un article de blog
-     * 
-     * 
-     * @param EntityManagerInterface $em
-     * @return void
-     * @Route("/admin/article_add", name="article_add", methods={"GET","POST"} )
-     */
-    public function addArticle(Request $req,Article $article, EntityManagerInterface $em ):Response{
-            dd($req);
-            
-            // $em->persist($article);
-            // $em->flush();
-             return $this->redirectToRoute('article_list_admin');
-        
-
-        //return $this->renderForm("backoffice/article/article_add.html.twig", compact('form'));
     }
 
     /**
