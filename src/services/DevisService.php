@@ -7,10 +7,15 @@ use Doctrine\ORM\EntityManagerInterface;
 class DevisService{
     private $devis;
     private $em;
+    private $mailer;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(
+        EntityManagerInterface $em, 
+        MaillerService $mailer
+        )
     {
         $this->em=$em;
+        $this->mailer = $mailer;
     }
 
    
@@ -26,6 +31,19 @@ class DevisService{
             $devis->setCreatedAt(new \DateTime());
             $this->em->persist($devis);
             $this->em->flush();
+            
+
+            $this->mailer->send(
+                "Demande de devis",
+                $form->get("email")->getData(),
+                "email/contact.html.twig",
+                [
+                "message"=> $form->get("subject")->getData(), 
+                "lastname"=> $form->get("lastname")->getData(), 
+                "firstname"=> $form->get("firstname")->getData()
+                ],
+                "emmanuelbenjamin.nguetoungoum@esprit.tn"
+            );
             return $devis;
     }
 }

@@ -11,8 +11,14 @@
             <h1 class="text-uppercase">I am rahi satner</h1>
             <h5 class="text-uppercase">senior wordpress developer</h5>
             <div class="d-flex align-items-center">
-              <a class="primary_btn" href="#"><span>Hire Me</span></a>
-              <a class="primary_btn tr-bg" href="#"><span>Get CV</span></a>
+              <a class="primary_btn" href="#about-us"
+                ><span>Qui sonmmes nous ?</span></a
+              >
+              <a
+                class="primary_btn tr-bg"
+                href="{{ path('categorie_service_all') }}"
+                ><span>Nos Solutions</span></a
+              >
             </div>
           </div>
         </div>
@@ -32,7 +38,7 @@
 <!--================ End Home Banner Area =================-->
 
 <!--================ Start About Us Area =================-->
-<section class="about_area section_gap">
+<section class="about_area section_gap" id="about-us">
   <div class="container">
     <div class="row justify-content-start align-items-center">
       <div class="col-lg-5">
@@ -43,22 +49,19 @@
 
       <div class="offset-lg-1 col-lg-5">
         <div class="main_title text-left">
-          <h2>
-            let’s <br />
-            Introduce about <br />
-            myself
-          </h2>
+          <h2>Qui sommes nous?</h2>
           <p>
-            Whose given. Were gathered. There first subdue greater. Bearing you
-            Whales heaven midst their. Beast creepeth. Fish days.
+            Entreprise jeune, dynamique et portée par une forte ambition, LOGONE
+            Est une équipe de personnes issus d’origine et culture différente.
           </p>
           <p>
-            Is give may shall likeness made yielding spirit a itself together
-            created after sea is in beast beginning signs open god you're
-            gathering whose gathered cattle let. Creature whales fruit unto meat
-            the life beginning all in under give two.
+            Notre savoir faire réside sur notre capacité à allier tallent,
+            nouvelle technologie et efficacité afin d'offrir une prèstation sur
+            mesure et des compétences aux standars internationnaux.
           </p>
-          <a class="primary_btn" href="#"><span>Download CV</span></a>
+          <a class="primary_btn" href="{{ path('about') }}"
+            ><span>Voir plus</span></a
+          >
         </div>
       </div>
     </div>

@@ -4,13 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Contact;
 use App\Form\ContactType;
+use App\services\MaillerService;
 use App\Repository\ContactRepository;
-use App\services\MailerService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ContactController extends AbstractController
 {
@@ -21,7 +22,8 @@ class ContactController extends AbstractController
     public function index(
         Request $req, 
         EntityManagerInterface $em,
-        MailerService $mailer
+        MaillerService $mailer,
+        FlashyNotifier $flashy
         ): Response
     {
         $contact = new Contact();
@@ -54,6 +56,8 @@ class ContactController extends AbstractController
                 ],
                 $from
             );
+
+            $flashy->success("Votre demande a été bien prise en compte vous serez recontactez dans les prochaines 24h!",'');
 
             return $this->redirectToRoute('contact');
         }

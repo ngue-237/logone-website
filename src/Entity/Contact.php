@@ -25,6 +25,10 @@ class Contact
      *     match=false,
      *     message="Your lastname cannot contain a number"
      * )
+     * @Assert\length(
+     * min = 4,
+     * minMessage = "Your first name must be at least {{ limit }} characters long"
+     * )
      */
     private $lastName;
 
@@ -40,6 +44,9 @@ class Contact
 
     /**
      * @ORM\Column(type="string", length=255)
+     *  @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email."
+     * )
      */
     private $email;
 
@@ -51,7 +58,12 @@ class Contact
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Assert\Length(min = 8, max = 250, minMessage = "Min length is 8 caracters", maxMessage = "Max length is 20 caracters")
+     * @Assert\Length(
+     * min = 8, 
+     * max = 700, 
+     * minMessage = "Min length is {{ limit }} caracters", 
+     * maxMessage = "Max length is {{ limit }} caracters"
+     * )
      */
     private $msg;
 

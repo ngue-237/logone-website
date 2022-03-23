@@ -18,22 +18,26 @@ class Devis
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     *@ORM\Column(type="string", length=255)
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     
+     * 
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
      */
     private $phoneNumber;
 

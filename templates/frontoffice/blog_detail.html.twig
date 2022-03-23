@@ -215,6 +215,7 @@
         {% if app.user %}
         <div class="comment-form">
           <h4>Laissez un Commentaire</h4>
+          {#
           <a
             id="test"
             href="{{
@@ -227,6 +228,7 @@
           >
             test ajax</a
           >
+          #}
           <div class="form">
             {{ form_start(form) }}
             <div class="form-group">
@@ -244,7 +246,9 @@
             </div>
 
             <div class="switch-wrap d-flex justify-content-between">
-              <p>Je confirm</p>
+              <p>
+                J'accepte les <a href="#">condition générales</a> d'utilistion
+              </p>
               <div class="">
                 {{
                   form_row(form.rgpd, {

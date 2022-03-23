@@ -18,36 +18,11 @@
 <section class="contact_area section_gap">
   <div class="container">
     <div class="row">
-      <div class="col-lg-3">
-        <div class="contact_info">
-          <div class="info_item">
-            <i class="lnr lnr-home"></i>
-            <h6>Paris, France</h6>
-            <p>Santa monica bullevard</p>
-          </div>
-          <div class="info_item">
-            <i class="lnr lnr-phone-handset"></i>
-            <h6><a href="#">00 (33) 9865 562</a></h6>
-            <p>de Lundi à Samedi de 9 h à 17 h 30</p>
-          </div>
-          <div class="info_item">
-            <i class="lnr lnr-home"></i>
-            <h6>Tunis, Tunisie</h6>
-            <p>Montplaisir Mohamed Badra</p>
-          </div>
-          <div class="info_item">
-            <i class="lnr lnr-phone-handset"></i>
-            <h6><a href="#">00 (216) 52 739 385</a></h6>
-            <p>de Lundi à Samedi de 9 h à 17 h 30</p>
-          </div>
-          <div class="info_item">
-            <i class="lnr lnr-envelope"></i>
-            <h6><a href="#">sale@logone-digital.com</a></h6>
-            <p>Send us your query anytime!</p>
-          </div>
-        </div>
+      <div class="col-lg-4">
+        {% include "include/frontoffice/contact_info.html.twig" %}
       </div>
-      <div class="col-lg-9">
+      <div class="col-lg-8">
+        {% form_theme form 'bootstrap_4_layout.html.twig' %}
         {{ form_start(form) }}
         <div class="row">
           <div class="col-md-6">
@@ -100,7 +75,7 @@
                 form_row(form.phoneNumber, {
                   label: false,
                   attr: {
-                    placeholder: "Téléphone",
+                    placeholder: "+33 9865 562",
                     class: "form-control",
                   }
                 })
