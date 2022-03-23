@@ -131,6 +131,12 @@
     "gedmo/doctrine-extensions": {
         "version": "v3.5.0"
     },
+    "gregwar/captcha": {
+        "version": "v1.1.9"
+    },
+    "gregwar/captcha-bundle": {
+        "version": "v2.2.0"
+    },
     "helios-ag/fm-elfinder-bundle": {
         "version": "12.1",
         "recipe": {

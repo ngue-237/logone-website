@@ -8,6 +8,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
+    {% block meta %}{% endblock %}
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
@@ -72,11 +73,8 @@
     {{
       encore_entry_script_tags("app")
     }}
-    #} {% endblock %}
-  </head>
 
-  <body>
-    {% block body %} {% block content %} {% endblock %} {% endblock %}
+    #}
     <script src="{{ asset('assetF/') }}js/jquery-3.2.1.min.js"></script>
     <script src="{{ asset('assetF/') }}js/popper.js"></script>
     <script src="{{ asset('assetF/') }}js/bootstrap.min.js"></script>
@@ -114,6 +112,12 @@
     <script src="{{
         asset('bundles/mercuryseriesflashy/js/flashy.js')
       }}"></script>
+    {% endblock %}
+  </head>
+
+  <body>
+    {% block body %} {% block content %} {% endblock %} {% endblock %}
+
     {{ include("@MercurySeriesFlashy/flashy.html.twig") }}
   </body>
 </html>
