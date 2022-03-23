@@ -39,8 +39,17 @@
               src="{{ asset('/uploads/images/categories_service/' ~ catg.image) }}"
               alt="image parlant de {{ catg.designation }}"
             />
-            <h4>{{ catg.designation }}</h4>
-            <p>{{ catg.description | raw }}</p>
+            <h4>
+              {{ catg.designation }}
+            </h4>
+            {% set read_more_link %}
+            <a href="{{ path('services', { slug: catg.slug }) }}"
+              >... Voir plus</a
+            >
+            {% endset %}
+            <p>
+              {{ catg.description|u.truncate(100, read_more_link,true)|raw }}
+            </p>
           </div>
         </a>
       </div>

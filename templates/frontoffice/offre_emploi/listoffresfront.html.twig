@@ -40,14 +40,13 @@
 					</div>
 				</div>
 			</div>
-			<form id="filters">
+			{# <form id="filters">
 					<input type="search" name="searchaj" id="searchaj" class="form-control" placeholder="search"/>
-			</form>
+			</form> #}
 
 			<div class="row feature_inner">
-				{% set i= 0 %}
+				
 				{% for job in list %}
-					{% set i= i+1 %}
 					{% if job.nombrePoste > 0 %}
 					<div class="col-lg-3 col-md-6">
 						<div class="feature_item">
@@ -66,11 +65,11 @@
 
 							<p>{{ job.description|u.truncate(100, read_more_link,true)|raw }}</p>
 							<form action="{{path('apply',{id: job.id})}}">
-								<button class="btn btn-primary">Postuler</button>
+								<button class="primary_btn" style="margin: 6px;">Je postule</button>
 							</form>
-							<button id="jobId"  value="{{job.id}}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+							{# <button id="jobId"  value="{{job.id}}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
 								Apply
-							</button>
+							</button> #}
 							
 						</div>
 					</div>
