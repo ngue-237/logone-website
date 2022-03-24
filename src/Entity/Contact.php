@@ -70,6 +70,9 @@ class Contact
      */
     private $rgpd;
 
+    
+    private $captcha;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -132,6 +135,18 @@ class Contact
     public function setRgpd(bool $rgpd): self
     {
         $this->rgpd = $rgpd;
+
+        return $this;
+    }
+
+    public function getCaptcha(): ?string
+    {
+        return $this->captcha;
+    }
+
+    public function setCaptcha(?string $captcha): self
+    {
+        $this->captcha = $captcha;
 
         return $this;
     }
