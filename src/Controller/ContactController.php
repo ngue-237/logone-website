@@ -53,8 +53,14 @@ class ContactController extends AbstractController
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_TIMEOUT, 1);
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-            $response = json_decode(curl_exec($curl),true);
+            $response = curl_exec($curl);
 
+            if(empty($response) || is_null($response)){
+                
+            }
+            else{
+                $data = json_decode($response);
+            }
            
 
             if($response["success"] === true){
