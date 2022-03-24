@@ -114,6 +114,16 @@ class User implements UserInterface
      */
     private $likes;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $activationToken;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $resetToken;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -277,6 +287,30 @@ class User implements UserInterface
     public function setRgpd($rgpd)
     {
         $this->rgpd = $rgpd;
+
+        return $this;
+    }
+
+    public function getActivationToken(): ?string
+    {
+        return $this->activationToken;
+    }
+
+    public function setActivationToken(?string $activationToken): self
+    {
+        $this->activationToken = $activationToken;
+
+        return $this;
+    }
+
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    public function setResetToken(?string $resetToken): self
+    {
+        $this->resetToken = $resetToken;
 
         return $this;
     }

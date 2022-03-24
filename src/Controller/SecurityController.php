@@ -3,11 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\ResetPassType;
 use App\Form\UserType;
 use App\services\UserService;
+use App\services\MaillerService;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -15,8 +18,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
 class SecurityController extends AbstractController
 {
@@ -26,7 +32,10 @@ class SecurityController extends AbstractController
      */
     public function register(
         UserService $helper,
-        Request $req): Response
+        Request $req,
+        MaillerService $mailerHelper
+        ): Response
+        
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -41,12 +50,44 @@ class SecurityController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
                 $helper->persistUser($user, ["ROLE_USER"]);
-                
+                $mailerHelper->send(
+                     "Activation de votre compe", 
+                     $form->get("email")->getData(), 
+                     "email/activation.html.twig", 
+                     ["activationToken" => $user->getActivationToken() ],
+                     "emmanuelbenjamin.nguetoungoum@esprit.tn"
+                    );
+            
             return $this->redirectToRoute('security_login');
         }
         return $this->render('frontoffice/register.html.twig', [
         'form'=>$form->createView()
         ]);
+    }
+
+    /**
+     * activation de du compte grâce au token
+     *
+     * @return void
+     * @Route("/register/activation/{activationToken}", name="activation")
+     */
+    public function activation(
+        User $user, 
+        EntityManagerInterface $em,
+        FlashyNotifier $flash
+        ){
+
+        if(!$user){
+            throw $this->createNotFoundException("cette utilisateur n'existe pas");
+        }
+        $user->setActivationToken(null);
+        $em->persist($user);
+        $em->flush();
+
+        //message flash
+        $flash->success("Votre Compte à bien été activé", "");
+        return $this->redirectToRoute('home');
+        
     }
 
     /**
@@ -82,6 +123,8 @@ class SecurityController extends AbstractController
         $form->handleRequest($req);
 
         if($form->isSubmitted() && $form->isValid()){
+            
+            //  
             $helper->persistUser($user, ["ROLE_ADMIN"]);
             return $this->redirectToRoute('user_list');
         }
@@ -156,6 +199,98 @@ class SecurityController extends AbstractController
      */
     public function logout(){
 
+    }
+
+    /**
+     * permet de récupérer un mot de pass
+     *
+     * @Route("/oubli-pass", name="app_forgotten_password")
+     */
+    public function forgottenPassword(
+        Request $req,
+         MaillerService $mailerHelper,
+        UserRepository $userRepo,
+        FlashyNotifier $flashy,
+        TokenGeneratorInterface $tokenGenarator,
+        EntityManagerInterface $em
+
+    ){
+        $form = $this->createForm(ResetPassType::class);
+        $form->handleRequest($req);
+        if($form->isSubmitted() and $form->isValid()){
+            $data = $form->getData();
+            $user = $userRepo->findOneByEmail($data['email']);
+
+            if(!$user){
+                $flashy->warning("Attention cette addresse n'existe pas", '');
+                return $this->redirectToRoute("security_login");
+            }
+            $token = $tokenGenarator->generateToken();
+
+            try {
+                $user->setResetToken($token);
+                $em->persist($user);
+                $em->flush();
+
+            } catch (\Exception $e) {
+                 $flashy->warning("Une erreur survenu : ".$e->getMessage(), "");
+                 return $this->redirectToRoute("security_login");
+            }
+
+            //génération de l'url de réinitialisation
+            $url = $this->generateUrl("app_reset_password", [
+                "token"=>$token
+            ], UrlGeneratorInterface::ABSOLUTE_URL);
+            $mailerHelper->send(
+                     "Activation de votre compe", 
+                     $user->getEmail(), 
+                     "email/reset_password.html.twig", 
+                     ["token" => $token ],
+                     "emmanuelbenjamin.nguetoungoum@esprit.tn"
+                    );
+            
+            $flashy->success("un email de réinitialisation du mot de passe vous a été envoyé!", "");
+
+            return $this->redirectToRoute("security_login");
+        }
+
+        return $this->renderForm("frontoffice/forgotten_password.html.twig", compact('form'));
+    }
+
+    /**
+     * permet de réinitialiser le mot de passe
+     *
+     * @Route("/reset-pass/{token}", name="app_reset_password")
+     */
+    public function resetPassword(
+    Request $req, 
+    UserPasswordEncoderInterface $encoder, 
+    FlashyNotifier $flashy,
+    EntityManagerInterface $em,
+    UserRepository $userRepo,
+    $token
+    ){
+        $user = $userRepo->findOneBy(["resetToken"=>$token]);
+        if(!$user){
+            $flashy->warning("token inconnu!");
+            return $this->redirectToRoute('security_login');
+        }
+
+        //si le formulaire est envoyé en méthode post
+
+        if($req->isMethod("POST")){
+            $user->setResetToken(null);
+
+            //on chiffre le mot de passe
+            $user->setPassword($encoder->encodePassword($user, $req->request->get('password')));
+            $em->persist($user);
+            $em->flush();
+            $flashy->success("Mot de passe modifier avec succès");
+            return $this->redirectToRoute('security_login');
+        }
+        else{
+            return $this->render("frontoffice/reset_password.html.twig", compact("token"));
+        }
     }
 
 }

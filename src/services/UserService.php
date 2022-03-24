@@ -23,6 +23,7 @@ Class UserService{
     }
 
     public function persistUser(User $user, $role):void{
+            $user->setActivationToken(md5(uniqid()));
             $user->setRoles($role);
             $user->setCreatedAt(new \DateTime());
             $hash = $this->encoder->encodePassword($user, $user->getPassword());

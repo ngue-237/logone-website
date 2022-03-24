@@ -26,7 +26,8 @@ class ContactController extends AbstractController
      * Permet d'envoyer une demande contacte
      * @Route("/contact", name="contact")
      */
-    public function index(
+    
+    public function newContact(
         Request $req, 
         EntityManagerInterface $em,
         MaillerService $mailer,
@@ -48,7 +49,7 @@ class ContactController extends AbstractController
         $form->handleRequest($req);
 
         if($form->isSubmitted() and $form->isValid()){
-            
+
             $url = "https://www.google.com/recaptcha/api/siteverify?secret=6Lc96AYfAAAAAEP84ADjdx5CBfEpgbTyYqgemO5n&response={$_POST['contact']["captcha"]}";
 
             $response = $client->curlManager($url);
