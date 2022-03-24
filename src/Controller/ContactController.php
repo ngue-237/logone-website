@@ -54,48 +54,55 @@ class ContactController extends AbstractController
             curl_setopt($curl, CURLOPT_TIMEOUT, 1);
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
             $response = curl_exec($curl);
-
+            
             if(empty($response) || is_null($response)){
                 
+                $flashy->warning("Something wrong!",'');
+                return $this->redirectToRoute('contact');
             }
             else{
+                //dd($form->getData());
                 $data = json_decode($response);
+                // $lastname = $form->get('lastName')->getData();
+                // $firstname = $form->get('firstName')->getData();
+                // $to = $form->get('email')->getData();
+                
+                // $subject = "Demande contact";
+                // $template = "email/contact.html.twig";
+                // $from = "emmanuelbenjamin.nguetoungoum@esprit.tn";
+                // $message = $form->get('msg')->getData();
+
+                
+                if($data->success){
+                   // dd($data);
+                    $em->persist($contact);
+                    $em->flush();
+                    $mailer->send(
+                        "Demande contact",
+                        $form->get('email')->getData(),
+                        "email/contact.html.twig",
+                        [
+                        "message"=> $message = $form->get('msg')->getData(), 
+                        "lastname"=> $form->get('lastName')->getData(), 
+                        "firstname"=> $form->get('firstName')->getData()
+                        ],
+                        "emmanuelbenjamin.nguetoungoum@esprit.tn"
+                    );
+
+                    $flashy->success("Votre demande a été bien prise en compte vous serez recontactez dans les prochaines 24h!",'');
+                    return $this->redirectToRoute('contact');
+                }else{
+                    //dd("je suis là");
+                    $flashy->error("Confirm you are not robot!",'');
+                    return $this->redirectToRoute('contact');
+                }
+
             }
            
 
-            if($response["success"] === true){
-                $flashy->error("Vous êtes un robot",'');
-                return $this->redirectToRoute("contact");
-            }else{
-
             
-            $lastname = $form->get('lastName')->getData();
-            $firstname = $form->get('firstName')->getData();
-            $to = $form->get('email')->getData();
+                
             
-            $subject = "Demande contact";
-            $template = "email/contact.html.twig";
-            $from = "emmanuelbenjamin.nguetoungoum@esprit.tn";
-            $message = $form->get('msg')->getData();
-
-            //dd($form->getData());
-            $em->persist($contact);
-            $em->flush();
-            $mailer->send(
-                $subject,
-                $to,
-                $template,
-                [
-                "message"=> $message, 
-                "lastname"=> $lastname, 
-                "firstname"=> $firstname
-                ],
-                $from
-            );
-
-            $flashy->success("Votre demande a été bien prise en compte vous serez recontactez dans les prochaines 24h!",'');
-            return $this->redirectToRoute('contact');
-            }
         }
         return $this->renderForm('frontoffice/contact.html.twig', compact('form'));
     }
