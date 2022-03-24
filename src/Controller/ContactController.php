@@ -8,6 +8,7 @@ use App\Form\ContactType;
 use App\services\CaptchaService;
 use App\services\MaillerService;
 use App\Repository\ContactRepository;
+use App\services\CurlService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use MercurySeries\FlashyBundle\FlashyNotifier;
@@ -30,7 +31,8 @@ class ContactController extends AbstractController
         EntityManagerInterface $em,
         MaillerService $mailer,
         FlashyNotifier $flashy,
-        CaptchaService $helper
+        CaptchaService $helper,
+        CurlService $client
         ): Response
     {
         $contact = new Contact();
@@ -46,14 +48,10 @@ class ContactController extends AbstractController
         $form->handleRequest($req);
 
         if($form->isSubmitted() and $form->isValid()){
+            
             $url = "https://www.google.com/recaptcha/api/siteverify?secret=6Lc96AYfAAAAAEP84ADjdx5CBfEpgbTyYqgemO5n&response={$_POST['contact']["captcha"]}";
-            $curl = curl_init($url);
 
-            curl_setopt($curl, CURLOPT_HEADER, false);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($curl, CURLOPT_TIMEOUT, 1);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-            $response = curl_exec($curl);
+            $response = $client->curlManager($url);
             
             if(empty($response) || is_null($response)){
                 
@@ -61,20 +59,8 @@ class ContactController extends AbstractController
                 return $this->redirectToRoute('contact');
             }
             else{
-                //dd($form->getData());
                 $data = json_decode($response);
-                // $lastname = $form->get('lastName')->getData();
-                // $firstname = $form->get('firstName')->getData();
-                // $to = $form->get('email')->getData();
-                
-                // $subject = "Demande contact";
-                // $template = "email/contact.html.twig";
-                // $from = "emmanuelbenjamin.nguetoungoum@esprit.tn";
-                // $message = $form->get('msg')->getData();
-
-                
                 if($data->success){
-                   // dd($data);
                     $em->persist($contact);
                     $em->flush();
                     $mailer->send(
@@ -88,11 +74,9 @@ class ContactController extends AbstractController
                         ],
                         "emmanuelbenjamin.nguetoungoum@esprit.tn"
                     );
-
                     $flashy->success("Votre demande a été bien prise en compte vous serez recontactez dans les prochaines 24h!",'');
                     return $this->redirectToRoute('contact');
                 }else{
-                    //dd("je suis là");
                     $flashy->error("Confirm you are not robot!",'');
                     return $this->redirectToRoute('contact');
                 }
