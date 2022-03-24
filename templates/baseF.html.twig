@@ -12,6 +12,7 @@ gtag('js', new Date());
 
 gtag('config', 'G-LQF0N89JD9');
 		</script>
+		<script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=623c3ba1cdbe0200193e19de&product=inline-share-buttons" async="async"></script>
 		<meta charset="UTF-8"/>
 		<title>
 			{% block title %}{% endblock %}
@@ -41,18 +42,34 @@ gtag('config', 'G-LQF0N89JD9');
 		<link
 		rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>"/>
 		{# Run `composer require symfony/webpack-encore-bundle` to start using
-																														    Symfony UX #}
+																																		    Symfony UX #}
 		{% block stylesheets %}
 			{#
-																																													    {{
-																																													      encore_entry_link_tags("app")
-																																													    }}
-																																													    #}
+																																																			    {{
+																																																			      encore_entry_link_tags("app")
+																																																			    }}
+																																																			    #}
 		{% endblock %}
 
 	</head>
 
 	<body>
+		<!-- Load Facebook SDK for JavaScript -->
+		<div id="fb-root"></div>
+		<script>
+			(function (d, s, id) {
+var js,
+fjs = d.getElementsByTagName(s)[0];
+if (d.getElementById(id)) 
+return;
+
+
+js = d.createElement(s);
+js.id = id;
+js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+		</script>
 		{% block body %}
 			{% block content %}{% endblock %}
 		{% endblock %}
@@ -80,10 +97,10 @@ gtag('config', 'G-LQF0N89JD9');
 		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 		{% block javascripts %}
 			{#
-																																													    {{
-																																													      encore_entry_script_tags("app")
-																																													    }}
-																																													    #}
+																																																			    {{
+																																																			      encore_entry_script_tags("app")
+																																																			    }}
+																																																			    #}
 		{% endblock %}
 	</body>
 </html>

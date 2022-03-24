@@ -31,7 +31,7 @@
 							<img src="{{asset('uploads/images/categories_article/') ~ category.image}}" alt="{{ category.image }}"/>
 							<div class="categories_details">
 								<div class="categories_text">
-									<a href="single-blog.html">
+									<a href="{{ path('blog_by_categorie', { slug: category.slug }) }}">
 										<h5>{{ category.title }}</h5>
 									</a>
 									<div class="border_line"></div>
@@ -81,10 +81,10 @@
 													</a>
 												</li>
 												{#
-																																																																																																																								                  <li>
-																																																																																																																								                    <a>1.2M Views<i class="lnr lnr-eye"></i></a>
-																																																																																																																								                  </li>
-																																																																																																																								                  #}
+																																																																																																																																																                  <li>
+																																																																																																																																																                    <a>1.2M Views<i class="lnr lnr-eye"></i></a>
+																																																																																																																																																                  </li>
+																																																																																																																																																                  #}
 												<li>
 													<a>{{ article.comments | length }}
 														Commentaires<i class="lnr lnr-bubble"></i>
@@ -156,9 +156,9 @@
 									</div>
 									<p>
 										Boot camps have its supporters andit sdetractors. Some people do
-																																																																																																				              not understand why you should have to spend money on boot camp
-																																																																																																				              when you can get. Boot camps have itssuppor ters andits
-																																																																																																				              detractors.
+																																																																																																																								              not understand why you should have to spend money on boot camp
+																																																																																																																								              when you can get. Boot camps have itssuppor ters andits
+																																																																																																																								              detractors.
 									</p>
 									<div class="br"></div>
 								</aside>
@@ -258,7 +258,7 @@
 									<h4 class="widget_title">Newsletter</h4>
 									<p>
 										Here, I focus on a range of items and features that we use in life
-																																																																																																				              without giving them a second thought.
+																																																																																																																								              without giving them a second thought.
 									</p>
 									<div class="form-group d-flex flex-row">
 										<div class="input-group">

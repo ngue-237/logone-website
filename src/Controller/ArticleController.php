@@ -195,4 +195,8 @@ class ArticleController extends AbstractController
 
         return $this->json(['code'=>200,'message'=>'Like bien ajouté','likes'=>$likeRepo->count(['article'=>$article])],200);
     }
+
+    public function newsletter(EntityManagerInterface $manager, LikeRepository $likeRepo):Response{
+
+    }
 }
