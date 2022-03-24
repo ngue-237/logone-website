@@ -109,9 +109,15 @@ class User implements UserInterface
      */
     private $rgpd;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Like::class, mappedBy="user")
+     */
+    private $likes;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->likes = new ArrayCollection();
     }
 
  
@@ -248,18 +254,6 @@ class User implements UserInterface
                 $comment->setUser(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getRgpd(): ?bool
-    {
-        return $this->rgpd;
-    }
-
-    public function setRgpd(?bool $rgpd): self
-    {
-        $this->rgpd = $rgpd;
 
         return $this;
     }

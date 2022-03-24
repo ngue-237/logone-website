@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\CategoryArticle;
 use App\Repository\ArticleRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\CategoryArticleRepository;
@@ -30,6 +31,43 @@ class BlogController extends AbstractController
         
              $articles = $paginator->paginate(
                 $articleRepo->findAll(), 
+            $req->query->getInt('page', 1), /*page number*/
+            5/*limit per page*/
+        );
+        return $this->render('frontoffice/blog.html.twig', [
+            'articles' => $articles,
+            'catgoriesArticle'=>$categories
+        ]);
+    }
+
+    
+    /**
+     * Undocumented function
+     * @Route("/blog/categorie/{slug}", name="blog_by_categorie", methods={"GET"})
+     * @param CategoryArticle $categoryArticle
+     * @param ArticleRepository $articleRepo
+     * @param CategoryArticleRepository $categoryArtRepo
+     * @param PaginatorInterface $paginator
+     * @param Request $req
+     * @return Response
+     */
+    public function blog_by_categorie(CategoryArticle $categoryArticle,
+        ArticleRepository $articleRepo, 
+        CategoryArticleRepository $categoryArtRepo,
+        PaginatorInterface $paginator,
+        Request $req
+        ): Response
+    {
+             $categories = $paginator->paginate(
+                $categoryArtRepo->findAll(), 
+            $req->query->getInt('page', 1), /*page number*/
+            3/*limit per page*/
+        );
+        
+             $articles = $paginator->paginate(
+                $articleRepo->findBy([
+                    'categoryArticle' => $categoryArticle,
+                ]), 
             $req->query->getInt('page', 1), /*page number*/
             5/*limit per page*/
         );

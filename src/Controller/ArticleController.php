@@ -4,12 +4,15 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Comments;
+use App\Entity\Like;
 use App\Form\ArticleType;
 use App\Form\CommentType;
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryArticleRepository;
+use App\Repository\LikeRepository;
 use App\services\CommentService;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,7 +55,7 @@ class ArticleController extends AbstractController
              $form = $this->createForm(CommentType::class, $comment);
              $form->handleRequest($req);
              if($form->isSubmitted() and $form->isValid()){
-                 dd($form->getData());
+                // dd($form->getData());
                 $comment = $form->getData();
                 $commentService->persistComment($form->getData(), $article);
 
@@ -91,9 +94,7 @@ class ArticleController extends AbstractController
         return $this->json(['code'=>200, 'message'=>'ça marche bien!']);
     }
 
-    
-
-    /**
+     /**
      * permet d'ajouter un article de blog
      *
      * @param Request $req
@@ -152,5 +153,50 @@ class ArticleController extends AbstractController
         $em->flush();
 
         return $this->redirectToRoute('article_list_admin');
+    }
+
+
+    /**
+     * Permet de liker et de unliker
+     *
+     * @Route("/blog/{id}/like", name="post_like")
+     * @param Article $article
+     * @param EntityManagerInterface $manager
+     * @param LikeRepository $likeRepo
+     * @return Symfony\Component\HttpFoundation\Response
+     */
+    public function like(Article $article, EntityManagerInterface $manager, LikeRepository $likeRepo):Response{
+        $user = $this->getUser();
+        if(!$user) return $this->json([
+            'code'=>403,
+            'message'=>'Unauthorized'
+        ],403);
+
+        if($article->isLikedByUser($user)){
+            $like = $likeRepo->findOneBy([
+                'article'=>$article,
+                'user'=>$user
+            ]);
+            $manager->remove($like);
+            $manager->flush();
+
+            return $this->json([
+                'code'=>200,
+                'message'=>'Like bien supprimé',
+                'likes'=>$likeRepo->count(['article'=>$article])
+            ],200);
+        }
+
+        $like = new Like();
+        $like->setArticle($article)
+             ->setUser($user);
+        $manager->persist($like);
+        $manager->flush();
+
+        return $this->json(['code'=>200,'message'=>'Like bien ajouté','likes'=>$likeRepo->count(['article'=>$article])],200);
+    }
+
+    public function newsletter(EntityManagerInterface $manager, LikeRepository $likeRepo):Response{
+
     }
 }

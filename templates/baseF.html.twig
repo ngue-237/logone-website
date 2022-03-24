@@ -1,6 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-LQF0N89JD9"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-LQF0N89JD9");
+    </script>
+    <script
+      type="text/javascript"
+      src="https://platform-api.sharethis.com/js/sharethis.js#property=623c3ba1cdbe0200193e19de&product=inline-share-buttons"
+      async="async"
+    ></script>
     <meta charset="UTF-8" />
     <title>{% block title %}{% endblock %}</title>
     <meta charset="utf-8" />
@@ -70,24 +88,28 @@
     {{
       encore_entry_link_tags("app")
     }}
-    #} {% endblock %} {% block javascripts %} {#
+    #} {% endblock %} {#
     {{
       encore_entry_script_tags("app")
     }}
-
     #}
-
-    <!--gmaps Js-->
-
-    <script src="{{ asset('assetF/') }}js/gmaps.min.js"></script>
-    <script src="{{ asset('assetF/') }}js/theme.js"></script>
-    <script src="{{
-        asset('bundles/mercuryseriesflashy/js/flashy.js')
-      }}"></script>
-    {% endblock %}
   </head>
 
   <body>
+    <!-- Load Facebook SDK for JavaScript -->
+    <div id="fb-root"></div>
+    <script>
+      (function (d, s, id) {
+        var js,
+          fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src =
+          "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+        fjs.parentNode.insertBefore(js, fjs);
+      })(document, "script", "facebook-jssdk");
+    </script>
     {% block body %} {% block content %} {% endblock %} {% endblock %}
 
     {{ include("@MercurySeriesFlashy/flashy.html.twig") }}
@@ -121,5 +143,15 @@
       integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
       crossorigin="anonymous"
     ></script>
+
+    <!--gmaps Js-->
+
+    <script src="{{ asset('assetF/') }}js/gmaps.min.js"></script>
+    <script src="{{ asset('assetF/') }}js/theme.js"></script>
+    <script src="{{
+        asset('bundles/mercuryseriesflashy/js/flashy.js')
+      }}"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    {% block javascripts %} {% endblock %}
   </body>
 </html>
