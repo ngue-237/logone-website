@@ -260,4 +260,24 @@ class User implements UserInterface
 
 
     
+
+    /**
+     * Get the value of rgpd
+     */ 
+    public function getRgpd()
+    {
+        return $this->rgpd;
+    }
+
+    /**
+     * Set the value of rgpd
+     *
+     * @return  self
+     */ 
+    public function setRgpd($rgpd)
+    {
+        $this->rgpd = $rgpd;
+
+        return $this;
+    }
 }

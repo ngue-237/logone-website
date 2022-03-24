@@ -55,7 +55,7 @@ class ContactController extends AbstractController
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
             $response = json_decode(curl_exec($curl),true);
 
-           //dd($response);
+           
 
             if($response["success"] === true){
                 $flashy->error("Vous êtes un robot",'');
