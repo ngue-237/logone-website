@@ -59,11 +59,10 @@
 							<h5>{{ job.min_salary }}DT
 																	-
 								{{ job.max_salary }}DT</h5>
-							{% set read_more_link %}
+							{% set read_more%}
 							<a href="{{ path('jobdetails', {id: job.id}) }}">... Voir plus</a>
 							{% endset %}
-
-							<p>{{ job.description|u.truncate(100, read_more_link,true)|raw }}</p>
+							<p>{{ job.description|u.truncate(50, read_more,true)|raw }}</p>
 							<form action="{{path('apply',{id: job.id})}}">
 								<button class="primary_btn" style="margin: 6px;">Je postule</button>
 							</form>
