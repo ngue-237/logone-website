@@ -90,13 +90,19 @@
               src="{{ asset('/uploads/images/categories_service/' ~ catg.image) }}"
               alt="image parlant de {{ catg.designation }}"
             />
-            <h4>{{ catg.designation }}</h4>
-            <p>{{ catg.description | raw }}</p>
+            <h4>
+              {{ catg.designation }}
+            </h4>
+            <p>
+              {{ catg.description|u.truncate(150,true)|raw }}
+              ...
+            </p>
+            <a href="{{ path('services', { slug: catg.slug }) }}"> Voir plus</a>
           </div>
         </a>
       </div>
       {% endfor %}
-      <div class="pagination text-center">
+      <div class="blog-pagination justify-content-center d-flex">
         {{ knp_pagination_render(categoriesService) }}
       </div>
     </div>

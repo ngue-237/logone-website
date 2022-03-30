@@ -3,8 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\ResetPassType;
 use App\Form\UserType;
+use App\Form\ResetPassType;
+use App\services\CurlService;
 use App\services\UserService;
 use App\services\MaillerService;
 use App\Repository\UserRepository;
@@ -14,12 +15,14 @@ use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
@@ -33,7 +36,9 @@ class SecurityController extends AbstractController
     public function register(
         UserService $helper,
         Request $req,
-        MaillerService $mailerHelper
+        MaillerService $mailerHelper,
+        CurlService $client,
+        FlashyNotifier $flashy
         ): Response
         
     {
@@ -46,11 +51,30 @@ class SecurityController extends AbstractController
                     new NotBlank()
                 ]
             ]);
+        $form->add("captcha", HiddenType::class, [
+            "mapped"=>false,
+            "constraints"=>[
+                new NotNull(),
+                new NotBlank()
+            ]
+        ]);
         $form->handleRequest($req);
 
         if($form->isSubmitted() && $form->isValid()){
-                $helper->persistUser($user, ["ROLE_USER"]);
-                $mailerHelper->send(
+
+                $url = "https://www.google.com/recaptcha/api/siteverify?secret=6Lc96AYfAAAAAEP84ADjdx5CBfEpgbTyYqgemO5n&response={$_POST['user']["captcha"]}";
+                
+                $response = $client->curlManager($url);
+                if(empty($response) || is_null($response)){
+                
+                $this->addFlash("warning",'something wrong!');
+                return $this->redirectToRoute('security_register');
+                }else{
+                    $data = json_decode($response);
+                    if($data->success){
+
+                    $helper->persistUser($user, ["ROLE_USER"]);
+                        $mailerHelper->send(
                      "Activation de votre compe", 
                      $form->get("email")->getData(), 
                      "email/activation.html.twig", 
@@ -58,7 +82,14 @@ class SecurityController extends AbstractController
                      "emmanuelbenjamin.nguetoungoum@esprit.tn"
                     );
             
-            return $this->redirectToRoute('security_login');
+                    return $this->redirectToRoute('security_login');  
+                    }else{
+                        $flashy->success("success registration!", "");
+                        $this->addFlash("Error",'Confirm you are not robot!');
+                         return $this->redirectToRoute('contact');
+                    }
+                }
+                
         }
         return $this->render('frontoffice/register.html.twig', [
         'form'=>$form->createView()
@@ -190,7 +221,12 @@ class SecurityController extends AbstractController
      */
     
     public function login(AuthenticationUtils $auth, Request $req):Response{
-        return $this->render('frontoffice/login.html.twig');
+        $errors = $auth->getLastAuthenticationError();
+        $lastUsername = $auth->getLastUsername();
+        return $this->render('frontoffice/login.html.twig', [
+            'last_username'=>$lastUsername,
+            'errors'=>$errors
+        ]);
     }
 
     /**
@@ -219,24 +255,25 @@ class SecurityController extends AbstractController
         $form->handleRequest($req);
         if($form->isSubmitted() and $form->isValid()){
             $data = $form->getData();
+           // dd($data);
             $user = $userRepo->findOneByEmail($data['email']);
-
+            
             if(!$user){
                 $flashy->warning("Attention cette addresse n'existe pas", '');
                 return $this->redirectToRoute("security_login");
             }
             $token = $tokenGenarator->generateToken();
-
             try {
                 $user->setResetToken($token);
                 $em->persist($user);
                 $em->flush();
-
+                
             } catch (\Exception $e) {
-                 $flashy->warning("Une erreur survenu : ".$e->getMessage(), "");
-                 return $this->redirectToRoute("security_login");
+                $flashy->warning("Une erreur survenu : ".$e->getMessage(), "");
+                return $this->redirectToRoute("security_login");
             }
-
+            
+            // dd($user);
             //génération de l'url de réinitialisation
             $url = $this->generateUrl("app_reset_password", [
                 "token"=>$token
@@ -248,8 +285,8 @@ class SecurityController extends AbstractController
                      ["token" => $token ],
                      "emmanuelbenjamin.nguetoungoum@esprit.tn"
                     );
-            
-            $flashy->success("un email de réinitialisation du mot de passe vous a été envoyé!", "");
+            //$this->addFlash("success", "un email de réinitialisation du mot de passe vous a été envoyé!");
+            $flashy->success("un email de réinitialisation du mot de passe vous a été envoyé !", "");
 
             return $this->redirectToRoute("security_login");
         }

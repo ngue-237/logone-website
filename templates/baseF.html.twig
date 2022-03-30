@@ -112,7 +112,7 @@
     </script>
     {% block body %} {% block content %} {% endblock %} {% endblock %}
 
-    {{ include("@MercurySeriesFlashy/flashy.html.twig") }}
+    <script src="//code.jquery.com/jquery.js"></script>
     <script src="{{ asset('assetF/') }}js/jquery-3.2.1.min.js"></script>
     <script src="{{ asset('assetF/') }}js/popper.js"></script>
     <script src="{{ asset('assetF/') }}js/bootstrap.min.js"></script>
@@ -152,6 +152,7 @@
         asset('bundles/mercuryseriesflashy/js/flashy.js')
       }}"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    {{ include("@MercurySeriesFlashy/flashy.html.twig") }}
     {% block javascripts %} {% endblock %}
   </body>
 </html>

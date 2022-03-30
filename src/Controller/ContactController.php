@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use Curl\Curl;
 use App\Entity\Contact;
 use App\Form\ContactType;
 use App\services\CaptchaService;

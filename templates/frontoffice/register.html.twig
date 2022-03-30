@@ -6,9 +6,7 @@
     <div class="row justify-content-center">
       <div class="col-lg-12">
         <h1>Je m'inscris !</h1>
-        <div class="row alert-danger">
-          
-        </div>
+        <div class="row alert-danger"></div>
         {% form_theme form 'bootstrap_4_layout.html.twig' %}
         {{ form_start(form) }}
         <div class="row" id="contactForm" novalidate="novalidate">
@@ -90,6 +88,19 @@
           </div>
         </div>
         {{ form_end(form) }}
+        <a href="{{ path('security_login') }}">J'ai déjà un compte</a>
+        <script src="https://www.google.com/recaptcha/api.js?render=6Lc96AYfAAAAAAJsKTsNdyF4yBBWVnt5rWll8Dbe"></script>
+        <script>
+          grecaptcha.ready(function () {
+            grecaptcha
+              .execute("6Lc96AYfAAAAAAJsKTsNdyF4yBBWVnt5rWll8Dbe", {
+                action: "homepage",
+              })
+              .then(function (token) {
+                document.getElementById("user_captcha").value = token;
+              });
+          });
+        </script>
       </div>
     </div>
   </div>
