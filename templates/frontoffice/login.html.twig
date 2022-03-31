@@ -1,12 +1,12 @@
-{% extends 'baseF.html.twig'%} {% block title %} Contact | Logone {% endblock %}
-{% block content %}
+{% extends 'baseF.html.twig'%} {% block title %} Se connecter | Logone {%
+endblock %} {% block content %}
 
 <section class="contact_area section_gap">
   <div class="container">
     <div class="row justify-content-center">
       {% if errors %}
       <div class="alert alert-danger">
-        {{ errors.messageKey|trans(errors.messageData, 'security')  }}
+        {{ errors.messageKey | trans(errors.messageData, 'security')  }}
       </div>
       {% endif %}
       <div class="col-lg-12">
@@ -44,7 +44,22 @@
             </button>
           </div>
         </form>
-        <a href="{{ path('app_forgotten_password') }}">Mot de passe oublié</a>
+        <p class="">
+          <a
+            class=""
+            href="{{ path('security_register') }}"
+            title="lien de création d'un compte"
+            >Je n'ai pas encore de compte</a
+          >
+        </p>
+        <p>
+          <a
+            class=""
+            href="{{ path('app_forgotten_password') }}"
+            title="lien de réinitialisation d'un compte"
+            >Mot de passe oublié</a
+          >
+        </p>
       </div>
     </div>
   </div>

@@ -1,19 +1,6 @@
 {% extends 'baseF.html.twig'%} {% block title %} Devis | Logone {% endblock %}
 {% block content %} {% include('include/frontoffice/header.html.twig')%}
-<section class="banner_area">
-  <div class="banner_inner d-flex align-items-center">
-    <div class="container">
-      <div class="banner_content text-center">
-        <h2>Nous Contacter</h2>
-        <div class="page_link">
-          <a href="{{ path('home') }}">Accueil</a>
-          <a>Devis</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!--================ End Banner Area =================-->
+
 <!--================Contact Area =================-->
 <section class="contact_area section_gap">
   <div class="container">
@@ -103,19 +90,6 @@
                 })
               }}
             </div>
-
-            {#
-            <div class="form-group">
-              {{
-                form_row(form.services, {
-                  attr: {
-                    class: "form-control mt-3 mb-3 ",
-                    id: "devis_services"
-                  }
-                })
-              }}
-            </div>
-            #}
           </div>
           <div class="col-md-6">
             <div class="form-floating">
@@ -151,6 +125,18 @@
           </div>
         </div>
         {{ form_end(form) }}
+        <script src="https://www.google.com/recaptcha/api.js?render=6Lc96AYfAAAAAAJsKTsNdyF4yBBWVnt5rWll8Dbe"></script>
+        <script>
+          grecaptcha.ready(function () {
+            grecaptcha
+              .execute("6Lc96AYfAAAAAAJsKTsNdyF4yBBWVnt5rWll8Dbe", {
+                action: "homepage",
+              })
+              .then(function (token) {
+                document.getElementById("form_captcha").value = token;
+              });
+          });
+        </script>
       </div>
     </div>
   </div>

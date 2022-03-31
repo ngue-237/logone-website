@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\NotNull;
-use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -31,7 +30,7 @@ class SecurityController extends AbstractController
 {
     /**
      * permet à un visiteur de s'inscrire via un formulaire d'inscription
-     * @Route("/register", name="security_register")
+     * @Route("/s-incrire", name="security_register")
      */
     public function register(
         UserService $helper,
@@ -92,7 +91,8 @@ class SecurityController extends AbstractController
                 
         }
         return $this->render('frontoffice/register.html.twig', [
-        'form'=>$form->createView()
+        'form'=>$form->createView(), 
+        "errors"=>$form->getErrors()
         ]);
     }
 
@@ -153,9 +153,7 @@ class SecurityController extends AbstractController
             ]);
         $form->handleRequest($req);
 
-        if($form->isSubmitted() && $form->isValid()){
-            
-            //  
+        if($form->isSubmitted() && $form->isValid()){ 
             $helper->persistUser($user, ["ROLE_ADMIN"]);
             return $this->redirectToRoute('user_list');
         }
@@ -168,21 +166,19 @@ class SecurityController extends AbstractController
      * @Route("/admin/user_list", name="user_list")
      */
     public function userList(UserRepository $rep):Response{
-        $users = $rep->findAll();
         return $this->render('backoffice/security/user_list.html.twig',[
-            'users'=>$users
+            'users'=>$rep->findAll()
         ]);
     }
 
     /**
      * permet de supprimer un utilisateur selon son ID
-     * @param $idUser
-     * @param UserRepository $rep
+     * @param $id
      * @param EntityManagerInterface $em
      * @return Response
-     * @Route("/admin/user_delete/{id}", name="user_delete")
+     * @Route("/admin/user-delete/{id}", name="user_delete")
      */
-    public function userDelete(User $user, UserRepository $rep, EntityManagerInterface $em):Response{
+    public function userDelete(User $user, EntityManagerInterface $em):Response{
         $em->remove($user) ;
         $em->flush();
     return $this->redirectToRoute('user_list');
@@ -190,14 +186,13 @@ class SecurityController extends AbstractController
 
     /**
      * Permet à l'administrateur de modifier les propriétés d'un utilisateur
-     * @param $idUser
-     * @param UserRepository $rep
+     * @param $id
      * @param EntityManagerInterface $em
      * @param Request $req
      * @return Response
-     * @Route("/admin/user_edit/{id}", name="user_edit")
+     * @Route("/admin/user-edit/{id}", name="user_edit")
      */
-    public function userEdit(User $user, UserRepository $rep, EntityManagerInterface $em, Request $req):Response{
+    public function userEdit(User $user, EntityManagerInterface $em, Request $req):Response{
         
         $form = $this->createForm(UserType::class, $user);
 
@@ -217,7 +212,7 @@ class SecurityController extends AbstractController
      * @param AuthenticationUtils $auth
      * @param Request $req
      * @return Response
-     * @Route("/login", name="security_login")
+     * @Route("/se-connecter", name="security_login")
      */
     
     public function login(AuthenticationUtils $auth, Request $req):Response{
@@ -231,7 +226,7 @@ class SecurityController extends AbstractController
 
     /**
      * Permet à un utilisateur de se déconnecter
-     * @Route("/logout", name="security_logout")
+     * @Route("/se-deconnecter", name="security_logout")
      */
     public function logout(){
 

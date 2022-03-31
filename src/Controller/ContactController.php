@@ -43,12 +43,11 @@ class ContactController extends AbstractController
                 new NotBlank()
             ]
         ]);
-     
         
         $form->handleRequest($req);
 
         if($form->isSubmitted() and $form->isValid()){
-
+            //url de vérification google recaptcha
             $url = "https://www.google.com/recaptcha/api/siteverify?secret=6Lc96AYfAAAAAEP84ADjdx5CBfEpgbTyYqgemO5n&response={$_POST['contact']["captcha"]}";
 
             $response = $client->curlManager($url);
@@ -81,11 +80,7 @@ class ContactController extends AbstractController
                     return $this->redirectToRoute('contact');
                 }
 
-            }
-           
-
-            
-                
+            }     
             
         }
         return $this->renderForm('frontoffice/contact.html.twig', compact('form'));
@@ -111,7 +106,7 @@ class ContactController extends AbstractController
      * @return Response
      * @Route("/admin/contact_delete/{id}", name="contact_delete")
      */
-    public function deleteContact(Contact $conctact , ContactRepository $rep, EntityManagerInterface $em):Response{
+    public function deleteContact(Contact $conctact , EntityManagerInterface $em):Response{
         $em->remove($conctact);
         $em->flush();
         return $this->redirectToRoute('contact_list');

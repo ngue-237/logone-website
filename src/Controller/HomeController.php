@@ -29,6 +29,16 @@ class HomeController extends AbstractController
     }
 
     /**
+     * Undocumented function
+     *
+     * @return Response
+     * @Route("/rendez-vous", name="app_rdv", methods={"GET"})
+     */
+    public function rdv():Response{
+        return $this->render("frontoffice/rdv.html.twig");
+    }
+
+    /**
      * @Route("/portfolio", name="portforlio")
      */
     public function portefolio(){

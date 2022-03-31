@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Devis;
+use App\services\CurlService;
 use App\services\DevisService;
 use App\Entity\CategoryService;
 use App\services\MaillerService;
@@ -14,16 +15,18 @@ use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\Regex;
 
 class DevisController extends AbstractController
 {
@@ -43,7 +46,8 @@ class DevisController extends AbstractController
          ServiceRepository $serviceRepo,
          DevisService $devisHelper,
          FlashyNotifier $flashy,
-         MaillerService $mailer
+         MaillerService $mailer,
+         CurlService $client
         ):Response{
         $devis = new Devis();
         $form = $this->createFormBuilder(['categories'=>$categoryService])
@@ -120,18 +124,39 @@ class DevisController extends AbstractController
                     new NotBlank(),
                 ]
             ])
+            ->add("captcha", HiddenType::class, [
+            "constraints"=>[
+                new NotNull(),
+                new NotBlank()
+            ]
+        ])
             ->getForm();
 
         $form->handleRequest($req);
         if($form->isSubmitted() and $form->isValid()){
-           
-            
-            $devisSet = new Devis();
-            $devisSet = $devisHelper->setDevis($devis, $form);
-            
-            $flashy->success("Votre demande a été bien prise en compte vous serez recontactez dans les prochaines 24h!",'');
+            $url = "https://www.google.com/recaptcha/api/siteverify?secret=6Lc96AYfAAAAAEP84ADjdx5CBfEpgbTyYqgemO5n&response={$form->get("captcha")->getData()}";
+            //dd($url);
+            if(empty($response) || is_null($response)){
+                
+                $flashy->error("Something wrong!",'');
+                return $this->redirectToRoute('categorie_service_all');
+            }else{
+                $data = json_decode($response);
+                if($data->success){
+                    $response = $client->curlManager($url);
+                            
+                        $devisSet = new Devis();
+                        $devisSet = $devisHelper->setDevis($devis, $form);
+                            
+                        $flashy->success("Un email de confirmation vous a-été envoyé à l'adresse ".$form->get("email")->getData(),'');
 
-            return $this->redirectToRoute('home');
+                        return $this->redirectToRoute('categorie_service_all');
+                }else{
+                    $flashy->error("Confirm you are not robot!",'');
+                    return $this->redirectToRoute('categorie_service_all');
+                }
+            }
+            
         }
         return $this->renderForm('frontoffice/devis_add.html.twig',compact(
             'form', 
@@ -159,7 +184,7 @@ class DevisController extends AbstractController
      * @param DevisRepository $devisRepo
      * @param EntityManagerInterface $em
      * @return Response
-     * @Route("/admin/devis_delete/{id}", name="devis_delete")
+     * @Route("/admin/devis_delete/{id}", name="devis_delete", methods={"GET" ,"DELETE"})
      */
     public function deleteDevis(Devis $devis, EntityManagerInterface $em, $id):Response{
         

@@ -1,24 +1,5 @@
 {% extends 'baseF.html.twig'%} {% block title %} Contact | Logone {% endblock %}
 {% block content %} {% include('include/frontoffice/header.html.twig')%}
-<style>
-  form.form-errors {
-    color: red;
-  }
-</style>
-<section class="banner_area">
-  <div class="banner_inner d-flex align-items-center">
-    <div class="container">
-      <div class="banner_content text-center">
-        <h2>Nous Contacter</h2>
-        <div class="page_link">
-          <a href="{{ path('home') }}">Accueil</a>
-          <a>Contact</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!--================ End Banner Area =================-->
 
 <!--================Contact Area =================-->
 <section class="contact_area section_gap">
@@ -30,12 +11,9 @@
       <div class="col-lg-8">
         {% form_theme form 'bootstrap_4_layout.html.twig' %}
         {{ form_start(form) }}
+        
         {{
-          form_errors(form, {
-            attr: {
-              class: "form-errors"
-            }
-          })
+          form_errors(form)
         }}
         <div class="row" id="contactForm" novalidate="novalidate">
           <div class="col-md-6">
@@ -107,13 +85,13 @@
         </div>
         {{ form_end(form) }}
         <script src="https://www.google.com/recaptcha/api.js?render=6Lc96AYfAAAAAAJsKTsNdyF4yBBWVnt5rWll8Dbe"></script>
-      <script>
-      grecaptcha.ready(function() {
-          grecaptcha.execute('6Lc96AYfAAAAAAJsKTsNdyF4yBBWVnt5rWll8Dbe', {action: 'homepage'}).then(function(token) {
-              document.getElementById('contact_captcha').value = token
-          });
-      });
-      </script>
+        <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6Lc96AYfAAAAAAJsKTsNdyF4yBBWVnt5rWll8Dbe', {action: 'homepage'}).then(function(token) {
+                document.getElementById('contact_captcha').value = token
+            });
+        });
+        </script>
       </div>
     </div>
     {# <div

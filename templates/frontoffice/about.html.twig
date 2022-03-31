@@ -1,34 +1,15 @@
-{% extends 'baseF.html.twig'%}
-{% block title %}
-	About | Logone
-{% endblock %}
-{% block content %}
-	{% include('include/frontoffice/header.html.twig')%}
+{% extends 'baseF.html.twig'%} {% block title %} A propos | Logone {% endblock
+%} {% block content %} {% include('include/frontoffice/header.html.twig')%}
 
-	<section class="banner_area">
-		<div class="banner_inner d-flex align-items-center">
-			<div class="container">
-				<div class="banner_content text-center">
-					<h2>About Us</h2>
-					<div class="page_link">
-						<a href="{{ path('home') }} ">Home</a>
-						<a href="#">Logone</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!--================ End Banner Area =================-->
-
-	<!--================ Start About Us Area =================-->
-	<!--================ End About Us Area =================-->
-		<section class="about_area" style="margin-top: 50px"> <div class="container">
-			<div class="row justify-content-start align-items-center">
-				<div class="col-lg-5">
-					<div class="about_img">
-						<img class="" src="{{ asset('assetF/') }}img/about-us.png" alt=""/>
-					</div>
-				</div>
+<!--================ End About Us Area =================-->
+<section class="about_area">
+  <div class="container">
+    <div class="row justify-content-start align-items-center">
+      <div class="col-lg-5">
+        <div class="about_img">
+          <img class="" src="{{ asset('assetF/') }}img/about-us.png" alt="" />
+        </div>
+      </div>
 
       <div class="offset-lg-1 col-lg-5">
         <div class="main_title text-left">
@@ -127,5 +108,5 @@
   </div>
 </section>
 
-	{{ include("include/frontoffice/footer.html.twig") }}
+{{ include("include/frontoffice/footer.html.twig") }}
 {% endblock %}

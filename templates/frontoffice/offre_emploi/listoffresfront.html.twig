@@ -9,20 +9,6 @@
 {% block content %}
 
 	{% include('include/frontoffice/header.html.twig')%}
-	<section class="banner_area">
-		<div class="banner_inner d-flex align-items-center">
-			<div class="container">
-				<div class="banner_content text-center">
-					<h2>Offres d'emploi</h2>
-					<div class="page_link">
-						<a href="index.html">Home</a>
-						<a href="services.html">Offres d'emploi</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!--================ End Banner Area =================-->
 
 	<!--================ Start Features Area =================-->
 	<section class="features_area section_gap_top">
@@ -48,21 +34,21 @@
 				
 				{% for job in list %}
 					{% if job.nombrePoste > 0 %}
+					
 					<div class="col-lg-3 col-md-6">
 						<div class="feature_item">
 							
 							<h4>
-								<a href="job-detail.html"> {{ job.titre }}</a>
+								<a href="{{ path('jobdetails', {id: job.id}) }}"> {{ job.titre }}</a>
 							</h4>
 							<span>{{ job.nombrePoste }}
 								Poste disponibles</span>
 							<h5>{{ job.min_salary }}DT
 																	-
 								{{ job.max_salary }}DT</h5>
-							{% set read_more%}
-							<a href="{{ path('jobdetails', {id: job.id}) }}">... Voir plus</a>
-							{% endset %}
-							<p>{{ job.description|u.truncate(50, read_more,true)|raw }}</p>
+							
+							<p>{{ job.description|u.truncate(150,true)|raw }}</p>
+							<a href="{{ path('jobdetails', {id: job.id}) }}" title="lien vers l'offre d'emplois: {{ job.titre }} ">... Voir plus</a>
 							<form action="{{path('apply',{id: job.id})}}">
 								<button class="primary_btn" style="margin: 6px;">Je postule</button>
 							</form>
