@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+>
+  {% for url in urls %}
+  <url>
+    {# on vérifie si le nom d'hote est présent dans l'url#} {# si il n'y est pas
+    on l'ajoute #} {% if url.loc | replace({hostname:''}) == url.loc %}
+    {{ hostname }}{{ url.loc }}
+    {% else %}
+    {{ url.loc }}
+    {% endif %} {# si il y a une date de modification #} {% if url.lastmod is
+    defined %}
+    <lastmod>{{ url.lastmod }}</lastmod>
+    {% endif %} {# si il y a une image #} {% if url.images is defined and
+    url.images is not empty %}
+    <image:image>
+      <image:loc>
+        {% if url.images.loc | replace({hostname:''}) == url.images.loc %}
+        {{ hostname }}{{ url.images.loc }}
+        {% else %}
+        {{ url.images.loc }}
+        {% endif %}
+      </image:loc>
+      <image:title>
+        {{ url.image.title }}
+      </image:title>
+    </image:image>
+    {% endif %}
+  </url>
+  {% endfor %}
+</urlset>

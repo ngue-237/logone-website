@@ -7,6 +7,7 @@ use App\Entity\Service;
 use App\Form\ServiceType;
 use App\Repository\CategoryServiceRepository;
 use App\Repository\ServiceRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -62,7 +63,7 @@ class ServiceController extends AbstractController
         $form->handleRequest($req);
 
         if($form->isSubmitted() and $form->isValid()){
-            //dd($service);
+            $service->setUpdatedAt(new \DateTime('now'));
             $em->persist($service);
             $em->flush();
             return $this->redirectToRoute('service_list');
@@ -103,6 +104,7 @@ class ServiceController extends AbstractController
         $form->handleRequest($req);
 
         if($form->isSubmitted() and $form->isValid()){
+            $service->setUpdatedAt(new \DateTime('now'));
             $em->flush();
             return $this->redirectToRoute('service_list');
         }
