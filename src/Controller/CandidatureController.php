@@ -18,12 +18,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CandidatureController extends AbstractController
 {
     /**
-     * @Route("/apply/{id}", name="apply")
+     * @Route("/je-postule/{slug}", name="apply")
      */
-    public function addCandidature($id, Request $request, PaginatorInterface $pag, OffreEmploiRepository $rep,EntityManagerInterface $em)
+    public function addCandidature(OffreEmploi $offre, Request $request, PaginatorInterface $pag, OffreEmploiRepository $rep,EntityManagerInterface $em)
     {
         $candidature = new Candidature();
-        $offre = $em->getRepository(OffreEmploi::class)->find($id);
+      
         $form = $this->createForm(CandidatureType::class,$candidature);
         $data = $rep->findAll();
 

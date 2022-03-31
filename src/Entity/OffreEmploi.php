@@ -9,7 +9,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use App\Repository\OffreEmploiRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @ORM\Entity(repositoryClass=OffreEmploiRepository::class)
  * @Vich\Uploadable
@@ -95,6 +95,12 @@ class OffreEmploi
      * @var \DateTime
      */
     private $updatedAt;
+
+    /**
+     * @Gedmo\Slug(fields={"titre"})
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $slug;
 
     // ...
 
@@ -275,5 +281,10 @@ class OffreEmploi
         $this->niveauScolaire = $niveauScolaire;
 
         return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
     }
 }

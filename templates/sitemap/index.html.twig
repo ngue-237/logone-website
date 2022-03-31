@@ -20,16 +20,12 @@
     {% endif %} {# si il y a une image #} {% if url.images is defined and
     url.images is not empty %}
     <image:image>
-      <image:loc>
-        {% if url.images.loc | replace({hostname:''}) == url.images.loc %}
-        {{ hostname }}{{ url.images.loc }}
-        {% else %}
-        {{ url.images.loc }}
-        {% endif %}
-      </image:loc>
-      <image:title>
-        {{ url.image.title }}
-      </image:title>
+      <image:loc
+        >{%if url.images.loc|replace({hostname:''}) == url.images.loc%}{{
+          hostname
+        }}{{ url.images.loc }}{%else%}{{ url.images.loc }}{%endif%}</image:loc
+      >
+      <image:title>{{ url.images.title }}</image:title>
     </image:image>
     {% endif %}
   </url>

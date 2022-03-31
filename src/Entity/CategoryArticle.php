@@ -7,10 +7,12 @@ use Gedmo\Sluggable\Util\Urlizer;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\Collection;
 use App\Repository\CategoryArticleRepository;
+use DateTime;
 use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File\UploadedFIle;
+use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryArticleRepository::class)
@@ -111,6 +113,10 @@ class CategoryArticle
     public function getTitle(): ?string
     {
         return $this->title;
+    }
+    public function getUpdatedAt(): ?DateTime
+    {
+        return $this->updatedAt;
     }
 
     public function __toString()

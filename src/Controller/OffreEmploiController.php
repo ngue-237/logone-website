@@ -20,7 +20,7 @@ class OffreEmploiController extends AbstractController
     /**
      * @Route("/admin/jobslist", name="jobslist_back")
      */
-    public function readjobsBack(Request $request, PaginatorInterface $pag, OffreEmploiRepository $rep)
+    public function readjobsBack( OffreEmploiRepository $rep)
     {
         return $this->render('backoffice/offre_emploi/listoffresback.html.twig', [
             'jobs' => $rep->findAll()
@@ -29,7 +29,7 @@ class OffreEmploiController extends AbstractController
 
 
     /**
-     * @Route("/joblist", name="jobslist_front")
+     * @Route("/rejoingnez-nous", name="jobslist_front")
      */
     public function readjobsFront(Request $request, PaginatorInterface $pag, OffreEmploiRepository $rep)
     {
@@ -97,28 +97,25 @@ class OffreEmploiController extends AbstractController
     }
 
     /**
-     * @Route("/jobdetails/{id}", name="jobdetails")
+     * @Route("/offre-emploi/{slug}", name="jobdetails")
      */
-    public function jobdetails($id, EntityManagerInterface $em)
+    public function jobdetails(OffreEmploi $offreEmploi)
     {
-        $job = $em->getRepository(OffreEmploi::class)->find($id);
 
         return $this->render('frontoffice/offre_emploi/jobdetails.html.twig', [
-            'job' => $job,
+            'job' => $offreEmploi,
         ]);
     }
 
     /**
      * @Route("/admin/edit_offre/{id}", name="edit_job")
      */
-    public function modifyjob(Request $request, $id)
+    public function modifyjob(Request $request, OffreEmploi $job, EntityManagerInterface $em)
     {
-        $job = $this->getDoctrine()->getRepository(OffreEmploi::class)->find($id);
         $form = $this->createForm(OffreEmploiType::class, $job);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
                 $em->persist($job);
                 $em->flush();
                 return $this->redirectToRoute('jobslist_back');

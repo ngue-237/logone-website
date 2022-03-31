@@ -1,6 +1,6 @@
 {% extends 'baseF.html.twig'%}
 {% block title %}
-	Accueil | Logone
+	Offre Emplois | Logone
 {% endblock %}
 {% block SS %}
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -39,7 +39,7 @@
 						<div class="feature_item">
 							
 							<h4>
-								<a href="{{ path('jobdetails', {id: job.id}) }}"> {{ job.titre }}</a>
+								<a href="{{ path('jobdetails', {slug: job.slug}) }}"> {{ job.titre }}</a>
 							</h4>
 							<span>{{ job.nombrePoste }}
 								Poste disponibles</span>
@@ -48,8 +48,8 @@
 								{{ job.max_salary }}DT</h5>
 							
 							<p>{{ job.description|u.truncate(150,true)|raw }}</p>
-							<a href="{{ path('jobdetails', {id: job.id}) }}" title="lien vers l'offre d'emplois: {{ job.titre }} ">... Voir plus</a>
-							<form action="{{path('apply',{id: job.id})}}">
+							<a href="{{ path('jobdetails', {slug: job.slug}) }}" title="lien vers l'offre d'emplois: {{ job.titre }} ">... Voir plus</a>
+							<form action="{{path('apply',{slug: job.slug})}}">
 								<button class="primary_btn" style="margin: 6px;">Je postule</button>
 							</form>
 							{# <button id="jobId"  value="{{job.id}}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">

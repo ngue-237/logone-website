@@ -32,7 +32,7 @@ class CategoryServiceController extends AbstractController
     /**
      * @param CategoryServiceRepository $rep
      * @return Response
-     * @Route("/services", name="categorie_service_all")
+     * @Route("/categories-services", name="categorie_service_all")
      */
     public function allCategoriesService(CategoryServices $categoryService, Request $req):Response{
         return $this->render('frontoffice/category_services.html.twig', [

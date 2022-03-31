@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Repository\CategoryArticleRepository;
 use App\Repository\CategoryServiceRepository;
+use App\Repository\OffreEmploiRepository;
 use App\Repository\ServiceRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +19,9 @@ class SitemapController extends AbstractController
     public function index(
         Request $req,
         CategoryServiceRepository $categoryServiceRepo,
-        ServiceRepository $serviceRepo
+        ServiceRepository $serviceRepo,
+        OffreEmploiRepository $offreEmploiRepo,
+        CategoryArticleRepository $catgArticleRepo
         ): Response
     {
         $hostname =  $req->getSchemeAndHttpHost();
@@ -42,31 +46,44 @@ class SitemapController extends AbstractController
             $urls []= [
                 "loc"=>$this->generateUrl("categorie_service_all"),
                 "images" => $images,
-                // "lastmod" =>$service->getUpdatedAt()->format('Y-m-d')
             ];
-            // dd($catgService);
-            
-            
         }
         
          foreach($categoryServiceRepo->findAll() as $catgService){
-            // $images = [
-            //     "loc" => "/public/uploads/images/categories_service/".$catgService->getImage(),
-            //     "title"=>$catgService->getSlug()
-            // ];
             foreach($catgService->getServices() as $service){
                 $urls []= [
                 "loc"=>$this->generateUrl("services", [
                     "slug"=>$service->getSlug()
                 ]),
-                 //"images" => $images,
                 "lastmod" =>$service->getUpdatedAt()->format('Y-m-d')
             ];
             }
             
         }
 
-        //dd($urls);
+        
+        foreach($offreEmploiRepo->findAll() as $offreEmploi){
+            $urls []= [
+                "loc"=>$this->generateUrl("jobslist_front", [
+                    "slug"=>$offreEmploi->getSlug()
+                ]),
+                "lastmod" =>$service->getUpdatedAt()->format('Y-m-d')
+            ];
+        }
+        foreach($catgArticleRepo->findAll() as $catgArticle){
+            $images = [
+                "loc" => "/public/uploads/images/categories_article/".$catgArticle->getImage(),
+                "title"=>$catgService->getSlug()
+            ];
+            //dd($catgArticle);
+            $urls []= [
+                "loc"=>$this->generateUrl("blog", [
+                    "slug"=>$catgArticle->getSlug()
+                ]),
+                "lastmod" =>$catgArticle->getUpdatedAt()->format('Y-m-d')
+            ];
+        }
+        // dd($urls);
 
         $response = new Response(
             $this->renderView('sitemap/index.html.twig', compact(
