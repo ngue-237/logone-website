@@ -1,5 +1,18 @@
 {% extends 'baseF.html.twig'%} {% block title %} Services-categories | Logone {%
-endblock %} {% block content %} {%
+endblock %} {% block meta %}
+<meta
+  name="description"
+  content="{{ categories.description|u.truncate(250,true)|raw }}"
+/>
+<meta
+  name="keywords"
+  content="
+  {% for service in services %}
+  {{ service.slug }},
+  {% endfor %}
+  "
+/>
+{% endblock %} {% block content %} {%
 include('include/frontoffice/header.html.twig')%}
 
 <!--================ Start Features Area =================-->

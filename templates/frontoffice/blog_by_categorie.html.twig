@@ -1,297 +1,168 @@
-{% extends 'baseF.html.twig'%}
-{% block title %}
-	Blog | Logone
+{% extends 'baseF.html.twig'%} {% block title %} Blog | Logone {% endblock %} 
+{% block meta %}
+  <meta name="description" content="">
+  <meta name="keywords" content="">
 {% endblock %}
-{% block content %}
+{%
+block content %}
 
-	<!--================ Start Header Area =================-->
-	{% include('include/frontoffice/header.html.twig')%}
-	<section class="banner_area">
-		<div class="banner_inner d-flex align-items-center">
-			<div class="container">
-				<div class="banner_content text-center">
-					<h2>Blog</h2>
-					<div class="page_link">
-						<a href="{{ path('home') }}">Home</a>
-						<a href="{{ path('blog') }}">Our Blog</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!--================ End Banner Area =================-->
-	<!--================Blog Area =================-->
-	<section class="blog_area">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8">
-					<div class="blog_left_sidebar">
-						{%for article in articles%}
-							<article class="row blog_item">
-								<div class="col-md-3">
-									<div class="blog_info text-right">
-										<div class="post_tag">
-											<a class="active">
-												{{ article.categoryArticle.title }}
-											</a>
-											<i class="fas fa-newspaper"></i>
-										</div>
-										<ul class="blog_meta list">
-											<li>
-												<a>{{ article.author }}<i class="lnr lnr-user"></i>
-												</a>
-											</li>
-											<li>
-												<a>{{article.createdAt | date('d:m:Y')
+<!--================ Start Header Area =================-->
+{% include('include/frontoffice/header.html.twig')%}
 
-
-
-
-
+<!--================Blog Area =================-->
+<section class="blog_area"  >
+  <div class="container">
+    <div class="row" >
+      <div class="col-lg-8">
+        <div class="blog_left_sidebar" >
+          {%for article in articles%}
+          <article class="row blog_item" style="margin-top: 150px;">
+            <div class="col-md-3">
+              <div class="blog_info text-right">
+                <div class="post_tag">
+                  <a class="active">
+                    {{ article.categoryArticle.title }}
+                  </a>
+                  <i class="fas fa-newspaper"></i>
+                </div>
+                <ul class="blog_meta list">
+                  <li>
+                    <a>{{ article.author }}<i class="lnr lnr-user"></i> </a>
+                  </li>
+                  <li>
+                    <a
+                      >{{article.createdAt | date('d:m:Y')
                       }}<i class="lnr lnr-calendar-full"></i>
-												</a>
-											</li>
-											{#
-																																																																																																																																															                  <li>
-																																																																																																																																															                    <a>1.2M Views<i class="lnr lnr-eye"></i></a>
-																																																																																																																																															                  </li>
-																																																																																																																																															                  #}
-											<li>
-												<a>{{ article.comments | length }}
-													Commentaires<i class="lnr lnr-bubble"></i>
-												</a>
-											</li>
-											<li>
-
-												<a>{{ article.likes | length }}
-													Likes<i class="far fa-thumbs-up"></i>
-												</a>
-											</li>
-										</ul>
-									</div>
-								</div>
-								<div class="col-md-9">
-									<div class="blog_post">
-										<img src="{{asset('uploads/images/article/' ~ article.image ) }}" alt="{{ article.title }}"/>
-										<div class="blog_details">
-											<a href="single-blog.html">
-												<h2>{{ article.title | title }}</h2>
-											</a>
-											<p>
-												{{ article.content | raw }}
-											</p>
-											<a href="{{ path('article_detail', { slug: article.slug }) }}" class="primary_btn">
-												<span>Voir plus</span>
-											</a>
-										</div>
-									</div>
-								</div>
-							</article>
-							{%endfor%}
-							<div class="blog-pagination justify-content-center d-flex">
-								{{ knp_pagination_render(articles) }}
+                    </a>
+                  </li>
+                  {#
+                  <li>
+                    <a>1.2M Views<i class="lnr lnr-eye"></i></a>
+                  </li>
+                  #}
+                  <li>
+                    <a
+                      >{{ article.comments | length }} Commentaires<i
+                        class="lnr lnr-bubble"
+                      ></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      >{{ article.likes | length }} Likes<i
+                        class="far fa-thumbs-up"
+                      ></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-9">
+              <div class="blog_post">
+                <img
+                  src="{{asset('uploads/images/article/' ~ article.image ) }}"
+                  alt="{{ article.title }}"
+                />
+                <div class="blog_details">
+                  <a href="single-blog.html">
+                    <h2>{{ article.title | title }}</h2>
+                  </a>
+                  <p>
+                    {{ article.content | raw }}
+                  </p>
+                  <a title="lien vers votre article sur : {{ article.title | lower }}"
+                    href="{{ path('article_detail', { slug: article.slug }) }}"
+                    class="primary_btn"
+                  >
+                    <span>Voir plus</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </article>
+          {%endfor%}
+          <div class="blog-pagination justify-content-center d-flex">
+            {{ knp_pagination_render(articles) }}
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="blog_right_sidebar" style="margin-top: 150px;">
+				<aside class="single_sidebar_widget popular_post_widget">
+					<h3 class="widget_title">Popular Posts</h3>
+					{% for articleByView in articleOrderByView %}
+						
+						<div class="media post_item">
+							<img with="100" height="60" src="{{asset('uploads/images/article/' ~ articleByView.image ) }}" alt="image faissant référence au {{articleByView.title}} "/>
+							<div class="media-body">
+								<a href="{{ path('article_detail', { slug: articleByView.slug }) }}">
+									<h3>{{articleByView.title}} </h3>
+								</a>
+								<p>publié le
+									{{articleByView.createdAt | date('d/m/y')}}</p>
 							</div>
 						</div>
-					</div>
-					<div class="col-lg-4">
-						<div class="blog_right_sidebar">
-							<aside class="single_sidebar_widget search_widget">
-								<div class="input-group">
-									<input type="text" class="form-control" placeholder="Search Posts"/>
-									<span class="input-group-btn">
-										<button class="btn btn-default" type="button">
-											<i class="lnr lnr-magnifier"></i>
-										</button>
-									</span>
-								</div>
-								<!-- /input-group -->
-								<div class="br"></div>
-							</aside>
-							<aside class="single_sidebar_widget author_widget">
-								<img class="author_img rounded-circle" src="{{ asset('assetF/') }}img/blog/author.png" alt=""/>
-								<h4>Charlie Barber</h4>
-								<p>Senior blog writer</p>
-								<div class="social_icon">
-									<a href="#">
-										<i class="fa fa-facebook"></i>
-									</a>
-									<a href="#">
-										<i class="fa fa-twitter"></i>
-									</a>
-									<a href="#">
-										<i class="fa fa-github"></i>
-									</a>
-									<a href="#">
-										<i class="fa fa-behance"></i>
-									</a>
-								</div>
-								<p>
-									Boot camps have its supporters andit sdetractors. Some people do
-																																																																																																																							              not understand why you should have to spend money on boot camp
-																																																																																																																							              when you can get. Boot camps have itssuppor ters andits
-																																																																																																																							              detractors.
-								</p>
-								<div class="br"></div>
-							</aside>
-							<aside class="single_sidebar_widget popular_post_widget">
-								<h3 class="widget_title">Popular Posts</h3>
-								<div class="media post_item">
-									<img src="{{ asset('assetF/') }}img/blog/popular-post/post1.jpg" alt="post"/>
-									<div class="media-body">
-										<a href="single-blog.html">
-											<h3>Space The Final Frontier</h3>
-										</a>
-										<p>02 Hours ago</p>
-									</div>
-								</div>
-								<div class="media post_item">
-									<img src="{{ asset('assetF/') }}img/blog/popular-post/post2.jpg" alt="post"/>
-									<div class="media-body">
-										<a href="single-blog.html">
-											<h3>The Amazing Hubble</h3>
-										</a>
-										<p>02 Hours ago</p>
-									</div>
-								</div>
-								<div class="media post_item">
-									<img src="{{ asset('assetF/') }}img/blog/popular-post/post3.jpg" alt="post"/>
-									<div class="media-body">
-										<a href="single-blog.html">
-											<h3>Astronomy Or Astrology</h3>
-										</a>
-										<p>03 Hours ago</p>
-									</div>
-								</div>
-								<div class="media post_item">
-									<img src="{{ asset('assetF/') }}img/blog/popular-post/post4.jpg" alt="post"/>
-									<div class="media-body">
-										<a href="single-blog.html">
-											<h3>Asteroids telescope</h3>
-										</a>
-										<p>01 Hours ago</p>
-									</div>
-								</div>
-								<div class="br"></div>
-							</aside>
-							<aside class="single_sidebar_widget ads_widget">
-								<a href="#"><img class="img-fluid" src="{{ asset('assetF/') }}img/blog/add.jpg" alt=""/></a>
-								<div class="br"></div>
-							</aside>
-							<aside class="single_sidebar_widget post_category_widget">
-								<h4 class="widget_title">Post Catgories</h4>
-								<ul class="list cat-list">
-									<li>
-										<a href="#" class="d-flex justify-content-between">
-											<p>Technology</p>
-											<p>37</p>
-										</a>
-									</li>
-									<li>
-										<a href="#" class="d-flex justify-content-between">
-											<p>Lifestyle</p>
-											<p>24</p>
-										</a>
-									</li>
-									<li>
-										<a href="#" class="d-flex justify-content-between">
-											<p>Fashion</p>
-											<p>59</p>
-										</a>
-									</li>
-									<li>
-										<a href="#" class="d-flex justify-content-between">
-											<p>Art</p>
-											<p>29</p>
-										</a>
-									</li>
-									<li>
-										<a href="#" class="d-flex justify-content-between">
-											<p>Food</p>
-											<p>15</p>
-										</a>
-									</li>
-									<li>
-										<a href="#" class="d-flex justify-content-between">
-											<p>Architecture</p>
-											<p>09</p>
-										</a>
-									</li>
-									<li>
-										<a href="#" class="d-flex justify-content-between">
-											<p>Adventure</p>
-											<p>44</p>
-										</a>
-									</li>
-								</ul>
-								<div class="br"></div>
-							</aside>
-							<aside class="single-sidebar-widget newsletter_widget">
-								<h4 class="widget_title">Newsletter</h4>
-								<p>
-									Here, I focus on a range of items and features that we use in life
-																																																																																																																							              without giving them a second thought.
-								</p>
-								<div class="form-group d-flex flex-row">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<div class="input-group-text">
-												<i class="fa fa-envelope" aria-hidden="true"></i>
-											</div>
-										</div>
-										<input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Enter email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email'"/>
-									</div>
-									<a href="#" class="bbtns">Subcribe</a>
-								</div>
-								<p class="text-bottom">You can unsubscribe at any time</p>
-								<div class="br"></div>
-							</aside>
-							<aside class="single-sidebar-widget tag_cloud_widget">
-								<h4 class="widget_title">Tag Clouds</h4>
-								<ul class="list">
-									<li>
-										<a href="#">Technology</a>
-									</li>
-									<li>
-										<a href="#">Fashion</a>
-									</li>
-									<li>
-										<a href="#">Architecture</a>
-									</li>
-									<li>
-										<a href="#">Fashion</a>
-									</li>
-									<li>
-										<a href="#">Food</a>
-									</li>
-									<li>
-										<a href="#">Technology</a>
-									</li>
-									<li>
-										<a href="#">Lifestyle</a>
-									</li>
-									<li>
-										<a href="#">Art</a>
-									</li>
-									<li>
-										<a href="#">Adventure</a>
-									</li>
-									<li>
-										<a href="#">Food</a>
-									</li>
-									<li>
-										<a href="#">Lifestyle</a>
-									</li>
-									<li>
-										<a href="#">Adventure</a>
-									</li>
-								</ul>
-							</aside>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		<!--================Blog Area =================-->
-		{{ include("include/frontoffice/footer.html.twig") }}
+					{% endfor %}
 
-	{% endblock %}
+					<div class="br"></div>
+				</aside>
+				
+				<aside class="single_sidebar_widget post_category_widget">
+					<h4 class="widget_title">Post Catgories</h4>
+					<ul class="list cat-list">
+						{% for categoryArticle in categoriesArticle %}
+							<li>
+								<a title="lien tout nos articles sur la thématique : {{categoryArticle.title | lower }} " href="{{ path('blog_by_categorie', { slug: categoryArticle.slug }) }}" class="d-flex justify-content-between">
+									<p>{{ categoryArticle.title }}</p>
+									<p>{{ loop.index }}</p>
+								</a>
+							</li>
+						{% endfor %}
+					</ul>
+					<div class="br"></div>
+				</aside>
+        <aside class="single_sidebar_widget post_category_widget">
+          <h3 class="widget_title">Nos services</h3>
+					<ul class="list cat-list">
+						{% for categoryService in categoriesService %}
+							<li>
+								<a title="lien vers notre offre sur : {{categoryService.designation | lower }} " href="{{ path('services', { slug: categoryService.slug }) }}" class="d-flex justify-content-between">
+									<p>{{ categoryService.designation }}</p>
+									<p>{{ loop.index }}</p>
+								</a>
+							</li>
+						{% endfor %}
+					</ul>
+					<div class="br"></div>
+					</aside>
+				<aside class="single-sidebar-widget newsletter_widget">
+				<h4 class="widget_title">Newsletter</h4>
+				<p>
+					
+          Inscrire à notre newsletter afin d'être sur informer
+          sur les nouveaux article sur la même thématique
+				</p>
+				<div class="form-group d-flex flex-row">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<div class="input-group-text">
+								<i class="fa fa-envelope" aria-hidden="true"></i>
+							</div>
+						</div>
+						<input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Enter email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Entrer votre email'"/>
+										</div>
+					<a href="#" class="bbtns">S'inscrire</a>
+				</div>
+				<p class="text-bottom">Vous pouvez vous inscrire à tout moment</p>
+				<div class="br"></div>
+			</aside>
+		</div>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+<!--================Blog Area =================-->
+{{ include("include/frontoffice/footer.html.twig") }}
+
+{% endblock %}

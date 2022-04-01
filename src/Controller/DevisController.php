@@ -38,7 +38,7 @@ class DevisController extends AbstractController
      * @param Request $req
      * @param EntityManagerInterface $em
      * @return Response
-     * @Route("/devis/{slug}", name="devis_add", methods={"GET" ,"POST"})
+     * @Route("/categories-services/services/{slug}/devis", name="devis_add", methods={"GET" ,"POST"})
      */
     public function addDevis(
          CategoryService $categoryService,

@@ -2,17 +2,14 @@
 
 namespace App\Controller;
 
-use App\Entity\Images;
 use App\Entity\CategoryArticle;
 use App\Form\CategoryArticleType;
 use App\services\ImageManagerService;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\CategoryArticleRepository;
-use App\services\ArticleBlogService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CategoryArticleController extends AbstractController
@@ -26,23 +23,6 @@ class CategoryArticleController extends AbstractController
             'categories' => $repo->findAll(),
         ]);
     }
-
-    /**
-     * affiche la liste des cathégories d'article de blog
-     *
-     * @param CategoryArticleRepository $repo
-     * @return Response
-    //  * @Route("/blog/article", name="blog")
-     */
-    // public function listCategoryArticle(
-    //     CategoryArticleRepository $repo,
-    //     ArticleBlogService $blog
-    //     ):Response{
-    //    return $this->render('frontoffice/blog.html.twig', [
-    //         'categories' => $repo->findAll(),
-    //         'articles '=> $blog->ArticleBlog()
-    //     ]); 
-    // }
 
     /**
      * @Route("/admin/category/article_add", name="category_article_add")

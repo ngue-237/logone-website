@@ -47,9 +47,11 @@ class ArticleController extends AbstractController
          ):Response
          {
              $comment = new Comments();//Créer un model de commentaire pour le formulaire
-             $categoryArticle = $categoryArtRepo->find($article->getId());
+             $categoryArticle = $categoryArtRepo->find($article->getCategoryArticle());
+             
              $comments = $commentService->allCommentPublished();
              $categoriesArticle = $categoryArtRepo->findAll();
+             //dd($categoryArticle);
 
             
              $form = $this->createForm(CommentType::class, $comment);
@@ -61,9 +63,9 @@ class ArticleController extends AbstractController
 
                 return $this->redirectToRoute('article_detail', ['slug'=> $article->getSlug()]);
              }
-        $article->setView($article->getView() + 1);   
-        $em->flush() ;
-        $articleOrderByView = $articleRepo->findAllByView();
+            $article->setView($article->getView() + 1);   
+            $em->flush() ;
+            $articleOrderByView = $articleRepo->findAllByView();
         
 
         
@@ -73,7 +75,8 @@ class ArticleController extends AbstractController
             'form', 
             'comments',
             'categoriesArticle',
-            'articleOrderByView'
+            'articleOrderByView',
+            'categoryArticle'
         ));
     }
 

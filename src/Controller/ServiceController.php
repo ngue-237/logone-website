@@ -2,12 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\CategoryService;
+
 use App\Entity\Service;
 use App\Form\ServiceType;
 use App\Repository\CategoryServiceRepository;
 use App\Repository\ServiceRepository;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,14 +21,14 @@ class ServiceController extends AbstractController
     public function index(ServiceRepository $rep): Response
     {
         $services = $rep->findAll();
-        //dd($services);
+        
         return $this->render('backoffice/services/service_list.html.twig', [
             'services' => $services,
         ]);
     }
 
     /**
-     * @Route("/services/{slug}", name="services", methods={"GET"} )
+     * @Route("/categories-services/services/{slug}", name="services", methods={"GET"} )
      * 
      */
     public function serviceList(EntityManagerInterface $em, $slug, CategoryServiceRepository $rep): Response
