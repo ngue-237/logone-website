@@ -1,111 +1,125 @@
-{% extends 'baseF.html.twig'%} {% block title %}Details offre emplois | LOGONE
+{% extends 'baseF.html.twig'%} {% block title %} Details offre emplois | LOGONE
 {% endblock %} {% block meta %}
 <meta
   name="description"
   content="{{ job.description|u.truncate(250,true)|raw }}"
 />
-<meta
-  name="keywords"
-  content="MARKETING DIGITAL, RELATION CLIENT, OFFRE EMPLOIS"
-/>
-{% endblock %} {% block content %} {%
-include('include/frontoffice/header.html.twig')%}
-<!--================Start Portfolio Details Area =================-->
-<section class="portfolio_details_area section_gap">
-  <div class="container">
-    <div class="portfolio_details_inner">
-      <div class="row">
-        <div class="col-lg-6">
-          <div class="left_img">
-            <img
-              class="img-fluid"
-              src="{{ asset('assetF/') }}img/portfolio/portfolio-details.jpg"
-              alt=""
-            />
-          </div>
-        </div>
-        <div class="offset-lg-1 col-lg-5">
-          <div class="portfolio_right_text mt-30">
-            <h4 class="text-uppercase">{{ job.titre }}</h4>
-            <ul class="list">
-              <li>
-                <span>Lieu</span>:<span class="fa fa-map-marker"></span
-                >{{ job.location }}
-              </li>
-              <li><span>Poste disponible</span>: {{ job.nombrePoste }}</li>
-              <li>
-                <span>Salaire</span>: {{ job.min_salary }} DT -
-                {{ job.max_salary }} DT
-              </li>
-              <li>
-                <span>Valable jusqu'au</span>:
-                {{ job.date_expiration |date("m/d/Y") }}
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <p>{{ job.description | raw }}</p>
-      <p>
-        Voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-        sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus
-        error sit voluptatem accusantium doloremque laudantium, totam rem
-        aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
-        beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
-        voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni
-        dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam
-        est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit,
-        sed quia non numquam eius modi tempora incidunt ut labore et dolore
-        magnam aliquam quaerat voluptatem.
-      </p>
-    </div>
-  </div>
-</section>
-<!--================End Portfolio Details Area =================-->
+{% endblock %} {% block content %}
 
-<!--================ Start Newsletter Area =================-->
-<section class="newsletter_area">
+<!--================ Start Header Area =================-->
+{% include('include/frontoffice/header.html.twig')%}
+
+<!--================Blog Area =================-->
+<section class="blog_area single-post-area section_gap">
   <div class="container">
-    <div class="row justify-content-center align-items-center">
-      <div class="col-lg-12">
-        <div class="subscription_box text-center">
-          <h2 class="text-uppercase text-white">get update from anywhere</h2>
-          <p class="text-white">
-            Bearing Void gathering light light his eavening unto dont afraid.
-          </p>
-          <div class="subcribe-form" id="mc_embed_signup">
-            <form
-              target="_blank"
-              novalidate="true"
-              action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-              method="get"
-              class="subscription relative"
-            >
-              <input
-                name="EMAIL"
-                placeholder="Email address"
-                onfocus="this.placeholder = ''"
-                onblur="this.placeholder = 'Email address'"
-                required=""
-                type="email"
-              />
-              <div style="position: absolute; left: -5000px">
-                <input
-                  name="b_36c4fd991d266f23781ded980_aefe40901a"
-                  tabindex="-1"
-                  value=""
-                  type="text"
-                />
-              </div>
-              <button class="primary-btn hover d-inline">Get Started</button>
-              <div class="info"></div>
-            </form>
+    <div class="row">
+      <div class="col-lg-8 posts-list">
+        <div class="single-post row">
+          <div class="col-lg-3 col-md-3">
+            <div class="blog_info text-right">
+              <ul class="blog_meta list">
+                <li>
+                  <a href="#">Logone<i class="lnr lnr-user"></i></a>
+                </li>
+                <li>
+                  <a href="#"
+                    >12 Dec, 2017<i class="lnr lnr-calendar-full"></i
+                  ></a>
+                </li>
+              </ul>
+              <ul class="social-links">
+                <li>
+                  <a href="#"><i class="fa fa-facebook"></i></a>
+                </li>
+                <li>
+                  <a href="#"><i class="fa fa-twitter"></i></a>
+                </li>
+              </ul>
+            </div>
           </div>
+          <div class="col-lg-9 col-md-9 blog_details">
+            <h2>{{ job.titre }}</h2>
+            <p class="excert">
+              {{ job.description | raw }}
+            </p>
+            <h2>Conditions préalables</h2>
+            <div class="row">
+              <div class="col-lg-6">Lieu&nbsp;:</div>
+              <div class="col-lg-6">{{ job.location }}</div>
+              <div class="col-lg-6">Poste disponible&nbsp;:</div>
+              <div class="col-lg-6">{{ job.nombrePoste }}</div>
+              <div class="col-lg-6">Valable jusqu'au&nbsp;:</div>
+              <div class="col-lg-6">
+                {{ job.date_expiration |date("m/d/Y") }}
+              </div>
+            </div>
+            <div style="text-align: center">
+              <a
+                title="lien vers notre offre d'emplois  : {{ job.slug }}"
+                href="{{ path('apply', { slug: job.slug }) }}"
+                class="primary_btn"
+                style="margin-top: 10px"
+              >
+                <span>Je postule</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="blog_right_sidebar">
+          <aside class="single_sidebar_widget post_category_widget">
+            <h4 class="widget_title">Offre d'emplois</h4>
+            <ul class="list cat-list">
+              {% for item in allJobs %}
+              <li>
+                <a
+                  href="{{ path('jobdetails', { slug: item.slug }) }}"
+                  class="d-flex justify-content-between"
+                >
+                  <p>{{ item.titre }}</p>
+                  <p>{{ loop.index }}</p>
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+            <div class="br"></div>
+          </aside>
+          <aside class="single_sidebar_widget post_category_widget">
+            <h4 class="widget_title">Services</h4>
+            <ul class="list cat-list">
+              {% for catgService in allCatgService %}
+              <li>
+                <a title="lien vers notre offre de service : {{catgService.slug}}" href="{{path("services",{slug:catgService.slug})}}" class="d-flex justify-content-between">
+                  <p>{{ catgService.designation }}</p>
+                  <p>{{ loop.index }}</p>
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+            <div class="br"></div>
+          </aside>
+          <aside class="single_sidebar_widget post_category_widget">
+            <h4 class="widget_title">Blog</h4>
+            <ul class="list cat-list">
+              {% for catgArticle in allCatgsArticle %}
+              <li>
+                <a title="lien vers tout nos article sur la thématique : {{catgArticle.slug}} " href="{{path("blog_by_categorie",{slug:catgArticle.slug})}}" class="d-flex justify-content-between">
+                  <p>{{ catgArticle.title }}</p>
+                  <p>{{ loop.index }}</p>
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+            <div class="br"></div>
+          </aside>
         </div>
       </div>
     </div>
   </div>
 </section>
+<!--================Blog Area =================-->
+
+<!--================Footer Area =================-->
 {{ include("include/frontoffice/footer.html.twig") }}
-{% endblock %}
+#} {% endblock %}

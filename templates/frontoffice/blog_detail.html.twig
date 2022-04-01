@@ -27,7 +27,7 @@
 					<div class="single-post row">
 						<div class="col-lg-12">
 							<div class="feature-img">
-								<img class="img-fluid" src="{{asset('uploads/images/article/' ~ article.image ) }}" alt="{{ article.title }}"/>
+								<img class="img-fluid" src="{{asset('uploads/images/article/' ~ article.image ) | imagine_filter("blog_image") }}" alt="{{ article.title }}"/>
 							</div>
 						</div>
 						<div class="col-lg-3 col-md-3">
@@ -219,10 +219,9 @@
 								</aside>
 								<aside class="single_sidebar_widget ads_widget">
 									<h3 class="widget_title">Notre solution</h3>
-									<a href="#"><div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-										
+									<a href="#">
 										<img class="img-fluid" src="{{ asset('assetF/') }}img/blog/add.jpg" alt=""/>
-										</a>
+									</a>
 									<div class="br"></div>
 								</aside>
 								<aside class="single_sidebar_widget popular_post_widget">

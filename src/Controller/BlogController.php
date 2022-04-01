@@ -65,7 +65,7 @@ class BlogController extends AbstractController
             'articles' => $paginator->paginate($articleRepo->findBy(['categoryArticle' => $categoryArticle,]), $req->query->getInt('page', 1),5),
             "articleOrderByView"=>$articleRepo->findAllByView(),
             "categoriesArticle" => $paginator->paginate($categoryArtRepo->findAll(), $req->query->getInt('page', 1), 3),
-            "categoriesService"=>$paginator->paginate($categServiceRepo->findAll(), $req->query->getInt('page', 1), 3) ,
+            "categoriesService"=>$paginator->paginate($categServiceRepo->findAll(), $req->query->getInt('page', 1), 6) ,
         ]);
     }
 }

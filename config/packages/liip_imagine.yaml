@@ -10,6 +10,12 @@ liip_imagine:
         thumbnail:
           size: [100, 60]
           mode: outbound
+    blog_image:
+      quality: 85
+      filters:
+        thumbnail:
+          size: [555, 280]
+          mode: outbound
     carre: #nomd du filtre
       quality: 75
       filters:

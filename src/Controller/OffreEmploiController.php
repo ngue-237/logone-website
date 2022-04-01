@@ -6,6 +6,8 @@ use App\Entity\Candidature;
 use App\Entity\OffreEmploi;
 use App\Form\CandidatureType;
 use App\Form\OffreEmploiType;
+use App\Repository\CategoryArticleRepository;
+use App\Repository\CategoryServiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\OffreEmploiRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -99,11 +101,21 @@ class OffreEmploiController extends AbstractController
     /**
      * @Route("/offre-emploi/{slug}", name="jobdetails")
      */
-    public function jobdetails(OffreEmploi $offreEmploi)
+    public function jobdetails(
+        OffreEmploi $offreEmploi,
+        OffreEmploiRepository $offreEmploiRepo,
+        CategoryServiceRepository $catgServiceRepo,
+        CategoryArticleRepository $catgArticleRepo,
+        PaginatorInterface $paginator,
+        Request $req
+    ):Response
     {
-
         return $this->render('frontoffice/offre_emploi/jobdetails.html.twig', [
             'job' => $offreEmploi,
+            "allJobs"=>$offreEmploiRepo->findAll(),
+             
+            "allCatgService"=>$paginator->paginate($catgServiceRepo->findAll(), $req->query->getInt('page', 1), 5),
+            "allCatgsArticle"=>$paginator->paginate($catgArticleRepo->findAll(), $req->query->getInt('page', 1), 5),
         ]);
     }
 

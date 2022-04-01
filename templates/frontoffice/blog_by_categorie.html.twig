@@ -10,13 +10,13 @@ block content %}
 {% include('include/frontoffice/header.html.twig')%}
 
 <!--================Blog Area =================-->
-<section class="blog_area"  >
+<section class="blog_area single-post-area section_gap"  >
   <div class="container">
     <div class="row" >
       <div class="col-lg-8">
         <div class="blog_left_sidebar" >
           {%for article in articles%}
-          <article class="row blog_item" style="margin-top: 150px;">
+          <article class="row blog_item">
             <div class="col-md-3">
               <div class="blog_info text-right">
                 <div class="post_tag">
@@ -60,7 +60,7 @@ block content %}
             <div class="col-md-9">
               <div class="blog_post">
                 <img
-                  src="{{asset('uploads/images/article/' ~ article.image ) }}"
+                  src="{{asset('uploads/images/article/' ~ article.image  ) | imagine_filter("blog_image") }}"
                   alt="{{ article.title }}"
                 />
                 <div class="blog_details">
@@ -70,7 +70,7 @@ block content %}
                   <p>
                     {{ article.content |u.truncate(280,true)|raw  }}...
                   </p>
-                  <a title="lien vers votre article sur : {{ article.slug }}"
+                  <a title="lien vers notre article sur : {{ article.slug }}"
                     href="{{ path('article_detail', { slug: article.slug }) }}"
                     class="primary_btn"
                   >
@@ -87,7 +87,7 @@ block content %}
         </div>
       </div>
       <div class="col-lg-4">
-        <div class="blog_right_sidebar" style="margin-top: 150px;">
+        <div class="blog_right_sidebar" >
 				<aside class="single_sidebar_widget popular_post_widget">
 					<h3 class="widget_title">Articles populaires</h3>
 					{% for articleByView in articleOrderByView %}
