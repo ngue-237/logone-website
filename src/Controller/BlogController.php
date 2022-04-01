@@ -64,8 +64,8 @@ class BlogController extends AbstractController
         return $this->render('frontoffice/blog_by_categorie.html.twig', [
             'articles' => $paginator->paginate($articleRepo->findBy(['categoryArticle' => $categoryArticle,]), $req->query->getInt('page', 1),5),
             "articleOrderByView"=>$articleRepo->findAllByView(),
-            "categoriesArticle" => $paginator->paginate($categoryArtRepo->findAll(), $req->query->getInt('page', 1), 7),
-            "categoriesService"=>$paginator->paginate($categServiceRepo->findAll(), $req->query->getInt('page', 1), 7) ,
+            "categoriesArticle" => $paginator->paginate($categoryArtRepo->findAll(), $req->query->getInt('page', 1), 3),
+            "categoriesService"=>$paginator->paginate($categServiceRepo->findAll(), $req->query->getInt('page', 1), 3) ,
         ]);
     }
 }

@@ -29,6 +29,9 @@ block meta %}
               <p>{{ category.content | raw }}</p>
               <a
                 class="btn btn-primary"
+                title="lien vers tout nos articles sur la thématique : {{
+                  category.slug
+                }}"
                 href="{{ path('blog_by_categorie', { slug: category.slug }) }}"
                 style="color: white; margin-top: 5px; width: 120px"
                 >Voir plus</a

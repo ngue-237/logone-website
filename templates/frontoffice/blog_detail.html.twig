@@ -4,7 +4,11 @@
 {% endblock %}
 {% block meta %}
 
-	<meta name="description" content="{{article.content | u.truncate (200, true) | raw}}">
+	
+	{# <meta
+	name="description"
+	content="{{ article.content|u.truncate(250,true)|raw }}"
+	/> #}
 	<meta name="keywords" content="{{categoryArticle.slug}}">
 	<meta name="author" content="{{article.author}}">
 
@@ -119,7 +123,7 @@
 								<div class="single-comment justify-content-between d-flex">
 									<div class="user justify-content-between d-flex">
 										<div class="thumb">
-											<img src="{{ asset('assetF/') }}img/blog/c1.jpg" alt=""/>
+											<img  src="{{ asset('assetF/') }}img/blog/image-blank.jpg" alt=""/>
 										</div>
 										<div class="desc">
 											<h5>
@@ -195,7 +199,7 @@
 						</div>
 						<div class="col-lg-4">
 							<div class="blog_right_sidebar">
-								<aside class="single_sidebar_widget search_widget">
+								{# <aside class="single_sidebar_widget search_widget">
 									<div class="input-group">
 										<input type="text" class="form-control" placeholder="Search Posts"/>
 										<span class="input-group-btn">
@@ -206,9 +210,9 @@
 									</div>
 									<!-- /input-group -->
 									<div class="br"></div>
-								</aside>
+								</aside> #}
 								<aside class="single_sidebar_widget author_widget">
-									<img class="author_img rounded-circle" src="{{ asset('assetF/') }}img/blog/author.png" alt=""/>
+									<img class="author_img rounded-circle" src="{{ asset('assetF/') }}img/blog/image-blank-author.jpg" alt=""/>
 									<h4>{{ article.author }}</h4>
 									<p>Auteur</p>
 									<div class="br"></div>

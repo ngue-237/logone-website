@@ -4,6 +4,12 @@ liip_imagine:
   driver: "gd"
   filter_sets:
     cache: ~
+    blog_min_image:
+      quality: 85
+      filters:
+        thumbnail:
+          size: [100, 60]
+          mode: outbound
     carre: #nomd du filtre
       quality: 75
       filters:

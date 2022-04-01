@@ -68,9 +68,9 @@ block content %}
                     <h2>{{ article.title | title }}</h2>
                   </a>
                   <p>
-                    {{ article.content | raw }}
+                    {{ article.content |u.truncate(280,true)|raw  }}...
                   </p>
-                  <a title="lien vers votre article sur : {{ article.title | lower }}"
+                  <a title="lien vers votre article sur : {{ article.slug }}"
                     href="{{ path('article_detail', { slug: article.slug }) }}"
                     class="primary_btn"
                   >
@@ -89,11 +89,11 @@ block content %}
       <div class="col-lg-4">
         <div class="blog_right_sidebar" style="margin-top: 150px;">
 				<aside class="single_sidebar_widget popular_post_widget">
-					<h3 class="widget_title">Popular Posts</h3>
+					<h3 class="widget_title">Articles populaires</h3>
 					{% for articleByView in articleOrderByView %}
 						
 						<div class="media post_item">
-							<img with="100" height="60" src="{{asset('uploads/images/article/' ~ articleByView.image ) }}" alt="image faissant référence au {{articleByView.title}} "/>
+							<img src="{{asset('uploads/images/article/' ~ articleByView.image ) | imagine_filter('blog_min_image') }}" alt="image faissant référence au {{articleByView.title}} "/>
 							<div class="media-body">
 								<a href="{{ path('article_detail', { slug: articleByView.slug }) }}">
 									<h3>{{articleByView.title}} </h3>
@@ -108,11 +108,11 @@ block content %}
 				</aside>
 				
 				<aside class="single_sidebar_widget post_category_widget">
-					<h4 class="widget_title">Post Catgories</h4>
+					<h4 class="widget_title">Toutes nos thématiques</h4>
 					<ul class="list cat-list">
 						{% for categoryArticle in categoriesArticle %}
 							<li>
-								<a title="lien tout nos articles sur la thématique : {{categoryArticle.title | lower }} " href="{{ path('blog_by_categorie', { slug: categoryArticle.slug }) }}" class="d-flex justify-content-between">
+								<a title="lien tout nos articles sur la thématique : {{categoryArticle.slug  }} " href="{{ path('blog_by_categorie', { slug: categoryArticle.slug }) }}" class="d-flex justify-content-between">
 									<p>{{ categoryArticle.title }}</p>
 									<p>{{ loop.index }}</p>
 								</a>
@@ -126,7 +126,7 @@ block content %}
 					<ul class="list cat-list">
 						{% for categoryService in categoriesService %}
 							<li>
-								<a title="lien vers notre offre sur : {{categoryService.designation | lower }} " href="{{ path('services', { slug: categoryService.slug }) }}" class="d-flex justify-content-between">
+								<a title="lien vers notre offre sur : {{categoryService.slug  }} " href="{{ path('services', { slug: categoryService.slug }) }}" class="d-flex justify-content-between">
 									<p>{{ categoryService.designation }}</p>
 									<p>{{ loop.index }}</p>
 								</a>
