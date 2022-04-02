@@ -40,14 +40,12 @@ block meta %}
               <div class="border_line"></div>
               <p>{{ category.content | raw }}</p>
               <a
-                class="btn btn-primary"
-                title="lien vers tout nos articles sur la thématique : {{
-                  category.slug
-                }}"
+                title="lien vers notre article sur : {{ category.slug }}"
                 href="{{ path('blog_by_categorie', { slug: category.slug }) }}"
-                style="color: white; margin-top: 5px; width: 120px"
-                >Voir plus</a
+                class="primary_btn"
               >
+                <span>Voir plus</span>
+              </a>
             </div>
           </div>
         </div>

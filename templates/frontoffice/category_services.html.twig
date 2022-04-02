@@ -26,11 +26,7 @@ include('include/frontoffice/header.html.twig')%}
     <div class="row feature_inner">
       {% for catg in catgs %}
       <div class="col-lg-3 col-md-6">
-        <a
-          href="{{ path('services', { slug: catg.slug }) }}"
-          class="text-font"
-          title="lien vers le service : {{ catg.slug }} "
-        >
+        <a class="text-font" title="lien vers le service : {{ catg.slug }} ">
           <div class="feature_item">
             <img
               src="{{ asset('/uploads/images/categories_service/' ~ catg.image) }}"

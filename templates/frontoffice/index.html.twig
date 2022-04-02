@@ -136,7 +136,9 @@ include('include/frontoffice/header.html.twig')%}
           <div class="categories_details">
             <div class="categories_text">
               <a
-                href="{{ path('blog_by_categorie', { slug: category.slug }) }}"
+                title="lien vers tout nos articles sur la thématique : {{
+                  category.slug
+                }}"
               >
                 <h5>{{ category.title }}</h5>
               </a>

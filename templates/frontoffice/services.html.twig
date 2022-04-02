@@ -16,7 +16,7 @@ endblock %} {% block meta %}
 include('include/frontoffice/header.html.twig')%}
 
 <!--================ Start Features Area =================-->
-<section class="features_area section_gap_top">
+<section class="features_area section_gap_top" style="margin-bottom: 80px">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-8 text-center">
@@ -25,14 +25,15 @@ include('include/frontoffice/header.html.twig')%}
           <p>
             {{ categories.description | raw }}
           </p>
-          <div class="text-center">
-            <a
-              href="{{ path('devis_add', { slug: categories.slug }) }}"
-              class="primary_btn"
-            >
-              <span>Je suis intéressé</span>
-            </a>
-          </div>
+        </div>
+        <div class="text-center">
+          <a
+            style="position: relative; top: -55px"
+            href="{{ path('devis_add', { slug: categories.slug }) }}"
+            class="primary_btn"
+          >
+            <span>Je suis intéressé</span>
+          </a>
         </div>
       </div>
     </div>
@@ -79,6 +80,7 @@ include('include/frontoffice/header.html.twig')%}
 </section>
 <!--================ End Features Area =================-->
 <!--================ Start Testimonial Area =================-->
+{#
 <div class="testimonial_area section_gap_bottom">
   <div class="container">
     <div class="row justify-content-center">
@@ -196,5 +198,6 @@ include('include/frontoffice/header.html.twig')%}
     </div>
   </div>
 </div>
+#}
 {{ include("include/frontoffice/footer.html.twig") }}
 {% endblock %}

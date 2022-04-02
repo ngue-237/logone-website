@@ -1047,7 +1047,7 @@ button:focus {
   transition: all 0.3s linear;
 }
 .blog_details h2:hover {
-  color: #4458dc;
+  color: #3fe1ff;
 }
 .blog_details p {
   margin-bottom: 26px;
