@@ -10,29 +10,18 @@ include('include/frontoffice/header.html.twig')%}
     <div class="container">
       <div class="row">
         <div class="col-lg-7">
-          <div class="banner_content">
-            {#
-            <h3 class="text-uppercase">Hello</h3>
-            #} {#
-            <h1 class="text-uppercase">LOGONE</h1>
-            #} {#
-            <h5 class="text-uppercase">you dream and we care</h5>
-            #} {#
-            <div class="d-flex align-items-center">
-              <a
-                title="lien vers la description de notre entre"
-                class="primary_btn"
-                href="#about-us"
-                ><span>Qui sonmmes nous ?</span></a
-              >
-              <a
-                title="lien vers toutes nos catégories de services"
-                class="primary_btn tr-bg"
-                href="{{ path('categorie_service_all') }}"
-                ><span>Nos Solutions</span></a
-              >
-            </div>
-            #}
+          <div class="main_title text-left" style="margin-bottom: -500px">
+            <h2>Nous Connaitre</h2>
+            <p>
+              Entreprise jeune, dynamique et portée par une forte ambition,
+              <strong><span style="color: black">LOGONE</span></strong>
+              est une équipe de personnes issus d’origine et culture différente.
+            </p>
+            <p>
+              Notre savoir faire réside sur notre capacité à allier tallent,
+              nouvelle technologie et efficacité afin d'offrir une prèstation
+              sur mesure et des compétences aux standars internationnaux.
+            </p>
           </div>
         </div>
         <div class="col-lg-5">
@@ -42,7 +31,7 @@ include('include/frontoffice/header.html.twig')%}
           >
             <img
               class=""
-              src="{{ asset('assetF/') }}img/banner/flat-3.png"
+              src="{{ asset('assetF/') }}img/banner/home-img.png"
               alt=""
             />
           </div>
@@ -103,8 +92,7 @@ include('include/frontoffice/header.html.twig')%}
       {% for catg in categoriesService %}
       <div class="col-lg-3 col-md-6">
         <a
-          title="lien nos services de la catégorie : {{ catg.slug }} "
-          href="{{ path('services', { slug: catg.slug }) }}"
+          title="découvrez notre offre de service dans : {{ catg.slug }} "
           class="text-font"
         >
           <div class="feature_item">
@@ -119,7 +107,16 @@ include('include/frontoffice/header.html.twig')%}
               {{ catg.description|u.truncate(150,true)|raw }}
               ...
             </p>
+            <a
+              title="lien nos services de la catégorie : {{ catg.slug }}"
+              href="{{ path('services', { slug: catg.slug }) }}"
+              class="primary_btn"
+            >
+              <span>Voir plus</span>
+            </a>
+            {#
             <a href="{{ path('services', { slug: catg.slug }) }}"> Voir plus</a>
+            #}
           </div>
         </a>
       </div>
@@ -130,7 +127,7 @@ include('include/frontoffice/header.html.twig')%}
           href="{{ path('categorie_service_all') }}"
           class="primary_btn tr-bg"
         >
-          <span>Toutes nos offres</span>
+          <span>Voir Toutes nos offres</span>
         </a>
       </div>
     </div>
@@ -169,6 +166,14 @@ include('include/frontoffice/header.html.twig')%}
               <div class="border_line"></div>
               <p>{{ category.content | raw }}</p>
               <a
+                title="lien vers notre article sur : {{ category.slug }}"
+                href="{{ path('article_detail', { slug: category.slug }) }}"
+                class="primary_btn"
+              >
+                <span>Voir plus</span>
+              </a>
+              {#
+              <a
                 class="btn btn-primary"
                 title="lien vers tout nos articles sur la thématique : {{
                   category.slug
@@ -177,6 +182,7 @@ include('include/frontoffice/header.html.twig')%}
                 style="color: white; margin-top: 5px; width: 120px"
                 >Voir plus</a
               >
+              #}
             </div>
           </div>
         </div>

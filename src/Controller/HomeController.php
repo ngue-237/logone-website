@@ -29,6 +29,15 @@ class HomeController extends AbstractController
     }
 
     /**
+     * Undocumented function
+     *@Route("/mentions-legales", name="app_mention_legale")
+     * @return Response
+     */
+    public function mentionLegale():Response{
+        return $this->render("frontoffice/mentions_legales.html.twig");
+    }
+
+    /**
      * @Route("/entreprise", name="about")
      */
     public function about(){
