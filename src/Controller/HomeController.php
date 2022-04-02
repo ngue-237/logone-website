@@ -2,33 +2,31 @@
 
 namespace App\Controller;
 
-use App\services\CategoryServices;
+use Knp\Component\Pager\PaginatorInterface;
+use App\Repository\CategoryArticleRepository;
+use App\Repository\CategoryServiceRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
      */
-    public function index(CategoryServices $categoryService, Request $req): Response
+    public function index(
+        Request $req, 
+        PaginatorInterface $paginator,
+        CategoryServiceRepository $catgServiceRepo,
+        CategoryArticleRepository $categoryArtRepo
+    ): Response
     {
         return $this->render('frontoffice/index.html.twig', [
-           'categoriesService'=>$categoryService->getAllCategoryService($req)
+           'categoriesService'=>$paginator->paginate($catgServiceRepo->findAll(), $req->query->getInt('page', 1), 4),
+           "catgoriesArticle" => $paginator->paginate($categoryArtRepo->findAll(), $req->query->getInt('page', 1), 3),
         ]);
     }
-    /**
-     * @Route("/accueil", name="home-redirection")
-     */
-    public function homePage(CategoryServices $categoryService, Request $req): Response
-    {
-        return $this->redirectToRoute('home-redirection', [
-           'categoriesService'=>$categoryService->getAllCategoryService($req)
-        ]);
-    }
-
 
     /**
      * @Route("/entreprise", name="about")

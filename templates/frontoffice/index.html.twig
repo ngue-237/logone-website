@@ -11,23 +11,35 @@ include('include/frontoffice/header.html.twig')%}
       <div class="row">
         <div class="col-lg-7">
           <div class="banner_content">
+            {#
             <h3 class="text-uppercase">Hello</h3>
+            #} {#
             <h1 class="text-uppercase">LOGONE</h1>
+            #} {#
             <h5 class="text-uppercase">you dream and we care</h5>
+            #} {#
             <div class="d-flex align-items-center">
-              <a class="primary_btn" href="#about-us"
+              <a
+                title="lien vers la description de notre entre"
+                class="primary_btn"
+                href="#about-us"
                 ><span>Qui sonmmes nous ?</span></a
               >
               <a
+                title="lien vers toutes nos catégories de services"
                 class="primary_btn tr-bg"
                 href="{{ path('categorie_service_all') }}"
                 ><span>Nos Solutions</span></a
               >
             </div>
+            #}
           </div>
         </div>
         <div class="col-lg-5">
-          <div class="home_right_img">
+          <div
+            class="home_right_img"
+            style="position: relative; top: -60px; right: -100px"
+          >
             <img
               class=""
               src="{{ asset('assetF/') }}img/banner/flat-3.png"
@@ -42,6 +54,7 @@ include('include/frontoffice/header.html.twig')%}
 <!--================ End Home Banner Area =================-->
 
 <!--================ Start About Us Area =================-->
+{#
 <section class="about_area section_gap" id="about-us">
   <div class="container">
     <div class="row justify-content-start align-items-center">
@@ -71,12 +84,13 @@ include('include/frontoffice/header.html.twig')%}
     </div>
   </div>
 </section>
+#}
 <section class="features_area">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-8 text-center">
         <div class="main_title">
-          <h2>service offers</h2>
+          <h2>Nos solutions</h2>
           <p>
             Is give may shall likeness made yielding spirit a itself togeth
             created after sea <br />
@@ -88,7 +102,11 @@ include('include/frontoffice/header.html.twig')%}
     <div class="row feature_inner">
       {% for catg in categoriesService %}
       <div class="col-lg-3 col-md-6">
-        <a href="{{ path('services', { slug: catg.slug }) }}" class="text-font">
+        <a
+          title="lien nos services de la catégorie : {{ catg.slug }} "
+          href="{{ path('services', { slug: catg.slug }) }}"
+          class="text-font"
+        >
           <div class="feature_item">
             <img
               src="{{ asset('/uploads/images/categories_service/' ~ catg.image) }}"
@@ -106,19 +124,84 @@ include('include/frontoffice/header.html.twig')%}
         </a>
       </div>
       {% endfor %}
-      <div class="blog-pagination justify-content-center d-flex">
-        {{ knp_pagination_render(categoriesService) }}
+      <div style="text-align: center">
+        <a
+          title="lien vers toutes nos offres de service "
+          href="{{ path('categorie_service_all') }}"
+          class="primary_btn tr-bg"
+        >
+          <span>Toutes nos offres</span>
+        </a>
       </div>
     </div>
   </div>
 </section>
 
+<section class="blog_categorie_area section_gap_top" style="margin-top: -350px">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 text-center">
+        <div class="main_title">
+          <h2>Nos actualités</h2>
+          <p>
+            Is give may shall likeness made yielding spirit a itself togeth
+            created after sea is in beast <br />
+            beginning signs open god you're gathering ithe
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      {%for category in catgoriesArticle %}
+      <div class="col-lg-4">
+        <div class="categories_post">
+          <img
+            src="{{asset('uploads/images/categories_article/') ~ category.image}}"
+            alt="{{ category.image }}"
+          />
+          <div class="categories_details">
+            <div class="categories_text">
+              <a
+                href="{{ path('blog_by_categorie', { slug: category.slug }) }}"
+              >
+                <h5>{{ category.title }}</h5>
+              </a>
+              <div class="border_line"></div>
+              <p>{{ category.content | raw }}</p>
+              <a
+                class="btn btn-primary"
+                title="lien vers tout nos articles sur la thématique : {{
+                  category.slug
+                }}"
+                href="{{ path('blog_by_categorie', { slug: category.slug }) }}"
+                style="color: white; margin-top: 5px; width: 120px"
+                >Voir plus</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      {%endfor%}
+      <div style="text-align: center; margin-top: 30px; margin-bottom: 150px">
+        <a
+          title="lien vers toutes nos offres de service "
+          href="{{ path('categorie_service_all') }}"
+          class="primary_btn tr-bg"
+        >
+          <span>Toutes nos actualités</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{#
 <div class="testimonial_area section_gap_bottom">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-8 text-center">
         <div class="main_title">
-          <h2>client say about me</h2>
+          <h2>Nos actualités</h2>
           <p>
             Is give may shall likeness made yielding spirit a itself togeth
             created after sea is in beast <br />
@@ -229,6 +312,7 @@ include('include/frontoffice/header.html.twig')%}
     </div>
   </div>
 </div>
+#}
 
 {{ include("include/frontoffice/footer.html.twig") }}
 {% endblock %}
