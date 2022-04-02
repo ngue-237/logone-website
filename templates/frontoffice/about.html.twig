@@ -2,8 +2,8 @@
 %} {% block meta %}
 <meta name="description" content="" />
 <meta name="keywords" content="" />
-{% endblock %} {% block content %} {%
-include('include/frontoffice/header.html.twig')%}
+{% endblock %} {% block content %}
+{{ include("include/frontoffice/header.html.twig") }}
 <!--================ Start About Us Area =================-->
 {#
 <section class="about_area section_gap">
@@ -50,7 +50,11 @@ include('include/frontoffice/header.html.twig')%}
     <div class="row justify-content-start align-items-center">
       <div class="col-lg-7">
         <div class="about_img">
-          <img class="" src="{{ asset('assetF/') }}img/team.png" alt="" />
+          <img
+            class=""
+            src="{{ asset('assetF/') }}img/team-logone.png"
+            alt="image équipe logone"
+          />
         </div>
       </div>
 

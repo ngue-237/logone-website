@@ -986,7 +986,7 @@ button:focus {
   height: 1px;
 }
 .categories_post:hover .categories_details {
-  background: rgba(68, 88, 220, 0.85);
+  background: #006fbf62;
 }
 
 /*============ blog_left_sidebar css ==============*/

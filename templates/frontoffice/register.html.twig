@@ -1,6 +1,5 @@
 {% extends 'baseF.html.twig'%} {% block title %} Contact | Logone {% endblock %}
-{% block content %}
-
+{% block content %} {{ include("include/frontoffice/header.html.twig") }}
 <section class="contact_area section_gap">
   <div class="container">
     <div class="row justify-content-center">
@@ -111,4 +110,5 @@
     </div>
   </div>
 </section>
+{{ include("include/frontoffice/footer.html.twig") }}
 {% endblock %}

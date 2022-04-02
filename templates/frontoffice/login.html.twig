@@ -1,6 +1,6 @@
 {% extends 'baseF.html.twig'%} {% block title %} Se connecter | Logone {%
 endblock %} {% block content %}
-
+{{ include("include/frontoffice/header.html.twig") }}
 <section class="contact_area section_gap">
   <div class="container">
     <div class="row justify-content-center">
@@ -9,7 +9,7 @@ endblock %} {% block content %}
         {{ errors.messageKey | trans(errors.messageData, 'security')  }}
       </div>
       {% endif %}
-      <div class="col-lg-12">
+      <div class="col-lg-8">
         <h1>Je me connecte !</h1>
         <form
           class="row contact_form"
@@ -61,7 +61,15 @@ endblock %} {% block content %}
           >
         </p>
       </div>
+      <div class="col-lg-4">
+        <img
+          class=""
+          src="{{ asset('assetF/') }}img/team-logone.png"
+          alt="image équipe logone"
+        />
+      </div>
     </div>
   </div>
 </section>
+{{ include("include/frontoffice/footer.html.twig") }}
 {% endblock %}
