@@ -377,7 +377,7 @@ button:focus {
     #3fe1ff
   );
   border: 2px solid transparent;
-  color: #222222;
+  color: #fff;
   box-shadow: none;
 }
 .primary_btn.tr-bg:hover {
@@ -389,7 +389,7 @@ button:focus {
     #00c5f4,
     #3fe1ff
   );
-  border: double 2px transparent;
+  border: double 2px #3fe1ff;
   color: #ffffff;
 }
 .primary_btn:hover {
@@ -401,8 +401,8 @@ button:focus {
     #00c5f4,
     #3fe1ff
   );
-  border: 2px solid #006ebf;
-  color: #222222;
+  border: 2px solid #3fe1ff;
+  color: #fff;
   box-shadow: none;
   background-clip: border-box;
 }

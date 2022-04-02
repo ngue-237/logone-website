@@ -1,6 +1,6 @@
 {% extends 'baseF.html.twig'%} {% block title %} Categories-Services | Logone {%
 endblock %} {% block meta %}
-<meta name="description" content="">
+<meta name="description" content="" />
 <meta
   name="keywords"
   content="MARKETING DIGITAL, RELATION CLIENT, CENTRE D'APPEL, EXTERNALISATION-CENTRE-APPEL-TUNISIE"
@@ -43,7 +43,13 @@ include('include/frontoffice/header.html.twig')%}
               {{ catg.description|u.truncate(150,true)|raw }}
               ...
             </p>
-            <a href="{{ path('services', { slug: catg.slug }) }}"> Voir plus</a>
+            <a
+              title="lien nos services de la catégorie : {{ catg.slug }}"
+              href="{{ path('services', { slug: catg.slug }) }}"
+              class="primary_btn"
+            >
+              <span>Voir plus</span>
+            </a>
           </div>
         </a>
       </div>
@@ -55,6 +61,7 @@ include('include/frontoffice/header.html.twig')%}
   </div>
 </section>
 
+{#
 <div class="testimonial_area section_gap_bottom">
   <div class="container">
     <div class="row justify-content-center">
@@ -172,6 +179,7 @@ include('include/frontoffice/header.html.twig')%}
     </div>
   </div>
 </div>
+#}
 
 {{ include("include/frontoffice/footer.html.twig") }}
 {% endblock %}
