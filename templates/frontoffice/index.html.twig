@@ -10,8 +10,9 @@ include('include/frontoffice/header.html.twig')%}
     <div class="container">
       <div class="row">
         <div class="col-lg-7">
-          <div class="main_title text-left" style="margin-bottom: -500px">
-            <h2>Nous Connaitre</h2>
+          <div class="main_title text-left" style="margin-bottom: -500px; position:relative; top: -118px;">
+            <h2>Qui sommes <br>
+               nous ?</h2>
             <p>
               Entreprise jeune, dynamique et portée par une forte ambition,
               <strong><span style="color: black">LOGONE</span></strong>
@@ -20,18 +21,26 @@ include('include/frontoffice/header.html.twig')%}
             <p>
               Notre savoir faire réside sur notre capacité à allier tallent,
               nouvelle technologie et efficacité afin d'offrir une prèstation
-              sur mesure et des compétences aux standars internationnaux.
+              sur mesure et des compétences aux standars internationnaux...
             </p>
+            <div style="margin-top: 20px; ">
+              <a style="margin-right: 10px" class="primary_btn" href="{{path("about")}}"
+                ><span>Qui sommes nous ?</span></a
+              >
+              <a class="primary_btn tr-bg" href="#ns-solutions"
+                ><span>Nos solutions</span></a
+              >
+            </div>
           </div>
         </div>
         <div class="col-lg-5">
           <div
             class="home_right_img"
-            style="position: relative; top: -60px; right: -100px"
+            style="position: relative; top: -60px; right: 0px"
           >
             <img
               class=""
-              src="{{ asset('assetF/') }}img/banner/home-img.png"
+              src="{{ asset('assetF/') }}img/home-image.png"
               alt=""
             />
           </div>
@@ -42,44 +51,12 @@ include('include/frontoffice/header.html.twig')%}
 </section>
 <!--================ End Home Banner Area =================-->
 
-<!--================ Start About Us Area =================-->
-{#
-<section class="about_area section_gap" id="about-us">
-  <div class="container">
-    <div class="row justify-content-start align-items-center">
-      <div class="col-lg-5">
-        <div class="about_img">
-          <img class="" src="{{ asset('assetF/') }}img/about-us.png" alt="" />
-        </div>
-      </div>
-
-      <div class="offset-lg-1 col-lg-5">
-        <div class="main_title text-left">
-          <h2>Qui sommes nous?</h2>
-          <p>
-            Entreprise jeune, dynamique et portée par une forte ambition, LOGONE
-            Est une équipe de personnes issus d’origine et culture différente.
-          </p>
-          <p>
-            Notre savoir faire réside sur notre capacité à allier tallent,
-            nouvelle technologie et efficacité afin d'offrir une prèstation sur
-            mesure et des compétences aux standars internationnaux.
-          </p>
-          <a class="primary_btn" href="{{ path('about') }}"
-            ><span>Voir plus</span></a
-          >
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-#}
 <section class="features_area">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-8 text-center">
         <div class="main_title">
-          <h2>Nos solutions</h2>
+          <h2 id="ns-solutions">Nos solutions</h2>
           <p>
             Is give may shall likeness made yielding spirit a itself togeth
             created after sea <br />
@@ -167,7 +144,7 @@ include('include/frontoffice/header.html.twig')%}
               <p>{{ category.content | raw }}</p>
               <a
                 title="lien vers notre article sur : {{ category.slug }}"
-                href="{{ path('article_detail', { slug: category.slug }) }}"
+                href="{{ path('blog_by_categorie', { slug: category.slug }) }}"
                 class="primary_btn"
               >
                 <span>Voir plus</span>
