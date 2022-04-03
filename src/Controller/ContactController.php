@@ -106,9 +106,14 @@ class ContactController extends AbstractController
      * @return Response
      * @Route("/admin/contact_delete/{id}", name="contact_delete")
      */
-    public function deleteContact(Contact $conctact , EntityManagerInterface $em):Response{
+    public function deleteContact(
+        Contact $conctact , 
+        EntityManagerInterface $em,
+        FlashyNotifier $flashy
+        ):Response{
         $em->remove($conctact);
         $em->flush();
+        $flashy->success("Delete successfully","");
         return $this->redirectToRoute('contact_list');
     }
 

@@ -1,5 +1,5 @@
-{% extends 'baseF.html.twig'%} {% block title %} Services-categories | Logone {%
-endblock %} {% block meta %}
+{% extends 'baseF.html.twig'%} {% block title %} {{ categories.slug }} | Logone
+{% endblock %} {% block meta %}
 <meta
   name="description"
   content="{{ categories.description|u.truncate(250,true)|raw }}"

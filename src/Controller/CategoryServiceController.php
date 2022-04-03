@@ -10,9 +10,12 @@ use App\services\ImageManagerService;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\CategoryServiceRepository;
 use Symfony\Component\HttpFoundation\Request;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CategoryServiceController extends AbstractController
@@ -45,13 +48,17 @@ class CategoryServiceController extends AbstractController
      * @param CategoryServiceRepository $rep
      * @param EntityManagerInterface $em
      * @return Response
-     * @Route("/admin/delete_category_service/{idCatg}", name="category_service_delete")
+     * @Route("/admin/delete_category_service/{slug}", name="category_service_delete")
      */
-    public function deleteCategoryService($idCatg, CategoryServiceRepository $rep, EntityManagerInterface $em):Response
+    public function deleteCategoryService(
+        CategoryService $catg,
+        EntityManagerInterface $em,
+        FlashyNotifier $flashy
+        ):Response
     {
-        $catg = $rep->find($idCatg);
         $em->remove($catg);
         $em->flush();
+        $flashy->success("Deleted successfully","");
         return $this->redirectToRoute('category_service_list');
     }
 
@@ -61,13 +68,28 @@ class CategoryServiceController extends AbstractController
      * @return Response
      * @Route("/admin/add_category_service", name="category_service_add", methods={"GET","POST"})
      */
-    public function addCategoryService(EntityManagerInterface $em, Request $req, ImageManagerService $imageManager):Response{
+    public function addCategoryService(
+        EntityManagerInterface $em, 
+        Request $req,
+        FlashyNotifier $flashy
+    ):Response{
         $catg = new CategoryService();
         $form = $this->createForm(CategoryServiceType::class, $catg);
+        $form->add('imageFile', VichImageType::class,[
+                'label'=>false,
+                 'required'=>false,
+                 'allow_delete'=>true,
+                 'download_uri' => false,
+                 'image_uri' => true,
+                 "constraints"=>[
+                     new NotNull()
+                 ]
+                 ]);
         $form->handleRequest($req);
         if($form->isSubmitted() and $form->isValid()){
             $em->persist($catg);
             $em->flush();
+            $flashy->success("Added successfully !","");
             return $this->redirectToRoute('category_service_list');
         }
         return $this->render('backoffice/category/add_category.html.twig',[
@@ -81,18 +103,27 @@ class CategoryServiceController extends AbstractController
      * @param CategoryServiceRepository $rep
      * @param Request $req
      * @return Response
-     * @Route("/admin/edit_category_service/{idCatg}", name="category_service_edit")
+     * @Route("/admin/edit_category_service/{slug}", name="category_service_edit")
      */
     public function modifierCategoryService(
-        $idCatg, EntityManagerInterface $em, 
-        CategoryServiceRepository $rep, 
-        Request $req):Response
+        CategoryService $catg, 
+        EntityManagerInterface $em, 
+        Request $req,
+        FlashyNotifier $flashy
+    ):Response
     {
-        $catg = $rep->find($idCatg);
         $form = $this->createForm(CategoryServiceType::class, $catg);
+        $form->add('imageFile', VichImageType::class,[
+                'label'=>false,
+                 'required'=>false,
+                 'allow_delete'=>true,
+                 'download_uri' => false,
+                 'image_uri' => true,
+        ]);
         $form->handleRequest($req);
         if($form->isSubmitted() and $form->isValid()){
             $em->flush();
+            $flashy->success("Edited successfully !","");
             return $this->redirectToRoute('category_service_list');
         }
         return $this->render('backoffice/category/modify_category_service.html.twig',[

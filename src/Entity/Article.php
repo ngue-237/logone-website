@@ -11,10 +11,15 @@ use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File\UploadedFIle;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
  *  @Vich\Uploadable
+ *  @UniqueEntity(
+ *     fields = {"title"},
+ *     message="This title already exist"
+ * )
  */
 class Article
 {

@@ -186,10 +186,15 @@ class DevisController extends AbstractController
      * @return Response
      * @Route("/admin/devis_delete/{id}", name="devis_delete", methods={"GET" ,"DELETE"})
      */
-    public function deleteDevis(Devis $devis, EntityManagerInterface $em, $id):Response{
+    public function deleteDevis(
+        Devis $devis, 
+        EntityManagerInterface $em,
+        FlashyNotifier $flashy
+    ):Response{
         
         $em->remove($devis);
         $em->flush();
+        $flashy->success("Delete successfully","");
         return $this->redirectToRoute('devis_lists');
     }
 }

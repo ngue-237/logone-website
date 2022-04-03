@@ -62,14 +62,14 @@
                     <td>
                       <a
                         href="{{
-                          path('category_service_edit', { idCatg: catg.id })
+                          path('category_service_edit', { slug: catg.slug })
                         }}"
                       >
                         <i class="far fa-edit"></i></a
                       >&nbsp;
                       <a
                         href="{{
-                          path('category_service_delete', { idCatg: catg.id })
+                          path('category_service_delete', { slug: catg.slug })
                         }}"
                       >
                         <i class="fas fa-trash-alt"></i

@@ -10,7 +10,9 @@ use App\Repository\CategoryArticleRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class CategoryArticleController extends AbstractController
 {
@@ -35,6 +37,16 @@ class CategoryArticleController extends AbstractController
 
         $categoryArticle = new CategoryArticle();
         $form = $this->createForm(CategoryArticleType::class, $categoryArticle);
+        $form->add('imageFile', VichImageType::class,[
+                'label'=>false,
+                 'required'=>false,
+                 'allow_delete'=>true,
+                 'download_uri' => false,
+                'image_uri' => true,
+                "constraints"=>[
+                    new NotNull()
+                ]
+        ]);
         $form->handleRequest($req);
         if($form->isSubmitted() and $form->isValid()){
             $em->persist($categoryArticle);
@@ -77,6 +89,13 @@ class CategoryArticleController extends AbstractController
     ):Response{
 
         $form = $this->createForm(CategoryArticleType::class, $categoryArticle);
+        $form->add('imageFile', VichImageType::class,[
+                'label'=>false,
+                 'required'=>false,
+                 'allow_delete'=>true,
+                 'download_uri' => false,
+                'image_uri' => true,
+        ]);
         $form->handleRequest($req);
         if($form->isSubmitted() and $form->isValid()){
             $em->persist($categoryArticle);

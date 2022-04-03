@@ -2,21 +2,26 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Sluggable\Util\Urlizer;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\Collection;
 use App\Repository\CategoryArticleRepository;
-use DateTime;
 use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints\Date;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File\UploadedFIle;
-use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryArticleRepository::class)
  * @Vich\Uploadable
+ * @UniqueEntity(
+ *     fields = {"title"},
+ *     message="This title already exist"
+ * )
  */
 class CategoryArticle
 {

@@ -3,16 +3,9 @@
 <section class="contact_area section_gap">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-12">
+      <div class="col-lg-8">
         <h1>Je m'inscris !</h1>
-        <div class="row alert-danger"></div>
-        {% form_theme form 'bootstrap_4_layout.html.twig' %} {# {% if errors %}
-        <div class="alert alert-danger">
-          {% for error in errors %}
-          {{ error }}
-          {% endfor %}
-        </div>
-        {% endif %} #}
+        {% form_theme form 'bootstrap_4_layout.html.twig' %}
         {{ form_start(form) }}
         <div class="row" id="contactForm" novalidate="novalidate">
           <div class="col-lg-6">
@@ -106,6 +99,15 @@
               });
           });
         </script>
+      </div>
+      <div
+        class="col-lg-4"
+        style="position: relative; top: -100px; left: -75px"
+      >
+        <img
+          src="{{ asset('assetF/') }}img/login-logone.png"
+          alt="image équipe logone"
+        />
       </div>
     </div>
   </div>

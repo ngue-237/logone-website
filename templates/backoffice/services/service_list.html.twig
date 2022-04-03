@@ -26,7 +26,7 @@
             Ajouter un service</a
           >
         </div>
-
+        {# {{ dump(app.flashes) }} #}
         <div class="card shadow mb-4">
           <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">
@@ -66,17 +66,11 @@
                       {{ service.category.designation }}
                     </td>
                     <td>
-                      <a
-                        href="{{
-                          path('service_edit', { idService: service.id })
-                        }}"
-                      >
+                      <a href="{{ path('service_edit', { id: service.id }) }}">
                         <i class="far fa-edit"></i></a
                       >&nbsp;
                       <a
-                        href="{{
-                          path('service_delete', { idService: service.id })
-                        }}"
+                        href="{{ path('service_delete', { id: service.id }) }}"
                       >
                         <i class="fas fa-trash-alt"></i></a
                       >&nbsp;

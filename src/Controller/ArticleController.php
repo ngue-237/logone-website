@@ -2,21 +2,23 @@
 
 namespace App\Controller;
 
+use App\Entity\Like;
 use App\Entity\Article;
 use App\Entity\Comments;
-use App\Entity\Like;
 use App\Form\ArticleType;
 use App\Form\CommentType;
-use App\Repository\ArticleRepository;
-use App\Repository\CategoryArticleRepository;
-use App\Repository\LikeRepository;
 use App\services\CommentService;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\LikeRepository;
+use App\Repository\ArticleRepository;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\CategoryArticleRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ArticleController extends AbstractController
 {
@@ -108,8 +110,18 @@ class ArticleController extends AbstractController
     public function addArticle(Request $req, EntityManagerInterface $em ){
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
+        $form->add('imageFile', VichImageType::class,[
+                'label'=>false,
+                 'required'=>false,
+                 'allow_delete'=>true,
+                 'download_uri' => false,
+                'image_uri' => true,
+                'delete_label' => 'Supprimez cette image',
+                "constraints"=>[
+                    new NotNull(),
+                ]
+                ]);
         $form->handleRequest($req);
-
         if($form->isSubmitted() and $form->isValid()){
             $article->setCreatedAt(new \DateTime('now'));
             //dd($article);
@@ -133,8 +145,14 @@ class ArticleController extends AbstractController
      */
     public function editArticle(Request $req, EntityManagerInterface $em, Article $article):Response{
         $form = $this->createForm(ArticleType::class, $article);
+        $form->add('imageFile', VichImageType::class,[
+                'label'=>false,
+                 'required'=>false,
+                 'allow_delete'=>true,
+                 'download_uri' => false,
+                'image_uri' => true,
+                ]);
         $form->handleRequest($req);
-
         if($form->isSubmitted() and $form->isValid()){
             $em->flush();
             return $this->redirectToRoute('article_list_admin');

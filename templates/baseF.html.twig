@@ -20,24 +20,20 @@
       async="async"
     ></script>
     <meta charset="UTF-8" />
-    <title>{% block title %}{% endblock %}</title>
-    <meta charset="utf-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    {% block meta %}{% endblock %} {# Run `composer require
-    symfony/webpack-encore-bundle` to start using Symfony UX #} {% block
-    stylesheets %}
+    {% block meta %}{% endblock %}
+    <title>{% block title %}{% endblock %}</title>
+    {# Run `composer require symfony/webpack-encore-bundle` to start using
+    Symfony UX #} {% block stylesheets %}
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
     />
-    <link
-      rel="shortcut icon"
-      href="{{ asset('assetF/') }}favicon.png"
-      type="image/png"
-    />
+
     <link
       rel="stylesheet"
       href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}"
@@ -80,11 +76,13 @@
     />
     <!-- main css -->
     <link rel="stylesheet" href="{{ asset('assetF/') }}css/style.css" />
+    <link rel="icon" href="{{ asset('assetF') }}/img/Logone-logo-fav.png" />
+    {#
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>"
     />
-    {#
+    #} {#
     {{
       encore_entry_link_tags("app")
     }}

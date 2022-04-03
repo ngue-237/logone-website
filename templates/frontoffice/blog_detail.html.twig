@@ -1,10 +1,10 @@
 {% extends 'baseF.html.twig'%} {% block title %} {{ article.slug }} | Logone {%
-endblock %} {% block meta %} {#
+endblock %} {% block meta %}
 <meta
   name="description"
   content="{{ article.content|u.truncate(250,true)|raw }}"
 />
-#}
+
 <meta name="keywords" content="{{ categoryArticle.slug }}" />
 <meta name="author" content="{{ article.author }}" />
 
@@ -22,8 +22,6 @@ endblock %} {% block meta %} {#
           <div class="col-lg-12">
             <div class="feature-img">
               <img class="img-fluid" src="{{asset('uploads/images/article/' ~ article.image ) | imagine_filter("blog_image")
-
-
 
 
 

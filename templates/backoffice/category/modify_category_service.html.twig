@@ -27,8 +27,10 @@
                       Ajouter une cathégorie !
                     </h1>
                   </div>
+                  {% form_theme form 'bootstrap_4_layout.html.twig' %}
                   {{ form_start(form) }}
                   <div class="user">
+                    {{ form_errors(form) }}
                     <div class="form-group">
                       {{
                         form_row(form.designation, {

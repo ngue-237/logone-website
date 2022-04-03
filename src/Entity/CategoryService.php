@@ -10,10 +10,15 @@ use App\Repository\CategoryServiceRepository;
 use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryServiceRepository::class)
  *  @Vich\Uploadable
+ * @UniqueEntity(
+ *     fields = {"designation"},
+ *     message="This title already exist"
+ * )
  */
 class CategoryService
 {

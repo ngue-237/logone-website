@@ -2,12 +2,12 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Service;
 use App\Form\ServiceType;
 use App\Repository\CategoryServiceRepository;
 use App\Repository\ServiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,7 +56,11 @@ class ServiceController extends AbstractController
      * @return Response
      * @Route("/admin/service_add", name="service_add")
      */
-    public function addService(EntityManagerInterface $em, Request $req):Response{
+    public function addService(
+        EntityManagerInterface $em, 
+        Request $req,
+        FlashyNotifier $flashy
+        ):Response{
         $service = new Service();
         $form= $this->createForm(ServiceType::class, $service);
         $form->handleRequest($req);
@@ -65,6 +69,7 @@ class ServiceController extends AbstractController
             $service->setUpdatedAt(new \DateTime('now'));
             $em->persist($service);
             $em->flush();
+            $flashy->success("Added successfully ! ",'');
             return $this->redirectToRoute('service_list');
         }
 
@@ -79,13 +84,17 @@ class ServiceController extends AbstractController
      * @param $id
      * @param EntityManagerInterface $em
      * @return Response
-     * @Route("/admin/delete_service/{idService}", name="service_delete")
+     * @Route("/admin/delete_service/{id}", name="service_delete")
      */
-    public function deleteService($idService, EntityManagerInterface $em, ServiceRepository $rep):Response{
-        $service = $rep->find($idService);
+    public function deleteService(
+        Service $service, 
+        EntityManagerInterface $em,
+        FlashyNotifier $flashy
+        ):Response{
+       
         $em->remove($service);
         $em->flush();
-
+        $flashy->success("Deleted successfully ! ",'');
     return $this->redirectToRoute('service_list');
     }
 
@@ -95,16 +104,22 @@ class ServiceController extends AbstractController
      * @param ServiceRepository $rep
      * @param EntityManagerInterface $em
      * @return Response
-     * @Route("/admin/edit_service/{idService}", name="service_edit")
+     * @Route("/admin/edit_service/{id}", name="service_edit")
      */
-    public function editService($idService, Request $req, ServiceRepository $rep, EntityManagerInterface $em):Response{
-        $service = $rep->find($idService);
+    public function editService(
+        Service $service,
+        Request $req, 
+        EntityManagerInterface $em,
+        FlashyNotifier $flashy
+        ):Response{
+       
         $form= $this->createForm(ServiceType::class, $service);
         $form->handleRequest($req);
 
         if($form->isSubmitted() and $form->isValid()){
             $service->setUpdatedAt(new \DateTime('now'));
             $em->flush();
+            $flashy->success("Edited successfully! ",'');
             return $this->redirectToRoute('service_list');
         }
        return $this->render('backoffice/services/edit_service.html.twig', [

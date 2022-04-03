@@ -64,7 +64,7 @@ block content %}
                   alt="{{ article.title }}"
                 />
                 <div class="blog_details">
-                  <a href="single-blog.html">
+                  <a href="{{ path('article_detail', { slug: article.slug }) }}">
                     <h2>{{ article.title | title }}</h2>
                   </a>
                   <p>

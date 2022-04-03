@@ -44,9 +44,8 @@ endblock %} {% block content %}
             </button>
           </div>
         </form>
-        <p class="">
+        <p style="margin-top: 20px">
           <a
-            class=""
             href="{{ path('security_register') }}"
             title="lien de création d'un compte"
             >Je n'ai pas encore de compte</a
@@ -54,17 +53,18 @@ endblock %} {% block content %}
         </p>
         <p>
           <a
-            class=""
             href="{{ path('app_forgotten_password') }}"
             title="lien de réinitialisation d'un compte"
             >Mot de passe oublié</a
           >
         </p>
       </div>
-      <div class="col-lg-4">
+      <div
+        class="col-lg-4"
+        style="position: relative; top: -150px; left: -75px"
+      >
         <img
-          class=""
-          src="{{ asset('assetF/') }}img/team-logone.png"
+          src="{{ asset('assetF/') }}img/login-logone.png"
           alt="image équipe logone"
         />
       </div>
