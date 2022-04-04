@@ -26,6 +26,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DevisController extends AbstractController
@@ -47,7 +48,8 @@ class DevisController extends AbstractController
          DevisService $devisHelper,
          FlashyNotifier $flashy,
          MaillerService $mailer,
-         CurlService $client
+         CurlService $client,
+         $slug
         ):Response{
         $devis = new Devis();
         $form = $this->createFormBuilder(['categories'=>$categoryService])
@@ -131,29 +133,29 @@ class DevisController extends AbstractController
             ]
         ])
             ->getForm();
-
+        $devisRoute = $this->generateUrl("devis_add",["slug"=>$slug],UrlGeneratorInterface::ABSOLUTE_URL);
+        //dd($devisRoute);
         $form->handleRequest($req);
         if($form->isSubmitted() and $form->isValid()){
             $url = "https://www.google.com/recaptcha/api/siteverify?secret=6Lc96AYfAAAAAEP84ADjdx5CBfEpgbTyYqgemO5n&response={$form->get("captcha")->getData()}";
-            //dd($url);
+            $response = $client->curlManager($url);
+            //dd("hellp");
             if(empty($response) || is_null($response)){
-                
                 $flashy->error("Something wrong!",'');
-                return $this->redirectToRoute('categorie_service_all');
+                return $this->redirect($devisRoute);
+
             }else{
                 $data = json_decode($response);
-                if($data->success){
-                    $response = $client->curlManager($url);
+                if($data->success){    
+                    $devisSet = new Devis();
+                    $devisSet = $devisHelper->setDevis($devis, $form);
                             
-                        $devisSet = new Devis();
-                        $devisSet = $devisHelper->setDevis($devis, $form);
-                            
-                        $flashy->success("Un email de confirmation vous a-été envoyé à l'adresse ".$form->get("email")->getData(),'');
+                    $flashy->success("Un email de confirmation vous a-été envoyé à l'adresse ".$form->get("email")->getData(),'');
 
-                        return $this->redirectToRoute('categorie_service_all');
+                    return $this->redirect($devisRoute);
                 }else{
                     $flashy->error("Confirm you are not robot!",'');
-                    return $this->redirectToRoute('categorie_service_all');
+                    return $this->redirect($devisRoute);
                 }
             }
             

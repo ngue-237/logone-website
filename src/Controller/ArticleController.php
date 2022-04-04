@@ -7,17 +7,23 @@ use App\Entity\Article;
 use App\Entity\Comments;
 use App\Form\ArticleType;
 use App\Form\CommentType;
+use App\services\CurlService;
 use App\services\CommentService;
 use App\Repository\LikeRepository;
 use App\Repository\ArticleRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\CategoryArticleRepository;
 use App\Repository\CommentsRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Contracts\Cache\ItemInterface;
+use Knp\Component\Pager\PaginatorInterface;
+use App\Repository\CategoryArticleRepository;
 use Symfony\Component\HttpFoundation\Request;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ArticleController extends AbstractController
@@ -46,32 +52,66 @@ class ArticleController extends AbstractController
          CategoryArticleRepository $categoryArtRepo,
          EntityManagerInterface $em,
          ArticleRepository $articleRepo,
-         CommentsRepository $commentRepo
+         CommentsRepository $commentRepo,
+         PaginatorInterface $paginator,
+         CurlService $curl,
+         FlashyNotifier $flashy,
+         $slug
          ):Response
          {
-             $comment = new Comments();//Créer un model de commentaire pour le formulaire
+             $cache  = new FilesystemAdapter();
+             $comment = new Comments();
              $categoryArticle = $categoryArtRepo->find($article->getCategoryArticle());
              
-             $comments = $commentRepo->findByAllComment();
+        
              $categoriesArticle = $categoryArtRepo->findAll();
-             //dd($categoryArticle);
-
             
              $form = $this->createForm(CommentType::class, $comment);
              $form->handleRequest($req);
+                $blogDetailRoute = $this->generateUrl("article_detail", ["slug"=>$slug], UrlGeneratorInterface::ABSOLUTE_URL);
              if($form->isSubmitted() and $form->isValid()){
-                // dd($form->getData());
-                $comment = $form->getData();
-                $commentService->persistComment($form->getData(), $article);
+                $url = "https://www.google.com/recaptcha/api/siteverify?secret=6Lc96AYfAAAAAEP84ADjdx5CBfEpgbTyYqgemO5n&response={$form->get("catcha")->getData()}";
+                
+                $response = $curl->curlManager($url);
+                if(empty($response) || is_null($response)){
+                        $flashy->warning("Something wrong!",'');
+                        return $this->redirect($blogDetailRoute);
+                }else{
+                $data = json_decode($response);
+                if($data->success){
+                   $commentService->persistComment($form->getData(), $article);
+                   $flashy->success('Votre commentaire a bien été envoyé, merci. Il sera publié après validation','');
+                    return $this->redirect($blogDetailRoute);
+                }else{
+                    $flashy->error("Confirm you are not robot!",'');
+                    return $this->redirect($blogDetailRoute);
+                }
 
+            }  
                 return $this->redirectToRoute('article_detail', ['slug'=> $article->getSlug()]);
              }
-            $article->setView($article->getView() + 1);   
-            $em->flush() ;
-            $articleOrderByView = $articleRepo->findAllByView();
-        
 
-        
+            $article->setView($article->getView() + 1);   
+            $em->flush();
+            //dd($commentRepo->findByAllComment($article->getId()));
+
+             //mis en cache des données
+             $article = $cache->get("article-article-detail-page".$article->getSlug(), function(ItemInterface $item) use($article){
+                $item->expiresAfter(2); 
+                return $article;
+             });
+            //je prende le cache de la page blog-by-category
+             $articleOrderByView= $cache->get("article-order-by-view-blog-by-categorie-page",function(ItemInterface $item) use($articleRepo, $paginator,$req){
+                $item->expiresAfter(200000); 
+                
+                return $paginator->paginate($articleRepo->findAllOderByDate(), $req->query->getInt('page', 1),3);
+             });
+
+             $comments = $cache->get("article-comments-article-detail-page".$article->getSlug(), function(ItemInterface $item) use($commentRepo, $article){
+                $item->expiresAfter(2); 
+                return $commentRepo->findByAllComment($article->getId());
+             });
+        //dd($commentRepo->findByAllComment($article->getId()));
         return $this->renderForm('frontoffice/blog_detail.html.twig', 
         compact(
             'article', 
@@ -105,6 +145,7 @@ class ArticleController extends AbstractController
              $comments = $commentService->allCommentPublished();
              $categoriesArticle = $categoryArtRepo->findAll();
              //dd($categoryArticle);
+            
 
             
              $form = $this->createForm(CommentType::class, $comment);

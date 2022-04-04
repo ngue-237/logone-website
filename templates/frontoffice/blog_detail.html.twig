@@ -93,9 +93,9 @@ endblock %} {% block meta %}
         </div>
 
         <div class="comments-area">
-          <h4>Commentaires : {{ article.comments | length }}</h4>
+          <h4>Commentaires : {{ comments | length }}</h4>
           <div class="comment-list">
-            {% for comment in article.comments %}
+            {% for comment in comments %}
             <div class="single-comment justify-content-between d-flex">
               <div class="user justify-content-between d-flex">
                 <div class="thumb">
@@ -144,6 +144,7 @@ endblock %} {% block meta %}
           <h4>Laissez un Commentaire</h4>
 
           <div class="form">
+            {% form_theme form 'bootstrap_4_layout.html.twig' %}
             {{ form_start(form) }}
             <div class="form-group">
               {{
@@ -304,8 +305,21 @@ endblock %} {% block meta %}
   </div>
 </section>
 {{ include("include/frontoffice/footer.html.twig") }}
+
 <script></script>
-#} {% endblock %} {% block javascripts %}
+{% endblock %} {% block javascripts %}
+<script src="https://www.google.com/recaptcha/api.js?render=6Lc96AYfAAAAAAJsKTsNdyF4yBBWVnt5rWll8Dbe"></script>
+<script>
+  grecaptcha.ready(function () {
+    grecaptcha
+      .execute("6Lc96AYfAAAAAAJsKTsNdyF4yBBWVnt5rWll8Dbe", {
+        action: "homepage",
+      })
+      .then(function (token) {
+        document.getElementById("comment_catcha").value = token;
+      });
+  });
+</script>
 <script>
   const LIKE_ICON = "far fa-thumbs-up";
   const UNLIKE_ICON = "fas fa-thumbs-down";

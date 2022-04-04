@@ -9,26 +9,24 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 class CommentService extends AbstractController
 {
     private $manager;
-    private $flash;
+    private $flashy;
     private $userRepo;
     private $commentRepo;
     
 
     public function __construct(
         EntityManagerInterface $manager, 
-        FlashyNotifier $flash,
+        FlashyNotifier $flashy,
         UserRepository $userRepo,
         CommentsRepository $commentRepo
         )
     {
         $this->manager= $manager;
-        $this->flash = $flash;
+        $this->flashy = $flashy;
         $this->userRepo = $userRepo;
         $this->commentRepo = $commentRepo;
     }
@@ -38,6 +36,7 @@ class CommentService extends AbstractController
         Article $article
         ):void
     {
+       
         $comment->setCreatedAt(new DateTime('now'))
             ->setIsPublished(false)
             ->setArticle($article)
@@ -46,13 +45,13 @@ class CommentService extends AbstractController
 
         $this->manager->persist($comment);
         $this->manager->flush();
-        $this->flash->success('Votre commentaire a bien été envoyé, merci. Il sera publié après validation','');
+        
     }
 
     public function removeComment(Comments $comment){
         $this->manager->remove($comment);
         $this->manager->flush();
-        $this->flash->success('Success delete !','');
+        $this->flashy->success('Success delete !','');
     }
 
     public function allCommentPublished():array{

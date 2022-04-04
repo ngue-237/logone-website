@@ -45,6 +45,14 @@ class CommentsRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllByDate(){
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Comments[] Returns an array of Comments objects
     //  */
@@ -66,26 +74,28 @@ class CommentsRepository extends ServiceEntityRepository
      * @return Comments[] Returns an array of Comments objects
      */
     
-    public function findByAllComment()
+    public function findByAllComment($id)
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.isPublished = :isPublished')
             ->setParameter('isPublished', 1)
+            ->andWhere("c.article= :id")
+            ->setParameter(':id',$id)
             ->orderBy('c.createdAt', 'DESC')
             ->getQuery()
             ->getResult()
         ;
     }
 
-    public function findAllCommentIspublished(){
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.isPublished = :val')
-            ->setParameter('val', 1)
-            ->orderBy('a.createdAt', 'DESC')
-            ->getQuery()
-            ->getResult()
-        ;
-    }
+    // public function findAllCommentIspublished(){
+    //     return $this->createQueryBuilder('a')
+    //         ->andWhere('a.isPublished = :val')
+    //         ->setParameter('val', 1)
+    //         ->orderBy('a.createdAt', 'DESC')
+    //         ->getQuery()
+    //         ->getResult()
+    //     ;
+    // }
 
     /*
     public function findOneBySomeField($value): ?Comments

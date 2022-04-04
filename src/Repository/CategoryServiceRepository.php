@@ -45,6 +45,15 @@ class CategoryServiceRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllByDate()
+    {
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.updatedAt', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return CategoryService[] Returns an array of CategoryService objects
     //  */

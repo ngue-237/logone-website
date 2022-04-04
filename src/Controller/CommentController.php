@@ -23,7 +23,7 @@ class CommentController extends AbstractController
     {
         //dd($commentRepo->findAll());
         return $this->render('backoffice/comments/list_comment.html.twig', [
-            'comments' => $commentRepo->findAll(),
+            'comments' => $commentRepo->findAllByDate(),
         ]);
     }
 
@@ -41,10 +41,12 @@ class CommentController extends AbstractController
         Request $req
     ){
         $submittedToken = $req->request->get('token');
-        
+      
         if ($this->isCsrfTokenValid('publish-comment', $submittedToken)) {
+            
              $comment->setIsPublished(true);
              $em->flush();
+            //  dd("hello boy");
             return $this->redirectToRoute('admin_comments_list');
         }
         return $this->redirectToRoute('admin_comments_list');
@@ -64,8 +66,9 @@ class CommentController extends AbstractController
             return $this->redirectToRoute('admin_comments_list');
     }
 
+    // public function addComment(){
 
-
+    // }
 
     /**
      * Permet de supprimer un comment via par son identifiant

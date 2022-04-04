@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Contracts\Cache\ItemInterface;
 
 class OffreEmploiController extends AbstractController
 {
@@ -35,24 +37,17 @@ class OffreEmploiController extends AbstractController
      */
     public function readjobsFront(Request $request, PaginatorInterface $pag, OffreEmploiRepository $rep)
     {
-        $offres = $rep->findAll();
-        $filtre = $request->get("searchaj");
+    
         $candidature = new Candidature();
         $form = $this->createForm(CandidatureType::class,$candidature);
-        $data = $rep->getdata($filtre);
 
-        $jobs = $pag->paginate($data, $request->query->getInt('page', 1), 4);
-        $nb = $rep->countday($filtre);
-        //dd($offres);
-
-        if ($request->get('ajax')) {
-            return new JsonResponse([
-                'content' => $this->renderView('frontoffice/offre_emploi/listoffresfront.html.twig', [
-                    'list' => $jobs, 'nb' => $nb,
-                    'form' => $form->createView()
-                ])
-            ]);
-        }
+        
+        $cache = new FilesystemAdapter();
+        $offres = $cache->get("jobs-join-us-page", function() use($rep, $request, $pag){
+            return $pag->paginate($rep->findAll(), $request->query->getInt('page', 1), 4);
+        });
+      
+        
         return $this->render('frontoffice/offre_emploi/listoffresfront.html.twig', [
             'list' => $offres,
             'form' => $form->createView()
@@ -113,12 +108,31 @@ class OffreEmploiController extends AbstractController
         $candidature = new Candidature();
         $form = $this->createForm(CandidatureType::class,$candidature);
         
+        $cache = new FilesystemAdapter();
+        $job = $cache->get("offre-emploi-join-us-page".$offreEmploi->getSlug(), function() use($offreEmploi) {
+            return $offreEmploi;
+        });
+
+        $allJobs = $cache->get("all-job-join-us-page", function() use($req, $paginator, $offreEmploiRepo){
+            return $paginator->paginate($offreEmploiRepo->findAll(), $req->query->getInt('page', 1), 5);
+        });
+        
+        $allCatgService = $cache->get("categorie-service", function() use($req, $paginator,$catgServiceRepo){
+            return $paginator->paginate($catgServiceRepo->findAll(), $req->query->getInt('page', 1), 5);
+        });
+
+        $allCatgsArticle = $cache->get("categorie-article", function(ItemInterface $item) use($paginator, $req,$catgArticleRepo){
+             $item->expiresAfter(604800000);
+            return $paginator->paginate($catgArticleRepo->findAll(), $req->query->getInt('page', 1), 3);
+        });
+
+
         return $this->render('frontoffice/offre_emploi/jobdetails.html.twig', [
-            'job' => $offreEmploi,
-            "allJobs"=>$offreEmploiRepo->findAll(),
+            'job' => $job,
+            "allJobs"=>$allJobs,
              'form' => $form->createView(),
-            "allCatgService"=>$paginator->paginate($catgServiceRepo->findAll(), $req->query->getInt('page', 1), 5),
-            "allCatgsArticle"=>$paginator->paginate($catgArticleRepo->findAll(), $req->query->getInt('page', 1), 5),
+            "allCatgService"=>$allCatgService,
+            "allCatgsArticle"=>$allCatgsArticle,
         ]);
     }
 

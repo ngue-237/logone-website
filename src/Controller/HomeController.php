@@ -9,9 +9,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Contracts\Cache\ItemInterface;
 
 class HomeController extends AbstractController
 {
+    
     /**
      * @Route("/", name="home")
      */
@@ -22,9 +25,21 @@ class HomeController extends AbstractController
         CategoryArticleRepository $categoryArtRepo
     ): Response
     {
+        $cache = new FilesystemAdapter();
+        
+        $categoriesService = $cache->get("categorie-service", function(ItemInterface $item) use ($catgServiceRepo,$paginator, $req){
+             $item->expiresAfter(2);   
+            return $paginator->paginate($catgServiceRepo->findAllByDate(), $req->query->getInt('page', 1), 4);
+        });
+
+        $catgoriesArticle = $cache->get("categorie-article", function(ItemInterface $item) use($paginator, $req,$categoryArtRepo){
+             $item->expiresAfter(2);
+            return $paginator->paginate($categoryArtRepo->findAllByDate(), $req->query->getInt('page', 1), 3);
+        });
+
         return $this->render('frontoffice/index.html.twig', [
-           'categoriesService'=>$paginator->paginate($catgServiceRepo->findAll(), $req->query->getInt('page', 1), 4),
-           "catgoriesArticle" => $paginator->paginate($categoryArtRepo->findAll(), $req->query->getInt('page', 1), 3),
+           'categoriesService'=>$categoriesService ,
+           "catgoriesArticle" => $catgoriesArticle,
         ]);
     }
 

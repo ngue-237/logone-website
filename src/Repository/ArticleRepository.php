@@ -57,7 +57,6 @@ class ArticleRepository extends ServiceEntityRepository
             ->andWhere('a.isPublished = :val')
             ->setParameter('val', 1)
             ->orderBy('a.view', 'ASC')
-            ->setMaxResults(6)
             ->getQuery()
             ->getResult()
         ;
@@ -72,11 +71,13 @@ class ArticleRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findAllByPublished()
+    public function findAllByPublished($id)
     {
         return $this->createQueryBuilder('a')
             ->andWhere('a.isPublished = :val')
             ->setParameter('val', 1)
+            ->andWhere('a.categoryArticle= :id')
+            ->setParameter('id', $id)
             ->orderBy('a.createdAt', 'DESC')
             ->getQuery()
             ->getResult()

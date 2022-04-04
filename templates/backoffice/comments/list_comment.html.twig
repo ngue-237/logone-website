@@ -98,7 +98,7 @@
                     </button>
                       {% else %}
                         <form action="{{ path('admin_comment_publish', { id: comment.id  }) }}" method="post">
-                      <input type="hidden" name="token" value="{{ csrf_token('publish-article') }}"/>
+                      <input type="hidden" name="token" value="{{ csrf_token('publish-comment') }}"/>
 
                       <button type="submit" style="background:none; border:none; outline:none;">
                           <div class="custom-control custom-checkbox small">

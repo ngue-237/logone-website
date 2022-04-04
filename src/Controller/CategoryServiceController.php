@@ -16,7 +16,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Contracts\Cache\ItemInterface;
 
 class CategoryServiceController extends AbstractController
 {
@@ -38,8 +40,13 @@ class CategoryServiceController extends AbstractController
      * @Route("/categories-services", name="categorie_service_all")
      */
     public function allCategoriesService(CategoryServices $categoryService, Request $req):Response{
+        $cache = new FilesystemAdapter();
+
         return $this->render('frontoffice/category_services.html.twig', [
-            'catgs' => $categoryService->getAllCategoryService($req),
+            'catgs' => $cache->get("category-service-page".md5(uniqid()), function(ItemInterface $item) use( $req, $categoryService){
+                $item->expiresAfter(604800000);
+                return $categoryService->getAllCategoryService($req);
+            }),
         ]);
     }
 

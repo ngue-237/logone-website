@@ -4,14 +4,16 @@ namespace App\Controller;
 
 use App\Entity\Service;
 use App\Form\ServiceType;
-use App\Repository\CategoryServiceRepository;
 use App\Repository\ServiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use MercurySeries\FlashyBundle\FlashyNotifier;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Contracts\Cache\ItemInterface;
+use App\Repository\CategoryServiceRepository;
 use Symfony\Component\HttpFoundation\Request;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ServiceController extends AbstractController
 {
@@ -33,15 +35,26 @@ class ServiceController extends AbstractController
      */
     public function serviceList(EntityManagerInterface $em, $slug, CategoryServiceRepository $rep): Response
     {
-        $categories = $rep->findOneBy(['slug'=>$slug]);
+        $cache = new FilesystemAdapter();
         
+        $categories = $cache->get("service-page-categorie".$slug, function(ItemInterface $item) use ($rep, $slug){
+             $item->expiresAfter(604800000);
+            return $rep->findOneBy(['slug'=>$slug]);
+        });
+
         if(!$categories){
             throw $this->createNotFoundException("cette cathégorie n'existe pas");
         }
         
-        $query = $em->createQuery("select s From App\Entity\Service s where s.category = :id")
-            ->setParameter("id", $categories->getId());
-        $services = $query->getResult();
+        $services = $em->createQuery("select s From App\Entity\Service s where s.category = :id")
+            ->setParameter("id", $categories->getId())
+            ->getResult();
+        
+        $services = $cache->get("service-page-service-".$slug, function(ItemInterface $item) use($services){
+            
+            $item->expiresAfter(604800000);
+            return $services;
+        });
        
         return $this->render('frontoffice/services.html.twig', [
             'services' => $services,

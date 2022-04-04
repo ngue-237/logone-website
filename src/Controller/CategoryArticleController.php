@@ -106,34 +106,4 @@ class CategoryArticleController extends AbstractController
 
         return $this->renderForm('backoffice/categoryArticle/edit_category_article.html.twig',compact('form','categoryArticle'));
     }
-
-    //  /**
-    //  * @param Images $image
-    //  * @Route("/admin/delete/images_category_service/{id}", name="category_article_delete_images", methods={"DELETE"})
-    //  */
-    // public function deleteImageCategory(
-    //     Images $image,
-    //     Request $req,
-    //     EntityManagerInterface $em){
-    //     $data = json_decode($req->getContent(), true);
-
-    //     // On vérifie si le token est valide
-    //     if($this->isCsrfTokenValid('delete'.$image->getId(), $data['_token'])){
-    //         // On récupère le nom de l'image
-    //         $nom = $image->getName();
-    //         // On supprime le fichier
-    //         unlink($this->getParameter('images_directory').'/'.$nom);
-
-    //         // On supprime l'entrée de la base
-            
-    //         $em->remove($image);
-    //         $em->flush();
-
-    //         // On répond en json
-    //         return new JsonResponse(['success' => 1]);
-    //     }else{
-    //         return new JsonResponse(['error' => 'Token Invalide'], 400);
-    //     }
-
-    // }
 }
