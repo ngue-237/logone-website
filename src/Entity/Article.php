@@ -95,6 +95,11 @@ class Article
      */
     private $likes;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isPublished;
+
     
 
     
@@ -298,6 +303,18 @@ class Article
             }
         }
         return false;
+   }
+
+   public function getIsPublished(): ?bool
+   {
+       return $this->isPublished;
+   }
+
+   public function setIsPublished(?bool $isPublished): self
+   {
+       $this->isPublished = $isPublished;
+
+       return $this;
    }
    
 

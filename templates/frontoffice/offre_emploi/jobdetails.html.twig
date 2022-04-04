@@ -2,7 +2,7 @@
 {% endblock %} {% block meta %}
 <meta
   name="description"
-  content="{{ job.description|u.truncate(250,true)|raw }}"
+  content=""
 />
 {% endblock %} {% block content %}
 
@@ -62,11 +62,11 @@
             <div style="text-align: center">
               <a
                 title="lien vers notre offre d'emplois  : {{ job.slug }}"
-                href="{{ path('apply', { slug: job.slug }) }}"
+                href=""
                 class="primary_btn"
-                style="margin-top: 10px"
+                style="margin-top: 10px" data-toggle="modal" data-target="#exampleModalCenter"
               >
-                <span>Je postule</span>
+                <span >Je postule</span>
               </a>
             </div>
           </div>
@@ -124,8 +124,9 @@
     </div>
   </div>
 </section>
-<!--================Blog Area =================-->
-
+{% set submit_url = path('apply', { slug: job.slug }) %}
+{% include 'frontoffice/candidature/modal.html.twig' with {url: submit_url} %}
 <!--================Footer Area =================-->
 {{ include("include/frontoffice/footer.html.twig") }}
 #} {% endblock %}
+

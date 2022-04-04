@@ -10,9 +10,9 @@ use App\Form\CommentType;
 use App\services\CommentService;
 use App\Repository\LikeRepository;
 use App\Repository\ArticleRepository;
-use Doctrine\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\CategoryArticleRepository;
+use App\Repository\CommentsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,7 +28,7 @@ class ArticleController extends AbstractController
     public function index(ArticleRepository $articleRepo): Response
     {
         return $this->render('backoffice/article/article_list_admin.html.twig', [
-            'articles' => $articleRepo->findAll(),
+            'articles' => $articleRepo->findAllOderByDate(),
         ]);
     }
 
@@ -40,6 +40,57 @@ class ArticleController extends AbstractController
      * @Route("/blog/{slug}", name="article_detail", methods={"GET", "POST"})
      */
     public function articleDetail(
+        Article $article,
+         Request $req,
+         CommentService $commentService,
+         CategoryArticleRepository $categoryArtRepo,
+         EntityManagerInterface $em,
+         ArticleRepository $articleRepo,
+         CommentsRepository $commentRepo
+         ):Response
+         {
+             $comment = new Comments();//Créer un model de commentaire pour le formulaire
+             $categoryArticle = $categoryArtRepo->find($article->getCategoryArticle());
+             
+             $comments = $commentRepo->findByAllComment();
+             $categoriesArticle = $categoryArtRepo->findAll();
+             //dd($categoryArticle);
+
+            
+             $form = $this->createForm(CommentType::class, $comment);
+             $form->handleRequest($req);
+             if($form->isSubmitted() and $form->isValid()){
+                // dd($form->getData());
+                $comment = $form->getData();
+                $commentService->persistComment($form->getData(), $article);
+
+                return $this->redirectToRoute('article_detail', ['slug'=> $article->getSlug()]);
+             }
+            $article->setView($article->getView() + 1);   
+            $em->flush() ;
+            $articleOrderByView = $articleRepo->findAllByView();
+        
+
+        
+        return $this->renderForm('frontoffice/blog_detail.html.twig', 
+        compact(
+            'article', 
+            'form', 
+            'comments',
+            'categoriesArticle',
+            'articleOrderByView',
+            'categoryArticle'
+        ));
+    }
+
+    /**
+     * permet d'afficher les détail d'un article
+     * permet également d'ajouter un commentaire via le service persistComment
+     * @param Article $article
+     * @return Response
+     * @Route("/admin/article/{slug}", name="article_preview", methods={"GET", "POST"})
+     */
+    public function articlePreview(
         Article $article,
          Request $req,
          CommentService $commentService,
@@ -83,21 +134,52 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * Undocumented function
+     * permet à l'admin de publier un commentaire
      *
-     * @param Comments $comment
-     * @param Request $req
      * @param EntityManagerInterface $em
+     * @param CommentsRepository $commentRepo
      * @return void
-     * @Route("/blog/{slug}/comment", name="article_comment_add")
+     * @Route("/admin/comment-publish/{slug}", name="admin_article_publish")
      */
-    public function addComment (Article $article , Request $req, EntityManagerInterface $em){
-        $validToken = $req->request->get('csrf_token');
-        if($this->isCsrfTokenValid('comment', $validToken)){
-            
+    public function publish(
+        EntityManagerInterface $em,
+        Article $article,
+        Request $req
+    ){
+        $submittedToken = $req->request->get('token');
+        
+        
+        if ($this->isCsrfTokenValid('publish-article', $submittedToken)) {
+
+            if($article->getIsPublished()){
+            $article->setIsPublished(false);
+             $em->flush();
+            }else{
+             $article->setIsPublished(true);
+             $em->flush();
+            }
+            return $this->redirectToRoute('article_list_admin');
         }
-        return $this->json(['code'=>200, 'message'=>'ça marche bien!']);
+
+        return $this->redirectToRoute('article_list_admin');
     }
+
+    // /**
+    //  * Undocumented function
+    //  *
+    //  * @param Comments $comment
+    //  * @param Request $req
+    //  * @param EntityManagerInterface $em
+    //  * @return void
+    //  * @Route("/blog/{slug}/comment", name="article_comment_add")
+    //  */
+    // public function addComment (Article $article , Request $req, EntityManagerInterface $em){
+    //     $validToken = $req->request->get('csrf_token');
+    //     if($this->isCsrfTokenValid('comment', $validToken)){
+            
+    //     }
+    //     return $this->json(['code'=>200, 'message'=>'ça marche bien!']);
+    // }
 
      /**
      * permet d'ajouter un article de blog
@@ -114,7 +196,7 @@ class ArticleController extends AbstractController
                 'label'=>false,
                  'required'=>false,
                  'allow_delete'=>true,
-                 'download_uri' => false,
+                 'download_uri' => false,           
                 'image_uri' => true,
                 'delete_label' => 'Supprimez cette image',
                 "constraints"=>[
@@ -123,9 +205,8 @@ class ArticleController extends AbstractController
                 ]);
         $form->handleRequest($req);
         if($form->isSubmitted() and $form->isValid()){
-            $article->setCreatedAt(new \DateTime('now'));
-            //dd($article);
-            
+            $article->setCreatedAt(new \DateTime('now'));   
+            $article->setIsPublished(false);     
             $em->persist($article);
             $em->flush();
             return $this->redirectToRoute('article_list_admin');
@@ -217,7 +298,5 @@ class ArticleController extends AbstractController
         return $this->json(['code'=>200,'message'=>'Like bien ajouté','likes'=>$likeRepo->count(['article'=>$article])],200);
     }
 
-    public function newsletter(EntityManagerInterface $manager, LikeRepository $likeRepo):Response{
-
-    }
+    
 }

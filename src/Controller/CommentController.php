@@ -47,6 +47,7 @@ class CommentController extends AbstractController
              $em->flush();
             return $this->redirectToRoute('admin_comments_list');
         }
+        return $this->redirectToRoute('admin_comments_list');
     }
     /**
      * Permet à l'administrateur de supprimer un commentaire

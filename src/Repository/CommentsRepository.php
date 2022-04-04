@@ -72,7 +72,16 @@ class CommentsRepository extends ServiceEntityRepository
             ->andWhere('c.isPublished = :isPublished')
             ->setParameter('isPublished', 1)
             ->orderBy('c.createdAt', 'DESC')
-            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findAllCommentIspublished(){
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.isPublished = :val')
+            ->setParameter('val', 1)
+            ->orderBy('a.createdAt', 'DESC')
             ->getQuery()
             ->getResult()
         ;

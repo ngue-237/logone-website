@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class CandidatureController extends AbstractController
 {
@@ -26,10 +27,10 @@ class CandidatureController extends AbstractController
       
         $form = $this->createForm(CandidatureType::class,$candidature);
         $data = $rep->findAll();
-
         $jobs = $pag->paginate($data, $request->query->getInt('page', 1), 4);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
+            //dd($candidature,$request->getContent());
             $offre->addCandidature($candidature);
             $candidature->addOffreEmploi($offre);
             $candidature->setStatus(false);
@@ -47,37 +48,12 @@ class CandidatureController extends AbstractController
         ]);
     }
     /**
-     * @Route("/postuler", name="postuler")
-     */
-    public function addCandidat(Request $request,EntityManagerInterface $em): Response
-    {
-        $candidature = new Candidature();
-        $offre = $em->getRepository(OffreEmploi::class)->find(3);
-        $form = $this->createForm(CandidatureType::class,$candidature);
-        $form->handleRequest($request);
-        if($form->isSubmitted()){
-            //dd($ca)
-            $offre->addCandidature($candidature);
-            $candidature->addOffreEmploi($offre);
-            $candidature->setStatus(false);
-            $em->persist($offre);
-            $em->persist($candidature);
-            $em->flush();
-            return new Response();
-        }
-        return new Response();
-        
-    }
-
-    /**
      * @Route("/admin/delete_candidat/{id}", name="delete_candidat")
      */
     public function deleteCandidat($id, EntityManagerInterface $em)
     {
         $candidature = $em->getRepository(Candidature::class)->find($id);
-        //dd($candidature);
         $em->remove($candidature);
-        //dd($candidature);
         $em->flush();
         
         return $this->redirectToRoute('jobslist_back');

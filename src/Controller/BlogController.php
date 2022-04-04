@@ -18,26 +18,14 @@ class BlogController extends AbstractController
      * @Route("/blog", name="blog", methods={"GET"})
      */
     public function index(
-        ArticleRepository $articleRepo, 
         CategoryArticleRepository $categoryArtRepo,
         PaginatorInterface $paginator,
         Request $req
         ): Response
     {
-             $categories = $paginator->paginate(
-                $categoryArtRepo->findAll(), 
-            $req->query->getInt('page', 1), /*page number*/
-            5/*limit per page*/
-        );
         
-        //      $articles = $paginator->paginate(
-        //         $articleRepo->findAll(), 
-        //     $req->query->getInt('page', 1), /*page number*/
-        //     4/*limit per page*/
-        // );
         return $this->render('frontoffice/blog.html.twig', [
-            // 'articles' => $articles,
-            'catgoriesArticle'=>$categories
+            'catgoriesArticle'=>$paginator->paginate($categoryArtRepo->findAll(),$req->query->getInt('page', 1),5),
         ]);
     }
 
@@ -62,7 +50,7 @@ class BlogController extends AbstractController
     {
         
         return $this->render('frontoffice/blog_by_categorie.html.twig', [
-            'articles' => $paginator->paginate($articleRepo->findBy(['categoryArticle' => $categoryArticle,]), $req->query->getInt('page', 1),5),
+            'articles' => $paginator->paginate($articleRepo->findAllByPublished(), $req->query->getInt('page', 1),5),
             "articleOrderByView"=>$articleRepo->findAllByView(),
             "categoriesArticle" => $paginator->paginate($categoryArtRepo->findAll(), $req->query->getInt('page', 1), 3),
             "categoriesService"=>$paginator->paginate($categServiceRepo->findAll(), $req->query->getInt('page', 1), 6) ,

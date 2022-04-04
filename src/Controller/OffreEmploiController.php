@@ -110,10 +110,13 @@ class OffreEmploiController extends AbstractController
         Request $req
     ):Response
     {
+        $candidature = new Candidature();
+        $form = $this->createForm(CandidatureType::class,$candidature);
+        
         return $this->render('frontoffice/offre_emploi/jobdetails.html.twig', [
             'job' => $offreEmploi,
             "allJobs"=>$offreEmploiRepo->findAll(),
-             
+             'form' => $form->createView(),
             "allCatgService"=>$paginator->paginate($catgServiceRepo->findAll(), $req->query->getInt('page', 1), 5),
             "allCatgsArticle"=>$paginator->paginate($catgArticleRepo->findAll(), $req->query->getInt('page', 1), 5),
         ]);

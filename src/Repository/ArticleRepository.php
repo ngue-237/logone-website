@@ -52,14 +52,50 @@ class ArticleRepository extends ServiceEntityRepository
     public function findAllByView()
     {
         return $this->createQueryBuilder('a')
+            ->andWhere('a.isPublished = :val')
+            ->setParameter('val', 1)
+            ->andWhere('a.isPublished = :val')
+            ->setParameter('val', 1)
             ->orderBy('a.view', 'ASC')
             ->setMaxResults(6)
             ->getQuery()
             ->getResult()
         ;
     }
+
+    public function findAllOderByDate()
+    {
+        return $this->createQueryBuilder('a')
+            ->orderBy('a.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findAllByPublished()
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.isPublished = :val')
+            ->setParameter('val', 1)
+            ->orderBy('a.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
     
 
+    // public function findByisPublished($val): ?Article
+    // {
+    //     return $this->createQueryBuilder('c')
+    //         ->andWhere('c.isPublished = :isPublished')
+    //         ->setParameter('isPublished', $val)
+    //         ->orderBy('c.createdAt', 'DESC')
+    //         ->setMaxResults(10)
+    //         ->getQuery()
+    //         ->getResult()
+    //     ;
+    // }
+    
     /*
     public function findOneBySomeField($value): ?Article
     {

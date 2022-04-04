@@ -41,6 +41,7 @@ class CommentService extends AbstractController
         $comment->setCreatedAt(new DateTime('now'))
             ->setIsPublished(false)
             ->setArticle($article)
+            ->setIsPublished(false)
             ->setUser($this->userRepo->find($this->getUser()->getId()));
 
         $this->manager->persist($comment);
