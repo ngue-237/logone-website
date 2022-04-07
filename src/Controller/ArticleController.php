@@ -13,6 +13,7 @@ use App\Repository\LikeRepository;
 use App\Repository\ArticleRepository;
 use App\Repository\CommentsRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sonata\SeoBundle\Seo\SeoPageInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\CategoryArticleRepository;
@@ -56,9 +57,13 @@ class ArticleController extends AbstractController
          PaginatorInterface $paginator,
          CurlService $curl,
          FlashyNotifier $flashy,
-         $slug
+         $slug,
+         SeoPageInterface $seoPage
          ):Response
          {
+
+            
+
              $cache  = new FilesystemAdapter();
              $comment = new Comments();
              $categoryArticle = $categoryArtRepo->find($article->getCategoryArticle());
@@ -111,7 +116,17 @@ class ArticleController extends AbstractController
                 $item->expiresAfter(2); 
                 return $commentRepo->findByAllComment($article->getId());
              });
-        //dd($commentRepo->findByAllComment($article->getId()));
+
+            $seoPage
+                ->setTitle($article->getSlug())
+                ->addMeta('name', 'description', $article->getContent())
+                ->addMeta('name', 'keywords', $article->getSlug())
+                ->addMeta('name', 'author', $article->getAuthor())
+                ->addMeta('property', 'og:title', $article->getSlug())
+                ->addMeta('property', 'og:type', 'blog')
+                ->addMeta('property', 'og:description', $article->getContent())
+            ;
+        
         return $this->renderForm('frontoffice/blog_detail.html.twig', 
         compact(
             'article', 
@@ -119,7 +134,7 @@ class ArticleController extends AbstractController
             'comments',
             'categoriesArticle',
             'articleOrderByView',
-            'categoryArticle'
+            'categoryArticle',
         ));
     }
 

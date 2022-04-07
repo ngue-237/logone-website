@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminController extends AbstractController
 {
     /**
-     * @Route("/admin_dashboard", name="admin_dashboard")
+     * @Route("/admin-logone", name="admin_dashboard")
      */
     public function index(): Response
     {

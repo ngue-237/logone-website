@@ -2,10 +2,8 @@
 block meta %}
 <meta name="description" content="" />
 <meta name="keywords" content="" />
-{% endblock %} {% block content %}
-
-<!--================ Start Header Area =================-->
-{% include('include/frontoffice/header.html.twig')%}
+{% endblock %} {% block content %} {% block bodyClass %} blog_version{% endblock
+%}
 
 <!--================Blog Categorie Area =================-->
 <section class="blog_categorie_area section_gap_top">
@@ -15,9 +13,10 @@ block meta %}
         <div class="main_title">
           <h2>Nos actualités</h2>
           <p>
-            Is give may shall likeness made yielding spirit a itself togeth
-            created after sea is in beast <br />
-            beginning signs open god you're gathering ithe
+            Suivez les dernières actualités du marketing digital et du growth
+            hacking. Au programme : SEO, SEA, Google Ads, Amazon et Social
+            Media. Le blog de l'Agence 90 a pour vocation de partager les
+            dernières évolutions relatives au webmarketing.
           </p>
         </div>
       </div>
@@ -42,7 +41,7 @@ block meta %}
               <a
                 title="lien vers notre article sur : {{ category.slug }}"
                 href="{{ path('blog_by_categorie', { slug: category.slug }) }}"
-                class="primary_btn"
+                class="genric-btn success circle"
               >
                 <span>Voir plus</span>
               </a>

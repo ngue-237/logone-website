@@ -1,44 +1,12 @@
 {% extends 'baseF.html.twig'%} {% block title %} A propos | Logone {% endblock
 %} {% block meta %}
 <meta name="description" content="" />
-<meta name="keywords" content="" />
+<meta
+  name="keywords"
+  content="LOGONE, MARKETING DIGITAL, E-REPUTATION SEO, SEA, RELATION CLIENT, ASSITANCE VIRTUELLE, CALL CENTER, RSE"
+/>
 {% endblock %} {% block content %}
-{{ include("include/frontoffice/header.html.twig") }}
-<!--================ Start About Us Area =================-->
-{#
-<section class="about_area section_gap">
-  <div class="container">
-    <div class="row justify-content-start align-items-center">
-      <div class="col-lg-5">
-        <div class="about_img">
-          <img class="" src="img/about-us.png" alt="" />
-        </div>
-      </div>
 
-      <div class="offset-lg-1 col-lg-5">
-        <div class="main_title text-left">
-          <h2>
-            let’s <br />
-            Introduce about <br />
-            myself
-          </h2>
-          <p>
-            Whose given. Were gathered. There first subdue greater. Bearing you
-            Whales heaven midst their. Beast creepeth. Fish days.
-          </p>
-          <p>
-            Is give may shall likeness made yielding spirit a itself together
-            created after sea is in beast beginning signs open god you're
-            gathering whose gathered cattle let. Creature whales fruit unto meat
-            the life beginning all in under give two.
-          </p>
-          <a class="primary_btn" href="#"><span>Download CV</span></a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-#}
 <style>
   .bg-us {
     margin-bottom: 100px;
@@ -60,7 +28,10 @@
 
       <div class="col-lg-5" style="word-wrap: break-word">
         <div class="main_title text-left">
-          <h2>Nous Connaitre</h2>
+          <h2>
+            Qui sommes <br />
+            nous ?
+          </h2>
           <p>
             Entreprise jeune, dynamique et portée par une forte ambition,
             <strong><span style="color: black">LOGONE</span></strong>
@@ -77,30 +48,9 @@
   </div>
 </section>
 <section class="about_area" style="margin-top: 100px">
-  <div class="container" style="text-align: center; word-wrap: break-word">
-    <div class="main_title">
-      <h2>les cinq piliers de notre engagement RSE</h2>
-      <p>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis vitae
-        nihil eos, fugiat necessitatibus aut. Minus porro, reiciendis
-        praesentium nisi tenetur sed inventore dicta fugiat optio enim laborum
-        expedita ullam illum perspiciatis itaque sint cum, quaerat unde delectus
-        obcaecati.
-      </p>
-    </div>
-    <div class="row" style="margin-top: -10px">
-      <img
-        src="{{ asset('assetF/') }}img/RSE_LOGONE.jpg"
-        alt="infographie RSE LOGONE"
-      />
-    </div>
-  </div>
-  <br />
-</section>
-<section class="about_area" style="margin-bottom: 200px; margin-top: -20px">
   <div class="container" style="text-align: center">
     <div class="main_title" style="margin-bottom: 50px">
-      <h2>les cinq piliers de notre engagement RSE</h2>
+      <h2>MINDSET LOGONE</h2>
       <p>
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis vitae
         nihil eos, fugiat necessitatibus aut. Minus porro, reiciendis
@@ -118,7 +68,20 @@
   </div>
   <br />
 </section>
-
+<section class="about_area" style="margin-bottom: 200px; margin-top: 20px">
+  <div class="container" style="text-align: center; word-wrap: break-word">
+    <div class="main_title">
+      <h2>les cinq piliers de notre engagement RSE</h2>
+    </div>
+    <div class="row" style="margin-top: -20px">
+      <img
+        src="{{ asset('assetF/') }}img/RSE_LOGONE.jpg"
+        alt="infographie RSE LOGONE"
+      />
+    </div>
+  </div>
+  <br />
+</section>
 {#
 <section class="about_area" style="margin-bottom: 200px">
   <div class="container">

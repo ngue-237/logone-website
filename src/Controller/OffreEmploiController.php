@@ -6,18 +6,19 @@ use App\Entity\Candidature;
 use App\Entity\OffreEmploi;
 use App\Form\CandidatureType;
 use App\Form\OffreEmploiType;
-use App\Repository\CategoryArticleRepository;
-use App\Repository\CategoryServiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\OffreEmploiRepository;
+use Sonata\SeoBundle\Seo\SeoPageInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use App\Repository\CategoryArticleRepository;
+use App\Repository\CategoryServiceRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use Symfony\Contracts\Cache\ItemInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class OffreEmploiController extends AbstractController
 {
@@ -102,7 +103,8 @@ class OffreEmploiController extends AbstractController
         CategoryServiceRepository $catgServiceRepo,
         CategoryArticleRepository $catgArticleRepo,
         PaginatorInterface $paginator,
-        Request $req
+        Request $req,
+        SeoPageInterface $seoPage
     ):Response
     {
         $candidature = new Candidature();
@@ -122,10 +124,16 @@ class OffreEmploiController extends AbstractController
         });
 
         $allCatgsArticle = $cache->get("categorie-article", function(ItemInterface $item) use($paginator, $req,$catgArticleRepo){
-             $item->expiresAfter(604800000);
             return $paginator->paginate($catgArticleRepo->findAll(), $req->query->getInt('page', 1), 3);
         });
 
+        $seoPage
+                ->setTitle($job->getSlug())
+                ->addMeta('name', 'description', $job->getDescription())
+                ->addMeta('name', 'keywords', $job->getSlug())
+                ->addMeta('property', 'og:title', $job->getSlug())
+                ->addMeta('property', 'og:description', $job->getDescription())
+            ;
 
         return $this->render('frontoffice/offre_emploi/jobdetails.html.twig', [
             'job' => $job,

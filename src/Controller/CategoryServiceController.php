@@ -43,10 +43,7 @@ class CategoryServiceController extends AbstractController
         $cache = new FilesystemAdapter();
 
         return $this->render('frontoffice/category_services.html.twig', [
-            'catgs' => $cache->get("category-service-page".md5(uniqid()), function(ItemInterface $item) use( $req, $categoryService){
-                $item->expiresAfter(604800000);
-                return $categoryService->getAllCategoryService($req);
-            }),
+            'catgs' => $categoryService->getAllCategoryService($req),
         ]);
     }
 

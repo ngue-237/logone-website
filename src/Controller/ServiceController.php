@@ -6,6 +6,7 @@ use App\Entity\Service;
 use App\Form\ServiceType;
 use App\Repository\ServiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sonata\SeoBundle\Seo\SeoPageInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use App\Repository\CategoryServiceRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,12 +34,18 @@ class ServiceController extends AbstractController
      * @Route("/categories-services/services/{slug}", name="services", methods={"GET"} )
      * 
      */
-    public function serviceList(EntityManagerInterface $em, $slug, CategoryServiceRepository $rep): Response
+    public function serviceList(
+        EntityManagerInterface $em, 
+        $slug, 
+        CategoryServiceRepository $rep,
+        SeoPageInterface $seoPage
+
+        ): Response
     {
         $cache = new FilesystemAdapter();
         
         $categories = $cache->get("service-page-categorie".$slug, function(ItemInterface $item) use ($rep, $slug){
-             $item->expiresAfter(604800000);
+             $item->expiresAfter(2);
             return $rep->findOneBy(['slug'=>$slug]);
         });
 
@@ -51,11 +58,18 @@ class ServiceController extends AbstractController
             ->getResult();
         
         $services = $cache->get("service-page-service-".$slug, function(ItemInterface $item) use($services){
-            
-            $item->expiresAfter(604800000);
+            $item->expiresAfter(2);
             return $services;
         });
-       
+
+        $seoPage
+                ->setTitle($categories->getSlug())
+                ->addMeta('name', 'description', $categories->getDescription())
+                ->addMeta('property', 'og:title', $categories->getSlug())
+                ->addMeta('property', 'og:type', 'blog')
+                ->addMeta('property', 'og:description', $categories->getDescription())
+            ;
+
         return $this->render('frontoffice/services.html.twig', [
             'services' => $services,
             'categories'=>$categories,

@@ -3,7 +3,10 @@
     <nav class="navbar navbar-expand-lg navbar-light">
       <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
-        <a class="navbar-brand logo_h" href="{{ path('home') }}"
+        <a
+          class="navbar-brand logo_h"
+          style="position: relative; right: 30px"
+          href="{{ path('home') }}"
           ><img src="{{ asset('assetF/') }}img/logo.png" alt=""
         /></a>
         <button
@@ -31,43 +34,16 @@
             <li class="nav-item">
               <a class="nav-link" href="{{ path('about') }}">Logone</a>
             </li>
-            {#
-            <li class="nav-item submenu dropdown">
-              <a
-                href="{{ path('about') }}"
-                class="nav-link dropdown-toggle"
-                data-toggle="dropdown"
-                role="button"
-                aria-haspopup="true"
-                aria-expanded="false"
-                >Logone</a
-              >
-              <ul class="dropdown-menu">
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ path('about') }}"
-                    >Nous connaitre</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Notre Vision</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Notre Mission</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Nos Valeurs</a>
-                </li>
-              </ul>
-            </li>
-            #}
             <li class="nav-item">
               <a class="nav-link" href="{{ path('categorie_service_all') }}"
                 >Services</a
               >
             </li>
+            {#
             <li class="nav-item">
               <a class="nav-link" href="{{ path('app_rdv') }}">rdv</a>
             </li>
+            #}
             <li class="nav-item">
               <a class="nav-link" href="{{ path('blog') }}">Blog</a>
             </li>

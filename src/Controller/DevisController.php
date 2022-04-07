@@ -167,6 +167,31 @@ class DevisController extends AbstractController
     }
 
     /**
+     * activation de du compte grâce au token
+     *
+     * @return void
+     * @Route("/services/devis/confirmation/{confirm}", name="confirmation-devis")
+     */
+    public function DevisConfirmation(
+        Devis $devis, 
+        EntityManagerInterface $em,
+        FlashyNotifier $flash
+        ){
+
+        if(!$devis){
+            throw $this->createNotFoundException("Ce devis n'existe pas");
+        }
+        $devis->setConfirm(null);
+        $em->persist($devis);
+        $em->flush();
+
+        //message flash
+        $flash->success("Votre demande à bien été confirmé !", "");
+        return $this->redirectToRoute('home');
+        
+    }
+
+    /**
      * liste tout les devis qui sont dans la bd dans l'ordre décroissant
      *
      * @param DevisRepository $devisRepo

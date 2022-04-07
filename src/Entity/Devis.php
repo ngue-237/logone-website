@@ -72,6 +72,11 @@ class Devis
      */
     private $rgpd;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $confirm;
+
     
 
     
@@ -196,6 +201,18 @@ class Devis
     public function setRgpd(?bool $rgpd): self
     {
         $this->rgpd = $rgpd;
+
+        return $this;
+    }
+
+    public function getConfirm(): ?string
+    {
+        return $this->confirm;
+    }
+
+    public function setConfirm(?string $confirm): self
+    {
+        $this->confirm = $confirm;
 
         return $this;
     }

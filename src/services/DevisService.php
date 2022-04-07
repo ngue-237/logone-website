@@ -3,19 +3,23 @@ namespace App\services;
 
 use App\Entity\Devis;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
 class DevisService{
     private $devis;
     private $em;
     private $mailer;
+    private $tokenGenarator;
 
     public function __construct(
         EntityManagerInterface $em, 
-        MaillerService $mailer
+        MaillerService $mailer,
+        TokenGeneratorInterface $tokenGenarator
         )
     {
         $this->em=$em;
         $this->mailer = $mailer;
+        $this->tokenGenarator = $tokenGenarator;
     }
 
    
@@ -28,6 +32,8 @@ class DevisService{
             $devis->setCountry($form->get("country")->getData());
             $devis->setSubject($form->get("subject")->getData());
             $devis->setCategories($form->get("categories")->getData());
+            $devis->setConfirm($this->tokenGenarator->generateToken());
+            $devis->setRgpd(true);
             $devis->setCreatedAt(new \DateTime());
             $this->em->persist($devis);
             $this->em->flush();
@@ -36,11 +42,12 @@ class DevisService{
             $this->mailer->send(
                 "Demande de devis",
                 $form->get("email")->getData(),
-                "email/contact.html.twig",
+                "email/devis.html.twig",
                 [
                 "message"=> $form->get("subject")->getData(), 
                 "lastname"=> $form->get("lastname")->getData(), 
-                "firstname"=> $form->get("firstname")->getData()
+                "firstname"=> $form->get("firstname")->getData(),
+                "confirm" => $devis->getConfirm()
                 ],
                 "emmanuelbenjamin.nguetoungoum@esprit.tn"
             );

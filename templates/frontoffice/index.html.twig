@@ -1,33 +1,39 @@
 {% extends 'baseF.html.twig'%} {% block title %} Accueil | Logone {% endblock %}
 {% block meta %}
-<meta name="description" content="" />
-<meta name="keywords" content="" />
-{% endblock %} {% block content %} {%
-include('include/frontoffice/header.html.twig')%}
+<meta name="description" content="LOGONE est une agence de communication digital qui vous accompagne dans votre stratégie digitale, e-réputation et l'augmentation de votre chiffre d'affaires. 
+Notre expertise s'étend aux leviers majeurs liés au développement de votre visibilité digitale et à la gestion de la relation client, à savoir: la création de votre site internet, 
+l'optimisation de votre visibilité Google à travers le référencement naturel (SEO) et référencement payant (Google Ads et Google Shopping), 
+l'amélioration de votre présence sur les réseaux sociaux, et une assistance virtuelle de vos client. " />
+<meta name="keywords" content="LOGONE, MARKETING DIGITAL, E-REPUTATION SEO, SEA, RELATION CLIENT, ASSITANCE VIRTUELLE, CALL CENTER, RSE" />
+{% endblock %} {% block content %} 
+<style>
+  @media screen and (max-width:1199px) {
+    .actuality-section{
+      margin-bottom: -2000px;
+    }
+  }
+</style>
 
-<section class="home_banner_area">
+<section class="about_area section_gap">
   <div class="banner_inner">
     <div class="container">
       <div class="row">
         <div class="col-lg-7">
-          <div class="main_title text-left" style="margin-bottom: -500px; position:relative; top: -118px;">
-            <h2>Qui sommes <br>
-              nous ?</h2>
+          <div class="main_title text-left" >
+             
+            <h2>PARTENAIRE <br>
+              DE VOTRE CROISSANCE</h2>
             <p>
-              Entreprise jeune, dynamique et portée par une forte ambition,
-              <strong><span style="color: black">LOGONE</span></strong>
-              est une équipe de personnes issus d’origine et culture différente.
-            </p>
-            <p>
-              Notre savoir faire réside sur notre capacité à allier tallent,
-              nouvelle technologie et efficacité afin d'offrir une prèstation
-              sur mesure et des compétences aux standars internationnaux...
+              <span style="color: #4cd3e3; font-weight:bold">LOGONE</span> est une agence de communication digital qui vous accompagne dans votre stratégie digitale, e-réputation et l'augmentation de votre chiffre d'affaires. 
+              Notre expertise s'étend aux leviers majeurs liés au développement de votre <span style="color: #4cd3e3; font-weight:bold">visibilité digitale</span> et à la <span style="color: #4cd3e3; font-weight:bold">gestion de la relation client</span>, 
+              à savoir: la création de votre site internet, l'optimisation de votre visibilité Google à travers le référencement naturel (SEO) et 
+              référencement payant (Google Ads et Google Shopping), l'amélioration de votre présence sur les réseaux sociaux, et une assistance virtuelle de vos client. 
             </p>
             <div style="margin-top: 20px; ">
-              <a style="margin-right: 10px" class="primary_btn" href="{{path("about")}}"
+              <a style="margin-right: 10px" class="genric-btn success  circle" href="{{path("about")}}"
                 ><span>Qui sommes nous ?</span></a
               >
-              <a class="primary_btn tr-bg" href="#ns-solutions"
+              <a class="genric-btn success-border  circle" href="#ns-solutions"
                 ><span>Nos solutions</span></a
               >
             </div>
@@ -49,6 +55,88 @@ include('include/frontoffice/header.html.twig')%}
     </div>
   </div>
 </section>
+<div class="whole-wrap row d-flex justify-content-center">
+  <div class="col-lg-10">
+    <div class="section-top-border" >
+      <div class="main_title">
+        <h2 class="mb-30 title_color" style="text-align: center;">Un service personnalisé sans engagement</h2>
+      </div>
+				<div class="progress-table-wrap" style="border: 3px solid #edf3fd">
+					<div class="progress-table">
+						<div class="table-head">
+							<div class="serial"></div>
+							<div class="country">Un accompagnement <br> personnalisé</div>
+							<div class="visit">
+              Logone <br>
+              Partenaire privilégié
+              </div>
+							<div class="percentage">
+              Agence <br>
+              Traditionnelle
+            </div>
+						</div>
+						<div class="table-row">
+							<div class="serial">01</div>
+							<div class="country"> Un seul interlocuteur <br> par client</div>
+							<div class="visit"><i class="fas fa-check-circle" style="color: #73fbaf; font-size:40px"></i></div>
+							<div class="percentage">
+								<i class="fas fa-times-circle" style="font-size:40px"></i>
+							</div>
+						</div>
+						<div class="table-row">
+							<div class="serial">02</div>
+							<div class="country"> Un contrat <br> sans engagement</div>
+							<div class="visit"><i class="fas fa-check-circle" style="color: #73fbaf; font-size:40px"></i></div>
+							<div class="percentage">
+								<i class="fas fa-times-circle" style="font-size:40px"></i>
+							</div>
+						</div>
+						<div class="table-row">
+							<div class="serial">03</div>
+							<div class="country"> Un rapport mensuel<br>  de performances</div>
+							<div class="visit" ><i class="fas fa-check-circle" style="color: #73fbaf; font-size:40px; "></i></div>
+							<div class="percentage">
+								<i class="fas fa-check-circle" style="color: #73fbaf; font-size:40px"></i>
+							</div>
+						</div>
+						<div class="table-row">
+							<div class="serial">04</div>
+							<div class="country"> Définition de résultats <br>  atteignables</div>
+							<div class="visit"><i class="fas fa-check-circle" style="color: #73fbaf; font-size:40px"></i></div>
+							<div class="percentage">
+								<i class="fas fa-times-circle" style="font-size:40px"></i>
+							</div>
+						</div>
+						<div class="table-row">
+							<div class="serial">05</div>
+							<div class="country"> Éducation du client <br> aux meilleures pratiques</div>
+							<div class="visit"><i class="fas fa-check-circle" style="color: #73fbaf; font-size:40px"></i></div>
+							<div class="percentage">
+								<i class="fas fa-times-circle" style="font-size:40px"></i>
+							</div>
+						</div>
+						<div class="table-row">
+							<div class="serial">05</div>
+							<div class="country"> Rendez-vous physiques <br> avec nos clients</div>
+							<div class="visit"><i class="fas fa-check-circle" style="color: #73fbaf; font-size:40px"></i></div>
+							<div class="percentage">
+								<i class="fas fa-check-circle" style="color: #73fbaf; font-size:40px"></i>
+							</div>
+						</div>
+						<div class="table-row">
+							<div class="serial">06</div>
+							<div class="country"> Disponibilité au téléphone <br>  de 9h à 18h</div>
+							<div class="visit"><i class="fas fa-check-circle" style="color: #73fbaf; font-size:40px"></i></div>
+							<div class="percentage">
+								<i class="fas fa-times-circle" style="font-size:40px"></i>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+	</div>
+  </div>
+</div>
 <!--================ End Home Banner Area =================-->
 
 <section class="features_area">
@@ -58,9 +146,9 @@ include('include/frontoffice/header.html.twig')%}
         <div class="main_title">
           <h2 id="ns-solutions">Nos solutions</h2>
           <p>
-            Is give may shall likeness made yielding spirit a itself togeth
-            created after sea <br />
-            is in beast beginning signs open god you're gathering ithe
+            Notre sommes une agence de marketing et communication web experte dans les principaux canaux de communication digitale. 
+            De la création de votre site internet jusque la mise en place d’une stratégie digitale pour augmenter votre visibilité, 
+            ventes et notoriété sur le web, nous vous accompagnons dans le développement de votre business.
           </p>
         </div>
       </div>
@@ -87,7 +175,7 @@ include('include/frontoffice/header.html.twig')%}
             <a
               title="lien nos services de la catégorie : {{ catg.slug }}"
               href="{{ path('services', { slug: catg.slug }) }}"
-              class="primary_btn"
+              class="genric-btn success  circle"
             >
               <span>Voir plus</span>
             </a>
@@ -102,7 +190,7 @@ include('include/frontoffice/header.html.twig')%}
         <a
           title="lien vers toutes nos offres de service "
           href="{{ path('categorie_service_all') }}"
-          class="primary_btn tr-bg"
+          class="genric-btn success  circle"
         >
           <span>Voir Toutes nos offres</span>
         </a>
@@ -111,16 +199,16 @@ include('include/frontoffice/header.html.twig')%}
   </div>
 </section>
 
-<section class="blog_categorie_area section_gap_top" style="margin-top: -350px">
+<section class="features_area"  >
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-8 text-center">
         <div class="main_title">
           <h2>Nos actualités</h2>
           <p>
-            Is give may shall likeness made yielding spirit a itself togeth
-            created after sea is in beast <br />
-            beginning signs open god you're gathering ithe
+            Suivez les dernières actualités du marketing digital et du growth hacking. 
+            Au programme : SEO, SEA, Google Ads, Amazon et Social Media. 
+            Le blog de l'Agence 90 a pour vocation de partager les dernières évolutions relatives au webmarketing.
           </p>
         </div>
       </div>
@@ -147,7 +235,7 @@ include('include/frontoffice/header.html.twig')%}
               <a
                 title="lien vers notre article sur : {{ category.slug }}"
                 href="{{ path('blog_by_categorie', { slug: category.slug }) }}"
-                class="primary_btn"
+                class="genric-btn success  circle"
               >
                 <span>Voir plus</span>
               </a>
@@ -171,7 +259,7 @@ include('include/frontoffice/header.html.twig')%}
         <a
           title="lien vers toutes nos offres de service "
           href="{{ path('categorie_service_all') }}"
-          class="primary_btn tr-bg"
+          class="genric-btn success  circle"
         >
           <span>Toutes nos actualités</span>
         </a>

@@ -5,8 +5,7 @@ endblock %} {% block meta %}
   name="keywords"
   content="MARKETING DIGITAL, RELATION CLIENT, CENTRE D'APPEL, EXTERNALISATION-CENTRE-APPEL-TUNISIE"
 />
-{% endblock %} {% block content %} {%
-include('include/frontoffice/header.html.twig')%}
+{% endblock %} {% block content %}
 
 <!--================ Start Features Area =================-->
 <section class="features_area section_gap_top">
@@ -16,9 +15,12 @@ include('include/frontoffice/header.html.twig')%}
         <div class="main_title">
           <h2>Nos services</h2>
           <p>
-            Is give may shall likeness made yielding spirit a itself togeth
-            created after sea <br />
-            is in beast beginning signs open god you're gathering ithe
+            Notre sommes une agence de marketing et communication experte dans
+            les principaux canaux de communication digitale. De la création de
+            votre site internet jusque la mise en place d’une stratégie
+            <br />
+            digitale pour augmenter votre visibilité, ventes et notoriété sur le
+            web, nous vous accompagnons dans le développement de votre business.
           </p>
         </div>
       </div>
@@ -42,7 +44,7 @@ include('include/frontoffice/header.html.twig')%}
             <a
               title="lien nos services de la catégorie : {{ catg.slug }}"
               href="{{ path('services', { slug: catg.slug }) }}"
-              class="primary_btn"
+              class="genric-btn success circle"
             >
               <span>Voir plus</span>
             </a>
@@ -50,7 +52,10 @@ include('include/frontoffice/header.html.twig')%}
         </a>
       </div>
       {% endfor %}
-      <div class="blog-pagination justify-content-center d-flex">
+      <div
+        class="blog-pagination justify-content-center d-flex"
+        style="position: relative; top: -20px"
+      >
         {{ knp_pagination_render(catgs) }}
       </div>
     </div>

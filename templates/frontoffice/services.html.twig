@@ -1,9 +1,6 @@
 {% extends 'baseF.html.twig'%} {% block title %} {{ categories.slug }} | Logone
 {% endblock %} {% block meta %}
-<meta
-  name="description"
-  content="{{ categories.description|u.truncate(250,true)|raw }}"
-/>
+{{ sonata_seo_metadatas("description") }}
 <meta
   name="keywords"
   content="
@@ -12,8 +9,7 @@
   {% endfor %}
   "
 />
-{% endblock %} {% block content %} {%
-include('include/frontoffice/header.html.twig')%}
+{% endblock %} {% block content %}
 
 <!--================ Start Features Area =================-->
 <section class="features_area section_gap_top" style="margin-bottom: 80px">
@@ -30,7 +26,7 @@ include('include/frontoffice/header.html.twig')%}
           <a
             style="position: relative; top: -55px"
             href="{{ path('devis_add', { slug: categories.slug }) }}"
-            class="primary_btn"
+            class="genric-btn success circle"
           >
             <span>Je suis intéressé</span>
           </a>

@@ -93,8 +93,10 @@
     #}
   </head>
 
-  <body>
+  <body class="{% block bodyClass %} {% endblock %}">
     <!-- Load Facebook SDK for JavaScript -->
+    {{ include("include/frontoffice/header.html.twig") }}
+    {% block content %} {% endblock %}
     <div id="fb-root"></div>
     <script>
       (function (d, s, id) {
@@ -108,8 +110,6 @@
         fjs.parentNode.insertBefore(js, fjs);
       })(document, "script", "facebook-jssdk");
     </script>
-    {% block body %} {% block content %} {% endblock %} {% endblock %}
-
     <script src="//code.jquery.com/jquery.js"></script>
     <script src="{{ asset('assetF/') }}js/jquery-3.2.1.min.js"></script>
     <script src="{{ asset('assetF/') }}js/popper.js"></script>
