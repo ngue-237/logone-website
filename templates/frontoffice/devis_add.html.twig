@@ -2,10 +2,10 @@
 {% block meta %}
 <meta name="description" content="" />
 <meta name="keywords" content="" />
-{% endblock %} {% block content %} 
+{% endblock %} {% block content %}
 
 <!--================Contact Area =================-->
-<section class="contact_area section_gap">
+<section class="contact_area section_gap" style="margin-bottom: 250px">
   <div class="container">
     <div class="row">
       <div class="col-lg-4">
@@ -147,6 +147,7 @@
 {{ include("include/frontoffice/footer.html.twig") }}
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script type="text/JavaScript">
   // window.onload = () => {
   //   console
@@ -177,7 +178,10 @@
   // });
   // };
   window.onload = () => {
-
+    // console.log("je suis là")
+    //     $(document).ready(function() {
+    //     $('.nice-select').select2();
+    // });
 
     let categories = document.querySelector("#devis_categories");
     // categories.addEventListener("change", function(){

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Devis;
+use App\Entity\Service;
 use App\services\CurlService;
 use App\services\DevisService;
 use App\Entity\CategoryService;
@@ -52,6 +53,7 @@ class DevisController extends AbstractController
          $slug
         ):Response{
         $devis = new Devis();
+        $services = $serviceRepo->findByCategoryService($categoryService->getId());
         $form = $this->createFormBuilder(['categories'=>$categoryService])
             -> add('lastname', TextType::class,
             [   

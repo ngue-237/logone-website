@@ -52,10 +52,7 @@ class Service
      */
     private $updatedAt;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Devis::class, mappedBy="services")
-     */
-    private $devis;
+    
 
     public function __construct()
     {
@@ -122,35 +119,4 @@ class Service
 
         return $this;
     }
-
-    /**
-     * @return Collection<int, Devis>
-     */
-    public function getDevis(): Collection
-    {
-        return $this->devis;
-    }
-
-    public function addDevi(Devis $devi): self
-    {
-        if (!$this->devis->contains($devi)) {
-            $this->devis[] = $devi;
-            $devi->setServices($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDevi(Devis $devi): self
-    {
-        if ($this->devis->removeElement($devi)) {
-            // set the owning side to null (unless already changed)
-            if ($devi->getServices() === $this) {
-                $devi->setServices(null);
-            }
-        }
-
-        return $this;
-    }
-
 }
