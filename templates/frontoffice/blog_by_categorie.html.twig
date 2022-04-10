@@ -64,14 +64,14 @@ block content %}
                   alt="{{ article.title }}"
                 />
                 <div class="blog_details">
-                  <a href="{{ path('article_detail', { slug: article.slug }) }}">
+                  <a href="{{ absolute_url(path('article_detail', { slug: article.slug })) }}">
                     <h2>{{ article.title | title }}</h2>
                   </a>
                   <p>
                     {{ article.content |u.truncate(280,true)|raw  }}...
                   </p>
                   <a title="lien vers notre article sur : {{ article.slug }}"
-                    href="{{ path('article_detail', { slug: article.slug }) }}"
+                    href="{{ absolute_url(path('article_detail', { slug: article.slug })) }}"
                     class="genric-btn success circle"
                   >
                     <span>Voir plus</span>
@@ -95,7 +95,7 @@ block content %}
 						<div class="media post_item">
 							<img src="{{asset('uploads/images/article/' ~ articleByView.image ) | imagine_filter('blog_min_image') }}" alt="image faissant référence au {{articleByView.title}} "/>
 							<div class="media-body">
-								<a href="{{ path('article_detail', { slug: articleByView.slug }) }}">
+								<a href="{{ absolute_url(path('article_detail', { slug: articleByView.slug })) }}">
 									<h3>{{articleByView.title}} </h3>
 								</a>
 								<p>publié le
@@ -112,7 +112,7 @@ block content %}
 					<ul class="list cat-list">
 						{% for categoryArticle in categoriesArticle %}
 							<li>
-								<a title="lien tout nos articles sur la thématique : {{categoryArticle.slug  }} " href="{{ path('blog_by_categorie', { slug: categoryArticle.slug }) }}" class="d-flex justify-content-between">
+								<a title="lien tout nos articles sur la thématique : {{categoryArticle.slug  }} " href="{{ absolute_url(path('blog_by_categorie', { slug: categoryArticle.slug })) }}" class="d-flex justify-content-between">
 									<p>{{ categoryArticle.title }}</p>
 									<p>{{ loop.index }}</p>
 								</a>
@@ -126,7 +126,7 @@ block content %}
 					<ul class="list cat-list">
 						{% for categoryService in categoriesService %}
 							<li>
-								<a title="lien vers notre offre sur : {{categoryService.slug  }} " href="{{ path('services', { slug: categoryService.slug }) }}" class="d-flex justify-content-between">
+								<a title="lien vers notre offre sur : {{categoryService.slug  }} " href="{{ absolute_url(path('services', { slug: categoryService.slug })) }}" class="d-flex justify-content-between">
 									<p>{{ categoryService.designation }}</p>
 									<p>{{ loop.index }}</p>
 								</a>

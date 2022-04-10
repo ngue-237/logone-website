@@ -63,6 +63,16 @@ endblock %} {% block content %}
                     </div>
                     <div class="form-group">
                       {{
+                        form_row(form.categoryService,{
+                          label: false,
+                          attr: {
+                            class: "form-control form-control-user",
+                          }
+                        })
+                      }}
+                    </div>
+                    <div class="form-group">
+                      {{
                         form_row(form.content, {
                           label: false,
                           attr: {
@@ -123,5 +133,9 @@ endblock %} {% block content %}
 <a class="scroll-to-top rounded" href="#page-top">
   <i class="fas fa-angle-up"></i>
 </a>
-
+<script>
+  jQuery(document).ready(function () {
+    $("#article_categoryService").select2();
+  });
+</script>
 {% endblock %}

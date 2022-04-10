@@ -25,7 +25,9 @@
         <div class="text-center">
           <a
             style="position: relative; top: -55px"
-            href="{{ path('devis_add', { slug: categories.slug }) }}"
+            href="{{
+              absolute_url(path('devis_add', { slug: categories.slug }))
+            }}"
             class="genric-btn success circle"
           >
             <span>Je suis intéressé</span>

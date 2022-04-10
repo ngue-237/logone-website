@@ -14,13 +14,20 @@ endblock %} {% block meta %}
       <div class="col-lg-8 text-center">
         <div class="main_title">
           <h2>Nos services</h2>
-          <p>
-            Notre sommes une agence de marketing et communication experte dans
-            les principaux canaux de communication digitale. De la création de
-            votre site internet jusque la mise en place d’une stratégie
-            <br />
-            digitale pour augmenter votre visibilité, ventes et notoriété sur le
-            web, nous vous accompagnons dans le développement de votre business.
+          <p class="sample-text">
+            Nous sommes une agence de marketing et communication experte dans
+            les principaux canaux de
+            <span style="color: #4cd3e3; font-weight: bold"
+              >communication digitale</span
+            >
+            et de la
+            <span style="color: #4cd3e3; font-weight: bold">
+              gestion de la relation client </span
+            >. <br />
+            De la création de votre site internet en passant par la mise en
+            passant d’une stratégie digitale pour augmenter votre visibilité,
+            ventes et notoriété sur le web, nous vous accompagnons dans le
+            développement de votre business.
           </p>
         </div>
       </div>
@@ -43,7 +50,7 @@ endblock %} {% block meta %}
             </p>
             <a
               title="lien nos services de la catégorie : {{ catg.slug }}"
-              href="{{ path('services', { slug: catg.slug }) }}"
+              href="{{ absolute_url(path('services', { slug: catg.slug })) }}"
               class="genric-btn success circle"
             >
               <span>Voir plus</span>

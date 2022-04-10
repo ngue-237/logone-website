@@ -24,7 +24,7 @@ class OffreEmploi
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=32)
+     * @ORM\Column(type="string", length=255)
      */
     private $titre;
 
@@ -38,10 +38,7 @@ class OffreEmploi
      */
     private $description;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
-    private $date_debut;
+    
 
     /**
      * @ORM\Column(type="date", nullable=true)
@@ -49,17 +46,7 @@ class OffreEmploi
     private $date_expiration;
 
     /**
-     * @ORM\Column(type="smallint", nullable=true)
-     */
-    private $max_salary;
-
-    /**
-     * @ORM\Column(type="smallint", nullable=true)
-     */
-    private $min_salary;
-
-    /**
-     * @ORM\Column(type="string", length=32, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $location;
 
@@ -69,26 +56,22 @@ class OffreEmploi
      */
     private $candidatures;
 
-    /**
-     * @ORM\Column(type="string", length=125, nullable=true)
-     */
-    private $niveauScolaire;
-
     public function __construct()
     {
         $this->candidatures = new ArrayCollection();
     }
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
+     * @var string
      */
-    private $file;
+    private $image;
 
     /**
-     * @Vich\UploadableField(mapping="offre_pdf", fileNameProperty="file")
+     * @Vich\UploadableField(mapping="jobs_images", fileNameProperty="image")
      * @var File
      */
-    private $fileFile;
+    private $imageFile;
 
     /**
      * @ORM\Column(type="datetime")
@@ -103,23 +86,32 @@ class OffreEmploi
     private $slug;
 
     // ...
-
-    public function setFileFile(File $file = null)
+    public function setImageFile(File $image = null)
     {
-        $this->fileFile = $file;
+        $this->imageFile = $image;
 
         // VERY IMPORTANT:
         // It is required that at least one field changes if you are using Doctrine,
         // otherwise the event listeners won't be called and the file is lost
-        if ($file) {
+        if ($image) {
             // if 'updatedAt' is not defined in your entity, use another property
             $this->updatedAt = new \DateTime('now');
         }
     }
 
-    public function getFileFile(): ?File
+    public function getImageFile()
     {
-        return $this->fileFile;
+        return $this->imageFile;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
     }
 
     public function getId(): ?int
@@ -163,18 +155,6 @@ class OffreEmploi
         return $this;
     }
 
-    public function getDateDebut(): ?\DateTimeInterface
-    {
-        return $this->date_debut;
-    }
-
-    public function setDateDebut(?\DateTimeInterface $date_debut): self
-    {
-        $this->date_debut = $date_debut;
-
-        return $this;
-    }
-
     public function getDate_Expiration(): ?\DateTimeInterface
     {
         return $this->date_expiration;
@@ -191,37 +171,7 @@ class OffreEmploi
         return $this;
     }
 
-    public function getMax_Salary(): ?int
-    {
-        return $this->max_salary;
-    }
-    public function getMaxSalary(): ?int
-    {
-        return $this->max_salary;
-    }
-
-    public function setMaxSalary(?int $max_salary): self
-    {
-        $this->max_salary = $max_salary;
-
-        return $this;
-    }
-
-    public function getMin_Salary(): ?int
-    {
-        return $this->min_salary;
-    }
-    public function getMinSalary(): ?int
-    {
-        return $this->min_salary;
-    }
-
-    public function setMinSalary(?int $min_salary): self
-    {
-        $this->min_salary = $min_salary;
-
-        return $this;
-    }
+    
 
     public function getLocation(): ?string
     {
@@ -267,18 +217,6 @@ class OffreEmploi
     public function removeCandidature(Candidature $candidature): self
     {
         $this->candidatures->removeElement($candidature);
-
-        return $this;
-    }
-
-    public function getNiveauScolaire(): ?string
-    {
-        return $this->niveauScolaire;
-    }
-
-    public function setNiveauScolaire(?string $niveauScolaire): self
-    {
-        $this->niveauScolaire = $niveauScolaire;
 
         return $this;
     }

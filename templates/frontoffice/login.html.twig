@@ -1,5 +1,13 @@
 {% extends 'baseF.html.twig'%} {% block title %} Se connecter | Logone {%
 endblock %} {% block content %}
+<style>
+  @media screen and(max-width:1188px) {
+    img.img-login {
+      display: none;
+    }
+  }
+</style>
+
 <section class="contact_area section_gap">
   <div class="container">
     <div class="row justify-content-center">
@@ -8,7 +16,7 @@ endblock %} {% block content %}
         {{ errors.messageKey | trans(errors.messageData, 'security')  }}
       </div>
       {% endif %}
-      <div class="col-lg-8">
+      <div class="col-lg-12 col-md-12 col-sm-12" style="margin-bottom: 200px">
         <h1>Je me connecte !</h1>
         <form
           class="row contact_form"
@@ -37,8 +45,12 @@ endblock %} {% block content %}
               />
             </div>
           </div>
-          <div class="col-md-12">
-            <button type="submit" value="submit" class="primary_btn">
+          <div class="col-md-12 col-sm-12">
+            <button
+              type="submit"
+              value="submit"
+              class="genric-btn success circle"
+            >
               <span>Me connecter</span>
             </button>
           </div>
@@ -57,15 +69,6 @@ endblock %} {% block content %}
             >Mot de passe oublié</a
           >
         </p>
-      </div>
-      <div
-        class="col-lg-4"
-        style="position: relative; top: -150px; left: -75px"
-      >
-        <img
-          src="{{ asset('assetF/') }}img/login-logone.png"
-          alt="image équipe logone"
-        />
       </div>
     </div>
   </div>

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Article;
 use App\Entity\CategoryArticle;
+use App\Entity\CategoryService;
 use Symfony\Component\Form\AbstractType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -46,7 +47,7 @@ class ArticleType extends AbstractType
                 'required'=>true,
                 'class'=>CategoryArticle::class,
                 'choice_label'=>'title',
-                'placeholder'=>'Choisir une cathégorie',
+                'placeholder'=>'Choisir une thématique',
                 "constraints"=>[
                     new NotNull(),
                 ]
@@ -62,6 +63,16 @@ class ArticleType extends AbstractType
                 ]
             )
         ),
+            ])
+            ->add('categoryService', EntityType::class,[
+                'label'=>false,
+                'required'=>true,
+                'class'=>CategoryService::class,
+                'choice_label'=>'designation',
+                'placeholder'=>'Choisir un service correspondant',
+                "constraints"=>[
+                    new NotNull(),
+                ]
             ])
         ;
     }

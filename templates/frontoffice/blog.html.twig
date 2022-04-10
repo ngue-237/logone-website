@@ -32,7 +32,7 @@ block meta %}
           <div class="categories_details">
             <div class="categories_text">
               <a
-                href="{{ path('blog_by_categorie', { slug: category.slug }) }}"
+                href="{{ absolute_url(path('blog_by_categorie', { slug: category.slug }))}}"
               >
                 <h5>{{ category.title }}</h5>
               </a>
@@ -40,7 +40,7 @@ block meta %}
               <p>{{ category.content | raw }}</p>
               <a
                 title="lien vers notre article sur : {{ category.slug }}"
-                href="{{ path('blog_by_categorie', { slug: category.slug }) }}"
+                href="{{ absolute_url(path('blog_by_categorie', { slug: category.slug })) }}"
                 class="genric-btn success circle"
               >
                 <span>Voir plus</span>

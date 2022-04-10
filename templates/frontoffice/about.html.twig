@@ -6,50 +6,55 @@
   content="LOGONE, MARKETING DIGITAL, E-REPUTATION SEO, SEA, RELATION CLIENT, ASSITANCE VIRTUELLE, CALL CENTER, RSE"
 />
 {% endblock %} {% block content %}
-
-<style>
-  .bg-us {
-    margin-bottom: 100px;
-  }
-</style>
-<div class="row bg-us"></div>
-<section class="about_area">
-  <div class="container">
-    <div class="row justify-content-start align-items-center">
-      <div class="col-lg-7">
-        <div class="about_img">
-          <img
-            class=""
-            src="{{ asset('assetF/') }}img/logone-team.png"
-            alt="image équipe logone"
-          />
+<section class="about_area section_gap">
+  <div class="banner_inner">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7">
+          <div class="main_title text-left">
+            <h2 class="typo-list">
+              Qui <br />
+              sommes nous ?
+            </h2>
+            <p class="sample-text">
+              <span style="color: #4cd3e3; font-weight: bold">LOGONE</span> est
+              une agence de communication digital qui vous accompagne dans votre
+              stratégie digitale, e-réputation et l'augmentation de votre
+              chiffre d'affaires. Notre expertise s'étend aux leviers majeurs
+              liés au développement de votre
+              <span style="color: #4cd3e3; font-weight: bold"
+                >visibilité digitale</span
+              >
+              et à la
+              <span style="color: #4cd3e3; font-weight: bold"
+                >gestion de la relation client</span
+              >, à savoir: la création de votre site internet, l'optimisation de
+              votre visibilité Google à travers le référencement naturel (SEO)
+              et référencement payant (Google Ads et Google Shopping),
+              l'amélioration de votre présence sur les réseaux sociaux, et une
+              assistance virtuelle de vos client.
+            </p>
+          </div>
         </div>
-      </div>
-
-      <div class="col-lg-5" style="word-wrap: break-word">
-        <div class="main_title text-left">
-          <h2>
-            Qui sommes <br />
-            nous ?
-          </h2>
-          <p>
-            Entreprise jeune, dynamique et portée par une forte ambition,
-            <strong><span style="color: black">LOGONE</span></strong>
-            est une équipe de personnes issus d’origine et culture différente.
-          </p>
-          <p>
-            Notre savoir faire réside sur notre capacité à allier tallent,
-            nouvelle technologie et efficacité afin d'offrir une prèstation sur
-            mesure et des compétences aux standars internationnaux.
-          </p>
+        <div class="col-lg-5">
+          <div
+            class="home_right_img"
+            style="position: relative; top: -60px; right: 70px"
+          >
+            <img
+              class=""
+              src="{{ asset('assetF/') }}img/logone-team-work.png"
+              alt=""
+            />
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
-<section class="about_area" style="margin-top: 100px">
+<section class="about_area">
   <div class="container" style="text-align: center">
-    <div class="main_title" style="margin-bottom: 50px">
+    <div class="main_title">
       <h2>MINDSET LOGONE</h2>
       <p>
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis vitae
@@ -82,35 +87,18 @@
   </div>
   <br />
 </section>
-{#
-<section class="about_area" style="margin-bottom: 200px">
-  <div class="container">
-    <div class="row justify-content-start align-items-center">
-      <div class="col-lg-5">
-        <div class="about_img">
-          <img class="" src="{{ asset('assetF/') }}img/about-us.png" alt="" />
-        </div>
-      </div>
-
-      <div class="offset-lg-1 col-lg-5">
-        <div class="main_title text-left">
-          <h2>Nos Valeurs</h2>
-          <p>
-            Entreprise jeune, dynamique et portée par une forte ambition,
-            <strong><span style="color: black">LOGONE</span></strong>
-            est une équipe de personnes issus d’origine et culture différente.
-          </p>
-          <p>
-            Notre savoir faire réside sur notre capacité à allier tallent,
-            nouvelle technologie et efficacité afin d'offrir une prèstation sur
-            mesure et des compétences aux standars internationnaux.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-#}
+<script src="https://www.google.com/recaptcha/api.js?render=6Lc96AYfAAAAAAJsKTsNdyF4yBBWVnt5rWll8Dbe"></script>
+<script>
+  grecaptcha.ready(function () {
+    grecaptcha
+      .execute("6Lc96AYfAAAAAAJsKTsNdyF4yBBWVnt5rWll8Dbe", {
+        action: "homepage",
+      })
+      .then(function (token) {
+        document.getElementById("user_captcha").value = token;
+      });
+  });
+</script>
 <!--================ End About Us Area =================-->
 
 <!--================Footer Area =================-->

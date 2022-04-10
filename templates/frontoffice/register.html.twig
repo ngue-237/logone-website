@@ -1,9 +1,9 @@
 {% extends 'baseF.html.twig'%} {% block title %} Contact | Logone {% endblock %}
-{% block content %} 
+{% block content %}
 <section class="contact_area section_gap">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-8">
+      <div class="col-lg-12" style="margin-bottom: 200px">
         <h1>Je m'inscris !</h1>
         {% form_theme form 'bootstrap_4_layout.html.twig' %}
         {{ form_start(form) }}
@@ -86,7 +86,9 @@
           </div>
         </div>
         {{ form_end(form) }}
-        <a href="{{ path('security_login') }}">J'ai déjà un compte</a>
+        <a href="{{ absolute_url(path('security_login')) }}"
+          >J'ai déjà un compte</a
+        >
         <script src="https://www.google.com/recaptcha/api.js?render=6Lc96AYfAAAAAAJsKTsNdyF4yBBWVnt5rWll8Dbe"></script>
         <script>
           grecaptcha.ready(function () {
@@ -99,15 +101,6 @@
               });
           });
         </script>
-      </div>
-      <div
-        class="col-lg-4"
-        style="position: relative; top: -100px; left: -75px"
-      >
-        <img
-          src="{{ asset('assetF/') }}img/login-logone.png"
-          alt="image équipe logone"
-        />
       </div>
     </div>
   </div>

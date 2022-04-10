@@ -44,8 +44,7 @@ block content %}
                   <tr>
                     <th>Title</th>
                     <th>Location</th>
-                    <th>File</th>
-                    <th>NbPoste</th>
+                    <th>Nombre Postes</th>
                     <th>Candidatures</th>
                     <th>Options</th>
                   </tr>
@@ -54,8 +53,7 @@ block content %}
                   <tr>
                     <th>Title</th>
                     <th>Location</th>
-                    <th>File</th>
-                    <th>NbPoste</th>
+                    <th>Nombre Poste</th>
                     <th>Candidatures</th>
                     <th>Options</th>
                   </tr>
@@ -67,7 +65,6 @@ block content %}
                       {{ job.titre }}
                     </td>
                     <td>{{ job.location }}</td>
-                    <td>{{ job.file }}</td>
                     <td>{{ job.nombrePoste }}</td>
                     <td>
                       <a href="{{ path('candidats', { id: job.id }) }}">

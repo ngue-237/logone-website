@@ -1,16 +1,16 @@
 <?php
 
 namespace App\Controller;
-
+use Symfony\Contracts\Cache\ItemInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\CategoryArticleRepository;
 use App\Repository\CategoryServiceRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-use Symfony\Contracts\Cache\ItemInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 
 class HomeController extends AbstractController
 {
@@ -36,6 +36,11 @@ class HomeController extends AbstractController
              $item->expiresAfter(2);
             return $paginator->paginate($categoryArtRepo->findAllByDate(), $req->query->getInt('page', 1), 3);
         });
+
+        // $seoPage
+        //         ->setTitle("")
+        //         ->addMeta('property', 'og:title', "")
+        //     ;
 
         return $this->render('frontoffice/index.html.twig', [
            'categoriesService'=>$paginator->paginate($catgServiceRepo->findAll(), $req->query->getInt('page', 1), 4) ,

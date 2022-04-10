@@ -14,6 +14,7 @@
       gtag("js", new Date());
       gtag("config", "G-LQF0N89JD9");
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script
       type="text/javascript"
       src="https://platform-api.sharethis.com/js/sharethis.js#property=623c3ba1cdbe0200193e19de&product=inline-share-buttons"
@@ -27,7 +28,7 @@
     {% block meta %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
     {# Run `composer require symfony/webpack-encore-bundle` to start using
-    Symfony UX #} {% block stylesheets %}
+    Symfony UX #}
 
     <link
       rel="stylesheet"
@@ -77,7 +78,7 @@
     <!-- main css -->
     <link rel="stylesheet" href="{{ asset('assetF/') }}css/style.css" />
     <link rel="icon" href="{{ asset('assetF') }}/img/Logone-logo-fav.png" />
-    {#
+    {% block stylesheets %} {#
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>"
@@ -145,6 +146,9 @@
     <!--gmaps Js-->
 
     <script src="{{ asset('assetF/') }}js/gmaps.min.js"></script>
+    <script src="{{
+        asset('jquery-collapser-master/')
+      }}src/jquery.collapser.js"></script>
     <script src="{{ asset('assetF/') }}js/theme.js"></script>
     <script src="{{
         asset('bundles/mercuryseriesflashy/js/flashy.js')

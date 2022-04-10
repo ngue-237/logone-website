@@ -16,58 +16,64 @@
 {% block content %}
 
 	{% include('include/frontoffice/header.html.twig')%}
-
 	<!--================ Start Features Area =================-->
 	<section class="features_area section_gap_top">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-lg-8 text-center">
-					<div class="main_title">
-						<h2>Nos offres d'emploi</h2>
-						<p>
-							Is give may shall likeness made yielding spirit a itself togeth created 
-																																			                            after sea
-							<br>
-							is in beast beginning signs open god you're gathering ithe
-						</p>
-					</div>
-				</div>
-			</div>
-		
-			<div class="row feature_inner">
-				
-				{% for job in list %}
-					{% if job.nombrePoste > 0 %}
-					
-					<div class="col-lg-3 col-md-6">
-						<div class="feature_item">
-							
-							<h4>
-								<a href="{{ path('jobdetails', {slug: job.slug}) }}"> {{ job.titre }}</a>
-							</h4>
-							<span>{{ job.nombrePoste }}
-								Poste disponibles</span>
-							<h5>{{ job.min_salary }}DT
-																	-
-								{{ job.max_salary }}DT</h5>
-							
-							<p>{{ job.description|u.truncate(250,true)|raw }}...</p>
-							{# <a href="{{ path('jobdetails', {slug: job.slug}) }}" title="lien vers l'offre d'emplois: {{ job.titre }} ">... Voir plus</a> #}
-							<a class="genric-btn success-border circle" href="{{ path('jobdetails', {slug: job.slug}) }}"
-								><span>Voir plus</span></a
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <div class="main_title">
+                        <h2>Toute nos offres d'emplois</h2>
+                        <p>
+                            Is give may shall likeness made yielding spirit a itself togeth created 
+                            after sea <br> is in beast beginning signs open god you're gathering ithe
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row feature_inner">
+                {% for job in list %}
+				<div class="col-lg-3 col-md-6">
+                    <div class="feature_item">
+                        <h4>
+							<a href="{{ path('jobdetails', { slug: job.slug }) }}">
+								{{ job.titre }}</a
 							>
-							
-							{# <form action="{{path('apply',{slug: job.slug})}}">
-								<button class="primary_btn" style="margin: 6px;">VOIR PLUS</button>
-							</form> #}
-						</div>
-					</div>
-					
-					{% endif %}
+						</h4>
+						
+						{% autoescape  %}
+						<span class="d-inline-block text-truncate" style="max-width: 150px; max-height: 300px;">
+						{{ job.description|raw }}  ...
+						</span>
+						{% endautoescape %}
+							<a
+							class="genric-btn success-border circle"
+							href="{{ path('jobdetails', { slug: job.slug }) }}"
+							><span>Voir plus</span></a
+							>
+                    </div>
+                </div>
 				{% endfor %}
+            </div>
+			<div class="blog-pagination justify-content-center d-flex">
+			{{ knp_pagination_render(list) }}
 			</div>
-		</div>
-	</section>
+        </div>
+    </section>
 </div>
-
+<script>
+$(document).ready(function(){
+	var textTruncates = $("#text-truncate")
+	console.log($("#text-truncate"))
+	for (const textTruncate of textTruncates) {
+		textTruncate.collapser({
+		mode: 'words',
+        truncate: 20
+		})
+	}
+    $("#text-truncate").collapser({
+        mode: 'words',
+        truncate: 20
+    });
+});
+</script>
 {{include('include/frontoffice/footer.html.twig')}}{% endblock %}

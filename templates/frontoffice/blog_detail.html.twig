@@ -14,12 +14,8 @@ endblock %} {% block meta %}
         <div class="single-post row">
           <div class="col-lg-12">
             <div class="feature-img">
-              <img class="img-fluid" src="{{asset('uploads/images/article/' ~ article.image ) | imagine_filter("blog_image")
-
-
-
-
-              }}" alt="{{ article.title }}"/>
+              <img src="{{asset('uploads/images/article/' ~ article.image ) | imagine_filter("blog_image")
+              }}" alt="{{ article.title }}" />
             </div>
           </div>
           <div class="col-lg-3 col-md-3">
@@ -58,7 +54,9 @@ endblock %} {% block meta %}
                 </li>
                 <li>
                   <a
-                    href="{{ path('post_like', { id: article.id }) }}"
+                    href="{{
+                      absolute_url(path('post_like', { id: article.id }))
+                    }}"
                     class="btn js-like"
                   >
                     <span class="js-likes">{{ article.likes | length }}</span>
@@ -117,11 +115,13 @@ endblock %} {% block meta %}
                 <a
                   id="btn-delete-comment"
                   href="{{
-                    path('comment_author_delete', {
-                      id: comment.id,
-                      slug: article.slug,
-                      _token: csrf_token('comment-delete')
-                    })
+                    absolute_url(
+                      path('comment_author_delete', {
+                        id: comment.id,
+                        slug: article.slug,
+                        _token: csrf_token('comment-delete')
+                      })
+                    )
                   }}"
                   class=""
                 >
@@ -176,7 +176,7 @@ endblock %} {% block meta %}
         {%else%}
         <p>
           Connectez vous pour laissez un commentaire,
-          <a href="{{ path('security_login') }} ">cliquez-ici</a>
+          <a href="{{ absolute_url(path('security_login')) }} ">cliquez-ici</a>
         </p>
         {%endif%}
       </div>
@@ -212,13 +212,16 @@ endblock %} {% block meta %}
           </aside>
           <aside class="single_sidebar_widget ads_widget">
             <h3 class="widget_title">Notre solution</h3>
-            <a href="#">
-              <img
-                class="img-fluid"
-                src="{{ asset('assetF/') }}img/blog/add.jpg"
-                alt=""
-              />
-            </a>
+            <div class="card" style="width: 18rem">
+              <div class="card-body">
+                <h4>{{ article.categoryService.designation }}</h4>
+                <p class="card-text sample-text">
+                  {{ article.categoryService.description|u.truncate(150,true)|raw
+                  }}...
+                </p>
+                <a href="{{absolute_url(path("services", {slug: article.categoryService.slug}))}}" class="card-link">Voir plus</a>
+              </div>
+            </div>
             <div class="br"></div>
           </aside>
           <aside class="single_sidebar_widget popular_post_widget">
@@ -235,7 +238,9 @@ endblock %} {% block meta %}
               <div class="media-body">
                 <a
                   href="{{
-                    path('article_detail', { slug: articleByView.slug })
+                    absolute_url(
+                      path('article_detail', { slug: articleByView.slug })
+                    )
                   }}"
                 >
                   <h3>{{ articleByView.title }}</h3>
@@ -255,7 +260,9 @@ endblock %} {% block meta %}
               <li>
                 <a
                   href="{{
-                    path('blog_by_categorie', { slug: categoryArticle.slug })
+                    absolute_url(
+                      path('blog_by_categorie', { slug: categoryArticle.slug })
+                    )
                   }}"
                   class="d-flex justify-content-between"
                 >
@@ -288,7 +295,11 @@ endblock %} {% block meta %}
                   onblur="this.placeholder = 'Enter email'"
                 />
               </div>
-              <a href="{{ path('post_newsletter') }}" class="bbtns">Subcribe</a>
+              <a
+                href="{{ absolute_url(path('post_newsletter')) }}"
+                class="bbtns"
+                >Subcribe</a
+              >
             </div>
             <p class="text-bottom">You can unsubscribe at any time</p>
             <div class="br"></div>

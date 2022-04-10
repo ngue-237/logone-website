@@ -6,7 +6,7 @@
         <a
           class="navbar-brand logo_h"
           style="position: relative; right: 30px"
-          href="{{ path('home') }}"
+          href="{{ absolute_url(path('home')) }}"
           ><img src="{{ asset('assetF/') }}img/logo.png" alt=""
         /></a>
         <button
@@ -29,37 +29,53 @@
         >
           <ul class="nav navbar-nav menu_nav justify-content-end">
             <li class="nav-item">
-              <a class="nav-link" href="{{ path('home') }}">Accueil</a>
+              <a class="nav-link" href="{{ absolute_url(path('home')) }}"
+                >Accueil</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ path('about') }}">Logone</a>
+              <a class="nav-link" href="{{ absolute_url(path('about')) }}"
+                >Logone</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ path('categorie_service_all') }}"
+              <a
+                class="nav-link"
+                href="{{ absolute_url(path('categorie_service_all')) }}"
                 >Services</a
               >
             </li>
             {#
             <li class="nav-item">
-              <a class="nav-link" href="{{ path('app_rdv') }}">rdv</a>
+              <a class="nav-link" href="{{ absolute_url(path('app_rdv')) }}"
+                >rdv</a
+              >
             </li>
             #}
             <li class="nav-item">
-              <a class="nav-link" href="{{ path('blog') }}">Blog</a>
+              <a class="nav-link" href="{{ absolute_url(path('blog')) }}"
+                >Blog</a
+              >
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="{{ path('jobslist_front') }}"
+              <a
+                class="nav-link"
+                href="{{ absolute_url(path('jobslist_front')) }}"
                 >Rejoignez-nous</a
               >
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="{{ path('contact') }}">Contact</a>
+              <a class="nav-link" href="{{ absolute_url(path('contact')) }}"
+                >Contact</a
+              >
             </li>
             {% if app.user %}
             <li class="nav-item">
-              <a class="nav-link" href="{{ path('security_logout') }}"
+              <a
+                class="nav-link"
+                href="{{ absolute_url(path('security_logout')) }}"
                 >déconnexion</a
               >
             </li>

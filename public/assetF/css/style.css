@@ -104,10 +104,15 @@ button:focus {
   margin-top: 50px;
 }
 
+span.color-text {
+  color: #4cd3e3;
+  font-weight: bold;
+}
+
 /*---------------------------------------------------- */
 /*----------------------------------------------------*/
 .section_gap {
-  padding: 200px 0;
+  padding-top: 200px;
 }
 @media (max-width: 1199px) {
   .section_gap {
@@ -2001,7 +2006,6 @@ button:focus {
 
 .section-top-border {
   padding: 50px 0;
-  border-top: 1px dotted #eee;
 }
 
 .switch-wrap {

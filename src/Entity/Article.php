@@ -100,6 +100,11 @@ class Article
      */
     private $isPublished;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=CategoryService::class, inversedBy="articles")
+     */
+    private $categoryService;
+
     
 
     
@@ -313,6 +318,18 @@ class Article
    public function setIsPublished(?bool $isPublished): self
    {
        $this->isPublished = $isPublished;
+
+       return $this;
+   }
+
+   public function getCategoryService(): ?CategoryService
+   {
+       return $this->categoryService;
+   }
+
+   public function setCategoryService(?CategoryService $categoryService): self
+   {
+       $this->categoryService = $categoryService;
 
        return $this;
    }

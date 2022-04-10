@@ -7,14 +7,14 @@
 {% include('include/frontoffice/header.html.twig')%}
 
 <!--================Blog Area =================-->
-<section class="blog_area single-post-area section_gap">
+<section class="blog_area single-post-area section_gap" style="margin-bottom:250px" >
   <div class="container">
     <div class="row">
       <div class="col-lg-8 posts-list">
         <div class="col-lg-12">
 							<div class="feature-img">
-								<img class="img-fluid" src="{{ asset('assetF/') }}img/blog/main-blog/m-blog-3.jpg" alt=""/>
-                
+								<img class="img-fluid" src="{{asset('uploads/images/jobs_images/' ~ job.image ) | imagine_filter("blog_image")
+              }}" alt=""/>  
 							</div>
 					</div>
         <div class="single-post row">

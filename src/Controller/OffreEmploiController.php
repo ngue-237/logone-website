@@ -13,10 +13,13 @@ use Symfony\Contracts\Cache\ItemInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\CategoryArticleRepository;
 use App\Repository\CategoryServiceRepository;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -50,7 +53,7 @@ class OffreEmploiController extends AbstractController
       
         
         return $this->render('frontoffice/offre_emploi/listoffresfront.html.twig', [
-            'list' => $offres,
+            'list' => $pag->paginate($rep->findAll(), $request->query->getInt('page', 1), 4),
             'form' => $form->createView()
         ]);
     }
@@ -58,23 +61,31 @@ class OffreEmploiController extends AbstractController
     /**
      * @Route("/admin/add_job", name="add_job")
      */
-    public function addoffer(Request $request, EntityManagerInterface $em)
+    public function addoffer(
+        Request $request, 
+        EntityManagerInterface $em,
+        FlashyNotifier $flashy
+        )
     {
         $offre = new OffreEmploi();
         $form = $this->createForm(OffreEmploiType::class, $offre);
-        $form->handleRequest($request);
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-               // $offre->setIdCandidat(null);
-                $offre->setDateDebut(new \DateTime('now'));
-                $em->persist($offre);
-                $em->flush();
-                return $this->redirectToRoute('jobslist_back');
-            } else {
-                return $this->render('backoffice/offre_emploi/add_offre.html.twig', [
-                    'form' => $form->createView(), 'message' => 'Check your fields !'
+        $form->add('imageFile', VichImageType::class,[
+                'label'=>false,
+                 'required'=>false,
+                 'allow_delete'=>true,
+                 'download_uri' => false,           
+                'image_uri' => true,
+                'delete_label' => 'Supprimez cette image',
+                "constraints"=>[
+                    new NotNull(),
+                ]
                 ]);
-            }
+        $form->handleRequest($request);
+        if ($form->isSubmitted() and $form->isValid()) {
+            $em->persist($offre);
+            $em->flush();
+            $flashy->success("Added successfully!");
+            return $this->redirectToRoute('jobslist_back');
         }
         return $this->render('backoffice/offre_emploi/add_offre.html.twig', [
             'form' => $form->createView(), 'message'=> ''
@@ -150,6 +161,14 @@ class OffreEmploiController extends AbstractController
     public function modifyjob(Request $request, OffreEmploi $job, EntityManagerInterface $em)
     {
         $form = $this->createForm(OffreEmploiType::class, $job);
+        $form->add('imageFile', VichImageType::class,[
+                'label'=>false,
+                 'required'=>false,
+                 'allow_delete'=>true,
+                 'download_uri' => false,           
+                'image_uri' => true,
+                'delete_label' => 'Supprimez cette image',
+        ]);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {

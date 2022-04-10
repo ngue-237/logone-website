@@ -1,5 +1,11 @@
 {% extends 'baseB.html.twig' %} {% block title %} Article-Add | Logone {%
-endblock %} {% block content %}
+endblock %} {% block stylesheets %}
+<link
+  href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+  rel="stylesheet"
+/>
+
+{% endblock %} {% block content %}
 
 <!-- Page Wrapper -->
 <div id="wrapper">
@@ -63,6 +69,16 @@ endblock %} {% block content %}
                     </div>
                     <div class="form-group">
                       {{
+                        form_row(form.categoryService, {
+                          label: false,
+                          attr: {
+                            class: "form-control",
+                          }
+                        })
+                      }}
+                    </div>
+                    <div class="form-group">
+                      {{
                         form_row(form.content, {
                           label: false,
                           attr: {
@@ -115,4 +131,9 @@ endblock %} {% block content %}
   <i class="fas fa-angle-up"></i>
 </a>
 
+<script>
+  jQuery(document).ready(function () {
+    $("#article_categoryService").select2();
+  });
+</script>
 {% endblock %}

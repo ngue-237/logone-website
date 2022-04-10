@@ -77,11 +77,17 @@ class CategoryService
      */
     private $devis;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="categoryService")
+     */
+    private $articles;
+
     public function __construct()
     {
         $this->services = new ArrayCollection();
         // $this->images = new ArrayCollection();
         $this->devis = new ArrayCollection();
+        $this->articles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -241,5 +247,35 @@ class CategoryService
         }
 
         return $this->slug;
+    }
+
+    /**
+     * @return Collection<int, Article>
+     */
+    public function getArticles(): Collection
+    {
+        return $this->articles;
+    }
+
+    public function addArticle(Article $article): self
+    {
+        if (!$this->articles->contains($article)) {
+            $this->articles[] = $article;
+            $article->setCategoryService($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticle(Article $article): self
+    {
+        if ($this->articles->removeElement($article)) {
+            // set the owning side to null (unless already changed)
+            if ($article->getCategoryService() === $this) {
+                $article->setCategoryService(null);
+            }
+        }
+
+        return $this;
     }
 }

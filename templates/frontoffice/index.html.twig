@@ -5,32 +5,27 @@ Notre expertise s'étend aux leviers majeurs liés au développement de votre vi
 l'optimisation de votre visibilité Google à travers le référencement naturel (SEO) et référencement payant (Google Ads et Google Shopping), 
 l'amélioration de votre présence sur les réseaux sociaux, et une assistance virtuelle de vos client. " />
 <meta name="keywords" content="LOGONE, MARKETING DIGITAL, E-REPUTATION SEO, SEA, RELATION CLIENT, ASSITANCE VIRTUELLE, CALL CENTER, RSE" />
-{% endblock %} {% block content %} 
-<style>
-  @media screen and (max-width:1199px) {
-    .actuality-section{
-      margin-bottom: -2000px;
-    }
-  }
-</style>
+<meta name="robots" content="index, follow">
 
+{% endblock %}
+
+{% block content %} 
 <section class="about_area section_gap">
   <div class="banner_inner">
     <div class="container">
       <div class="row">
         <div class="col-lg-7">
           <div class="main_title text-left" >
-             
-            <h2>PARTENAIRE <br>
+            <h2 class="typo-list">PARTENAIRE <br>
               DE VOTRE CROISSANCE</h2>
-            <p>
-              <span style="color: #4cd3e3; font-weight:bold">LOGONE</span> est une agence de communication digital qui vous accompagne dans votre stratégie digitale, e-réputation et l'augmentation de votre chiffre d'affaires. 
+            <p class="sample-text">
+              <span style="color: #4cd3e3; font-weight:bold">LOGONE</span> est une agence de communication digitale qui vous accompagne dans votre stratégie digitale, e-réputation et l'augmentation de votre chiffre d'affaires. 
               Notre expertise s'étend aux leviers majeurs liés au développement de votre <span style="color: #4cd3e3; font-weight:bold">visibilité digitale</span> et à la <span style="color: #4cd3e3; font-weight:bold">gestion de la relation client</span>, 
               à savoir: la création de votre site internet, l'optimisation de votre visibilité Google à travers le référencement naturel (SEO) et 
-              référencement payant (Google Ads et Google Shopping), l'amélioration de votre présence sur les réseaux sociaux, et une assistance virtuelle de vos client. 
+              référencement payant (Google Ads et Google Shopping), l'amélioration de votre présence sur les réseaux sociaux, et le suivie virtuel de vos clients (tout au long de leur processus d'achat). 
             </p>
-            <div style="margin-top: 20px; ">
-              <a style="margin-right: 10px" class="genric-btn success  circle" href="{{path("about")}}"
+            <div >
+              <a style="margin-right: 10px" class="genric-btn success  circle" href="{{absolute_url(path("about"))}}"
                 ><span>Qui sommes nous ?</span></a
               >
               <a class="genric-btn success-border  circle" href="#ns-solutions"
@@ -55,11 +50,12 @@ l'amélioration de votre présence sur les réseaux sociaux, et une assistance v
     </div>
   </div>
 </section>
-<div class="whole-wrap row d-flex justify-content-center">
+<section style="margin-top: -100px;">
+  <div class="whole-wrap row d-flex justify-content-center tableau-vs">
   <div class="col-lg-10">
     <div class="section-top-border" >
       <div class="main_title">
-        <h2 class="mb-30 title_color" style="text-align: center;">Un service personnalisé sans engagement</h2>
+        <h2 class="mb-30 title_color" style="text-align: center;"> 7 Raisons de nous faire confiance</h2>
       </div>
 				<div class="progress-table-wrap" style="border: 3px solid #edf3fd">
 					<div class="progress-table">
@@ -75,68 +71,76 @@ l'amélioration de votre présence sur les réseaux sociaux, et une assistance v
               Traditionnelle
             </div>
 						</div>
-						<div class="table-row">
+            <div class="table-row">
 							<div class="serial">01</div>
-							<div class="country"> Un seul interlocuteur <br> par client</div>
-							<div class="visit"><i class="fas fa-check-circle" style="color: #73fbaf; font-size:40px"></i></div>
+							<div class="country">Suivi personnalisé après l'acquisition de vos leads dans le but de les convertir en clients.</div>
+							<div class="visit"><i class="fas fa-check-circle" style="color: #4cd3e3; font-size:40px"></i></div>
 							<div class="percentage">
 								<i class="fas fa-times-circle" style="font-size:40px"></i>
 							</div>
 						</div>
-						<div class="table-row">
+            <div class="table-row">
 							<div class="serial">02</div>
-							<div class="country"> Un contrat <br> sans engagement</div>
-							<div class="visit"><i class="fas fa-check-circle" style="color: #73fbaf; font-size:40px"></i></div>
+							<div class="country"> Définition de résultats <br>  atteignables</div>
+							<div class="visit"><i class="fas fa-check-circle" style="color: #4cd3e3; font-size:40px"></i></div>
 							<div class="percentage">
 								<i class="fas fa-times-circle" style="font-size:40px"></i>
 							</div>
 						</div>
-						<div class="table-row">
+            <div class="table-row">
 							<div class="serial">03</div>
-							<div class="country"> Un rapport mensuel<br>  de performances</div>
-							<div class="visit" ><i class="fas fa-check-circle" style="color: #73fbaf; font-size:40px; "></i></div>
+							<div class="country"> Disponibilité au téléphone <br>  de 9h à 18h</div>
+							<div class="visit"><i class="fas fa-check-circle" style="color: #4cd3e3; font-size:40px"></i></div>
 							<div class="percentage">
-								<i class="fas fa-check-circle" style="color: #73fbaf; font-size:40px"></i>
+								<i class="fas fa-times-circle" style="font-size:40px"></i>
 							</div>
 						</div>
 						<div class="table-row">
 							<div class="serial">04</div>
-							<div class="country"> Définition de résultats <br>  atteignables</div>
-							<div class="visit"><i class="fas fa-check-circle" style="color: #73fbaf; font-size:40px"></i></div>
+							<div class="country"> Un seul interlocuteur <br> par client</div>
+							<div class="visit"><i class="fas fa-check-circle" style="color: #4cd3e3; font-size:40px"></i></div>
 							<div class="percentage">
 								<i class="fas fa-times-circle" style="font-size:40px"></i>
 							</div>
 						</div>
 						<div class="table-row">
 							<div class="serial">05</div>
-							<div class="country"> Éducation du client <br> aux meilleures pratiques</div>
-							<div class="visit"><i class="fas fa-check-circle" style="color: #73fbaf; font-size:40px"></i></div>
+							<div class="country"> Un contrat <br> sans engagement</div>
+							<div class="visit"><i class="fas fa-check-circle" style="color: #4cd3e3; font-size:40px"></i></div>
 							<div class="percentage">
 								<i class="fas fa-times-circle" style="font-size:40px"></i>
-							</div>
-						</div>
-						<div class="table-row">
-							<div class="serial">05</div>
-							<div class="country"> Rendez-vous physiques <br> avec nos clients</div>
-							<div class="visit"><i class="fas fa-check-circle" style="color: #73fbaf; font-size:40px"></i></div>
-							<div class="percentage">
-								<i class="fas fa-check-circle" style="color: #73fbaf; font-size:40px"></i>
 							</div>
 						</div>
 						<div class="table-row">
 							<div class="serial">06</div>
-							<div class="country"> Disponibilité au téléphone <br>  de 9h à 18h</div>
-							<div class="visit"><i class="fas fa-check-circle" style="color: #73fbaf; font-size:40px"></i></div>
+							<div class="country"> Un rapport mensuel<br>  de performances</div>
+							<div class="visit" ><i class="fas fa-check-circle" style="color: #4cd3e3; font-size:40px; "></i></div>
+							<div class="percentage">
+								<i class="fas fa-check-circle" style="color: #4cd3e3; font-size:40px"></i>
+							</div>
+						</div>
+						<div class="table-row">
+							<div class="serial">07</div>
+							<div class="country"> Éducation du client <br> aux meilleures pratiques</div>
+							<div class="visit"><i class="fas fa-check-circle" style="color: #4cd3e3; font-size:40px"></i></div>
 							<div class="percentage">
 								<i class="fas fa-times-circle" style="font-size:40px"></i>
 							</div>
 						</div>
-						
+						<div class="table-row">
+							<div class="serial">08</div>
+							<div class="country"> Rendez-vous physiques <br> avec nos clients</div>
+							<div class="visit"><i class="fas fa-check-circle" style="color: #4cd3e3; font-size:40px"></i></div>
+							<div class="percentage">
+								<i class="fas fa-check-circle" style="color: #4cd3e3; font-size:40px"></i>
+							</div>
+						</div>
 					</div>
 				</div>
 	</div>
   </div>
 </div>
+</section>
 <!--================ End Home Banner Area =================-->
 
 <section class="features_area">
@@ -144,11 +148,9 @@ l'amélioration de votre présence sur les réseaux sociaux, et une assistance v
     <div class="row justify-content-center">
       <div class="col-lg-8 text-center">
         <div class="main_title">
-          <h2 id="ns-solutions">Nos solutions</h2>
-          <p>
-            Notre sommes une agence de marketing et communication web experte dans les principaux canaux de communication digitale. 
-            De la création de votre site internet jusque la mise en place d’une stratégie digitale pour augmenter votre visibilité, 
-            ventes et notoriété sur le web, nous vous accompagnons dans le développement de votre business.
+          <h2 id="ns-solutions">En quoi nous pouvons vous aider</h2>
+          <p class="sample-text">
+            Notre démarche consiste à vous <span style="color: #4cd3e3; font-weight:bold; font-size:20px"> conseiller</span> , vous <span style="color: #4cd3e3; font-weight:bold; font-size:20px">accompagner</span> et <span style="color: #4cd3e3; font-weight:bold ; font-size:20px">obtenir</span>  des résultats !
           </p>
         </div>
       </div>
@@ -174,14 +176,11 @@ l'amélioration de votre présence sur les réseaux sociaux, et une assistance v
             </p>
             <a
               title="lien nos services de la catégorie : {{ catg.slug }}"
-              href="{{ path('services', { slug: catg.slug }) }}"
+              href="{{ absolute_url(path('services', { slug: catg.slug })) }}"
               class="genric-btn success  circle"
             >
               <span>Voir plus</span>
             </a>
-            {#
-            <a href="{{ path('services', { slug: catg.slug }) }}"> Voir plus</a>
-            #}
           </div>
         </a>
       </div>
@@ -189,7 +188,7 @@ l'amélioration de votre présence sur les réseaux sociaux, et une assistance v
       <div style="text-align: center">
         <a
           title="lien vers toutes nos offres de service "
-          href="{{ path('categorie_service_all') }}"
+          href="{{ absolute_url(path('categorie_service_all') )}}"
           class="genric-btn success  circle"
         >
           <span>Voir Toutes nos offres</span>
@@ -205,10 +204,10 @@ l'amélioration de votre présence sur les réseaux sociaux, et une assistance v
       <div class="col-lg-8 text-center">
         <div class="main_title">
           <h2>Nos actualités</h2>
-          <p>
-            Suivez les dernières actualités du marketing digital et du growth hacking. 
-            Au programme : SEO, SEA, Google Ads, Amazon et Social Media. 
-            Le blog de l'Agence 90 a pour vocation de partager les dernières évolutions relatives au webmarketing.
+          <p class="sample-text">
+            Suivez nos dernières actualités sur marketing digital, la gestion de la relation client. 
+            Au programme : SEO, SEA, google Ads, Social Media et CRM. 
+            Notre blog à pour vocation de partager les dernières évolutions relatives au web marketing, CRM.
           </p>
         </div>
       </div>
@@ -234,22 +233,11 @@ l'amélioration de votre présence sur les réseaux sociaux, et une assistance v
               <p>{{ category.content | raw }}</p>
               <a
                 title="lien vers notre article sur : {{ category.slug }}"
-                href="{{ path('blog_by_categorie', { slug: category.slug }) }}"
+                href="{{ absolute_url(path('blog_by_categorie', { slug: category.slug })) }}"
                 class="genric-btn success  circle"
               >
                 <span>Voir plus</span>
               </a>
-              {#
-              <a
-                class="btn btn-primary"
-                title="lien vers tout nos articles sur la thématique : {{
-                  category.slug
-                }}"
-                href="{{ path('blog_by_categorie', { slug: category.slug }) }}"
-                style="color: white; margin-top: 5px; width: 120px"
-                >Voir plus</a
-              >
-              #}
             </div>
           </div>
         </div>
@@ -267,125 +255,19 @@ l'amélioration de votre présence sur les réseaux sociaux, et une assistance v
     </div>
   </div>
 </section>
+<script src="https://www.google.com/recaptcha/api.js?render=6Lc96AYfAAAAAAJsKTsNdyF4yBBWVnt5rWll8Dbe"></script>
+<script>
+          grecaptcha.ready(function () {
+            grecaptcha
+              .execute("6Lc96AYfAAAAAAJsKTsNdyF4yBBWVnt5rWll8Dbe", {
+                action: "homepage",
+              })
+              .then(function (token) {
+                document.getElementById("user_captcha").value = token;
+              });
+          });
+</script>
 
-{#
-<div class="testimonial_area section_gap_bottom">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-8 text-center">
-        <div class="main_title">
-          <h2>Nos actualités</h2>
-          <p>
-            Is give may shall likeness made yielding spirit a itself togeth
-            created after sea is in beast <br />
-            beginning signs open god you're gathering ithe
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="testi_slider owl-carousel">
-        <div class="testi_item">
-          <div class="row">
-            <div class="col-lg-4">
-              <img src="{{ asset('assetF/') }}img/testimonials/t1.jpg" alt="" />
-            </div>
-            <div class="col-lg-8">
-              <div class="testi_text">
-                <h4>Elite Martin</h4>
-                <p>
-                  Him, made can't called over won't there on divide there male
-                  fish beast own his day third seed sixth seas unto. Saw from
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="testi_item">
-          <div class="row">
-            <div class="col-lg-4">
-              <img src="{{ asset('assetF/') }}img/testimonials/t2.jpg" alt="" />
-            </div>
-            <div class="col-lg-8">
-              <div class="testi_text">
-                <h4>Davil Saden</h4>
-                <p>
-                  Him, made can't called over won't there on divide there male
-                  fish beast own his day third seed sixth seas unto. Saw from
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="testi_item">
-          <div class="row">
-            <div class="col-lg-4">
-              <img src="{{ asset('assetF/') }}img/testimonials/t1.jpg" alt="" />
-            </div>
-            <div class="col-lg-8">
-              <div class="testi_text">
-                <h4>Elite Martin</h4>
-                <p>
-                  Him, made can't called over won't there on divide there male
-                  fish beast own his day third seed sixth seas unto. Saw from
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="testi_item">
-          <div class="row">
-            <div class="col-lg-4">
-              <img src="{{ asset('assetF/') }}img/testimonials/t2.jpg" alt="" />
-            </div>
-            <div class="col-lg-8">
-              <div class="testi_text">
-                <h4>Davil Saden</h4>
-                <p>
-                  Him, made can't called over won't there on divide there male
-                  fish beast own his day third seed sixth seas unto. Saw from
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="testi_item">
-          <div class="row">
-            <div class="col-lg-4">
-              <img src="{{ asset('assetF/') }}img/testimonials/t1.jpg" alt="" />
-            </div>
-            <div class="col-lg-8">
-              <div class="testi_text">
-                <h4>Elite Martin</h4>
-                <p>
-                  Him, made can't called over won't there on divide there male
-                  fish beast own his day third seed sixth seas unto. Saw from
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="testi_item">
-          <div class="row">
-            <div class="col-lg-4">
-              <img src="{{ asset('assetF/') }}img/testimonials/t2.jpg" alt="" />
-            </div>
-            <div class="col-lg-8">
-              <div class="testi_text">
-                <h4>Davil Saden</h4>
-                <p>
-                  Him, made can't called over won't there on divide there male
-                  fish beast own his day third seed sixth seas unto. Saw from
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-#}
 
 {{ include("include/frontoffice/footer.html.twig") }}
 {% endblock %}

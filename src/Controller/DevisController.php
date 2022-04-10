@@ -102,6 +102,7 @@ class DevisController extends AbstractController
                     new NotBlank()
                 ]
             ] )
+            
             ->add('subject', TextareaType::class, [
                 "constraints"=>[
                     new NotBlank(),

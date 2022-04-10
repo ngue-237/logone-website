@@ -1,24 +1,46 @@
-{# <footer class="footer_area">
+
+
+<footer class="footer_area">
   <div class="container">
+    
     <div class="row justify-content-center">
-      <div class="col-lg-12">
-        <div class="footer_top flex-column">
-          <div class="footer_logo">
-            <a href="#">
-              <img src="{{ asset('assetF/') }}img/logo.png" alt="" />
-            </a>
-            <h4>Suivez nous</h4>
+      <div class="col-2">
+        <h5>Nos solutions</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+        </ul>
+      </div>
+
+      <div class="col-2">
+        <h5>Nos actulités</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+        </ul>
+      </div>
+
+      <div class="col-2">
+        <h5>Qui sommes nous ?</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+        </ul>
+      </div>
+
+      <div class="col-4 offset-1">
+        <form>
+          <h5>Subscribe to our newsletter</h5>
+          <p>Monthly digest of whats new and exciting from us.</p>
+          <div class="d-flex w-100 gap-2">
+            <label for="newsletter1" class="visually-hidden">Email address</label>
+            <input id="newsletter1" type="text" class="form-control" placeholder="Email address">
+            <button class="genric-btn success medium" type="button">Subscribe</button>
           </div>
-          <div class="footer_social">
-            <a title="lien vers notre page facebook" href="#" target="blank"><i class="fab fa-facebook-square"></i></i></a>
-            <a title="lien vers notre page linkedin" target="blank" href="#"><i class="fab fa-linkedin"></i></a>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
-    <div class="row footer_bottom justify-content-center">
-      <a href="{{path("app_mention_legale")}}" title="lien vers nos mentions légales">mentions légales</a>
-      <p class="col-lg-8 col-sm-12 footer-text">
+    <div class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+    <div class="col-lg-6">
+        <a href="{{absolute_url(absolute_url(path("app_mention_legale")))}}" title="lien vers nos mentions légales">mentions légales</a>
+        <p class="col-lg-8 col-sm-12 footer-text" style="display: inline-block;">
         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
         Copyright &copy;
         <script>
@@ -27,9 +49,16 @@
         All rights reserved
         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
       </p>
-    </div>
+      </div>
+
+    <div class="col-lg-6">
+        <div class="footer_social">
+					<a href="#"><i class="fa fa-facebook"></i></a>
+					<a href="#"><i class="fab fa-linkedin"></i></a>
+      </div>
   </div>
-</footer> #}
+  </div>
+</footer>
 
 
 

@@ -77,6 +77,11 @@ class Devis
      */
     private $confirm;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Service::class, inversedBy="devis")
+     */
+    private $services;
+
     
 
     
@@ -213,6 +218,18 @@ class Devis
     public function setConfirm(?string $confirm): self
     {
         $this->confirm = $confirm;
+
+        return $this;
+    }
+
+    public function getServices(): ?Service
+    {
+        return $this->services;
+    }
+
+    public function setServices(?Service $services): self
+    {
+        $this->services = $services;
 
         return $this;
     }

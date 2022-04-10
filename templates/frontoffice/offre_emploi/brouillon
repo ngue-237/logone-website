@@ -108,4 +108,23 @@ include('include/frontoffice/header.html.twig')%}
   </div>
 </section>
 {{ include("include/frontoffice/footer.html.twig") }}
-{% endblock %}
+{% endblock %} {% for job in list %} {% if job.nombrePoste > 0 %}
+
+<div class="col-lg-3">
+  <div class="feature_item">
+    <h4>
+      <a href="{{ path('jobdetails', { slug: job.slug }) }}">
+        {{ job.titre }}</a
+      >
+    </h4>
+    <span>{{ job.nombrePoste }} Poste disponibles</span>
+
+    <p>{{ job.description|u.truncate(250,true)|raw }}...</p>
+    <a
+      class="genric-btn success-border circle"
+      href="{{ path('jobdetails', { slug: job.slug }) }}"
+      ><span>Voir plus</span></a
+    >
+  </div>
+</div>
+{% else %} {% endif %} {% endfor %}

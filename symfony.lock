@@ -11,8 +11,14 @@
             "./config/packages/stof_doctrine_extensions.yaml"
         ]
     },
+    "antoligy/dom-string-iterators": {
+        "version": "v1.0.0"
+    },
     "behat/transliterator": {
         "version": "v1.3.0"
+    },
+    "bluetel-solutions/twig-truncate-extension": {
+        "version": "v0.1.3"
     },
     "curl/curl": {
         "version": "2.3.3"
@@ -757,6 +763,9 @@
     },
     "twig/twig": {
         "version": "v3.3.8"
+    },
+    "urodoz/truncate-html": {
+        "version": "1.0.1"
     },
     "vich/uploader-bundle": {
         "version": "1.19",
