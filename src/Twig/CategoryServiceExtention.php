@@ -22,9 +22,7 @@ public function getFunctions() : array
 }
 
 public function getCategoriesService(){
-    return $this->categoryServiceRepo->findBy([], [
-        "designation"=>"ASC"
-    ]);
+    return $this->categoryServiceRepo->findAllByDateF();
 }
 
 }

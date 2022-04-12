@@ -38,12 +38,32 @@
                 >Logone</a
               >
             </li>
-            <li class="nav-item">
+            <li class="nav-item submenu dropdown">
               <a
-                class="nav-link"
-                href="{{ absolute_url(path('categorie_service_all')) }}"
+                href="#"
+                class="nav-link dropdown-toggle"
+                data-toggle="dropdown"
+                role="button"
+                aria-haspopup="true"
+                aria-expanded="false"
                 >Services</a
               >
+              <ul class="dropdown-menu">
+                {% for catg in catgs.getCategoriesService %}
+                <li class="nav-item">
+                  <a
+                    title="lien vers tous nos services dans liés au {{
+                      catg.slug | u.truncate(20, true)
+                    }} "
+                    class="nav-link"
+                    href="{{
+                      absolute_url(path('services', { slug: catg.slug }))
+                    }}"
+                    >{{ catg.designation }}</a
+                  >
+                </li>
+                {% endfor %}
+              </ul>
             </li>
             {#
             <li class="nav-item">
