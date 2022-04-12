@@ -47,7 +47,8 @@ class SecurityController extends AbstractController
         ->add('passwordConfirm', PasswordType::class)
         ->add("rgpd", CheckboxType::class, [
                 "constraints"=>[
-                    new NotBlank()
+                    new NotBlank(),
+                    new NotNull()
                 ]
             ]);
         $form->add("captcha", HiddenType::class, [
@@ -85,7 +86,7 @@ class SecurityController extends AbstractController
                     }else{
                         $flashy->success("success registration!", "");
                         $this->addFlash("Error",'Confirm you are not robot!');
-                         return $this->redirectToRoute('contact');
+                         return $this->redirectToRoute('security_login');
                     }
                 }
                 
@@ -143,7 +144,8 @@ class SecurityController extends AbstractController
         ])
             ->add('passwordConfirm', PasswordType::class, [
                 "constraints"=>[
-                    new NotBlank()
+                    new NotBlank(),
+                    new NotNull()
                 ]
             ])
             ->add("rgpd", CheckboxType::class, [
