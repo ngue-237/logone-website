@@ -49,6 +49,9 @@
                       <h1 class="h4 text-gray-900 mb-4">
                         REGISTRATION
                       </h1>
+                      <p class="mb-4">
+                        Veuillez au préalable lire nos <a href="{{absolute_url(path("app_mention_legale"))}} ">conditions générales d'utilisation</a>.
+                      </p>
                     </div>
                     {% form_theme form 'bootstrap_4_layout.html.twig' %}
                     {{ form_start(form) }}
@@ -110,13 +113,13 @@
                     <div class=" row mb-3 form-check">
                         {{
                             form_row(form.rgpd, {
-                            label: false,
+                            label: "J'ai lu et j'approuve les conditions générales d'utilisations",
                             attr:{
                                 class:"form-check-input"
                             }
                             })
                         }}
-                        <label class="form-check-label" for="exampleCheck1">J'ai lu et j'approuve les <a href="{{absolute_url(path("app_mention_legale"))}}">conditions générales d'utilisation</a></label>
+                        
                       </div>
                     <div class=" row mb-3 form-check">
                         {{
@@ -141,14 +144,15 @@
                       <hr />
                     {{form_end(form)}}
                     <hr />
+                    
                     <div class="text-center">
-                      <a class="small" href="{{absolute_url(path("security_register"))}}"
-                        >Create account?</a
+                      <a class="small" href="{{absolute_url(path("security_login"))}}"
+                        >I already have account</a
                       >
                     </div>
                     <div class="text-center">
-                      <a class="small" href="{{absolute_url(path("app_forgotten_password"))}}"
-                        >Forgot Password?</a
+                      <a class="small" href="{{absolute_url(path("home"))}}"
+                        >Go back to home</a
                       >
                     </div>
                     <script src="https://www.google.com/recaptcha/api.js?render=6Lc96AYfAAAAAAJsKTsNdyF4yBBWVnt5rWll8Dbe"></script>
