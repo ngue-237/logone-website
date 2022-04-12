@@ -24,10 +24,21 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authenticator\FormLoginAuthenticator;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
+use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
 
 class SecurityController extends AbstractController
 {
+    private FormLoginAuthenticator $authenticator;
+     public function __construct(
+       FormLoginAuthenticator $authenticator 
+    ) 
+    {
+        $this->authenticator = $authenticator;
+    }
+
     /**
      * permet à un visiteur de s'inscrire via un formulaire d'inscription
      * @Route("/s-incrire", name="security_register")
@@ -37,7 +48,8 @@ class SecurityController extends AbstractController
         Request $req,
         MaillerService $mailerHelper,
         CurlService $client,
-        FlashyNotifier $flashy
+        FlashyNotifier $flashy,
+        UserAuthenticatorInterface $authenticatorManager
         ): Response
         
     {
@@ -50,7 +62,8 @@ class SecurityController extends AbstractController
                     new NotBlank(),
                     new NotNull()
                 ]
-            ]);
+            ])
+            ;
         $form->add("captcha", HiddenType::class, [
             "mapped"=>false,
             "constraints"=>[
@@ -59,9 +72,9 @@ class SecurityController extends AbstractController
             ]
         ]);
         $form->handleRequest($req);
-
-        if($form->isSubmitted() && $form->isValid()){
-
+        
+        if($form->isSubmitted() and $form->isValid()){
+                //dd("hello");
                 $url = "https://www.google.com/recaptcha/api/siteverify?secret=6Lc96AYfAAAAAEP84ADjdx5CBfEpgbTyYqgemO5n&response={$_POST['user']["captcha"]}";
                 
                 $response = $client->curlManager($url);
@@ -72,7 +85,7 @@ class SecurityController extends AbstractController
                 }else{
                     $data = json_decode($response);
                     if($data->success){
-
+                   
                     $helper->persistUser($user, ["ROLE_USER"]);
                         $mailerHelper->send(
                      "Activation de votre compe", 
@@ -81,17 +94,18 @@ class SecurityController extends AbstractController
                      ["activationToken" => $user->getActivationToken() ],
                      "emmanuelbenjamin.nguetoungoum@esprit.tn"
                     );
-            
-                    return $this->redirectToRoute('security_login');  
+                    $authenticatorManager->authenticateUser($user, $this->authenticator, $req, [new RememberMeBadge()]);
+                    $flashy->success("Sucess Registration", "");
+                    
+                    return $this->redirectToRoute('home');  
                     }else{
-                        $flashy->success("success registration!", "");
-                        $this->addFlash("Error",'Confirm you are not robot!');
-                         return $this->redirectToRoute('security_login');
+                        $flashy->error("Confirm you are not robot!", "");
+                         return $this->redirectToRoute('security_register');
                     }
                 }
                 
         }
-        return $this->render('frontoffice/register.html.twig', [
+        return $this->render('backoffice/registration.html.twig', [
         'form'=>$form->createView(), 
         "errors"=>$form->getErrors()
         ]);
@@ -291,7 +305,7 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute("security_login");
         }
 
-        return $this->renderForm("frontoffice/forgotten_password.html.twig", compact('form'));
+        return $this->renderForm("backoffice/forgot-password.html.twig", compact('form'));
     }
 
     /**
@@ -326,7 +340,7 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('security_login');
         }
         else{
-            return $this->render("frontoffice/reset_password.html.twig", compact("token"));
+            return $this->render("backoffice/reset-password.html.twig", compact("token"));
         }
     }
 

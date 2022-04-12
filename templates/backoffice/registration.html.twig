@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>se-connecter | Logone</title>
+
+    <!-- Custom fonts for this template-->
+    <link
+      href="{{ asset('assetB/') }}vendor/fontawesome-free/css/all.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet"
+    />
+
+    <!-- Custom styles for this template-->
+    <link
+      href="{{ asset('assetB/') }}css/sb-admin-2.min.css"
+      rel="stylesheet"
+    />
+    
+    <link rel="icon" href="{{ asset('assetF') }}/img/Logone-logo-fav.png" />
+    
+  </head>
+
+  <body class="bg-gradient-primary">
+    <div class="container">
+      <!-- Outer Row -->
+      <div class="row justify-content-center">
+        <div class="col-xl-10 col-lg-12 col-md-9">
+          <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+              <!-- Nested Row within Card Body -->
+              <div class="row">
+                <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                <div class="col-lg-6">
+                  <div class="p-5">
+                    <div class="text-center">
+                      <h1 class="h4 text-gray-900 mb-4">
+                        REGISTRATION
+                      </h1>
+                    </div>
+                    {% form_theme form 'bootstrap_4_layout.html.twig' %}
+                    {{ form_start(form) }}
+                    <div class="form-group">
+                        {{
+                            form_row(form.lastName, {
+                            label: false,
+                            attr: {
+                                placeholder: "Nom",
+                                class: "form-control form-control-user",
+                            }
+                            })
+                        }}
+                      </div>
+                    <div class="form-group">
+                        {{
+                            form_row(form.firstName, {
+                            label: false,
+                            attr: {
+                                placeholder: "Prénom",
+                                class: "form-control form-control-user",
+                            }
+                            })
+                        }}
+                      </div>
+                    <div class="form-group">
+                        {{
+                            form_row(form.email, {
+                            label: false,
+                            attr: {
+                                placeholder: "Email",
+                                class: "form-control form-control-user",
+                            }
+                            })
+                        }}
+                      </div>
+                    <div class="form-group">
+                        {{
+                            form_row(form.password, {
+                            label: false,
+                            attr: {
+                                placeholder: "Mot de passe",
+                                class: "form-control form-control-user",
+                            }
+                            })
+                        }}
+                      </div>
+                    <div class="form-group">
+                        {{
+                            form_row(form.passwordConfirm, {
+                            label: false,
+                            attr: {
+                                placeholder: "Mot de passe à nouveau",
+                                class: "form-control form-control-user",
+                            }
+                            })
+                        }}
+                      </div>
+                    <div class=" row mb-3 form-check">
+                        {{
+                            form_row(form.rgpd, {
+                            label: false,
+                            attr:{
+                                class:"form-check-input"
+                            }
+                            })
+                        }}
+                        <label class="form-check-label" for="exampleCheck1">J'ai lu et j'approuve les <a href="{{absolute_url(path("app_mention_legale"))}}">conditions générales d'utilisation</a></label>
+                      </div>
+                    <div class=" row mb-3 form-check">
+                        {{
+                            form_row(form.captcha, {
+                            label: false,
+                            attr:{
+                                class:"form-check-input"
+                            }
+                            })
+                        }}
+                      </div>
+                      {# <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" name="user[rgpd]" id="user_rgpd">
+                        <label class="form-check-label" for="exampleCheck1">J'ai lu et j'approuve les <a href="{{absolute_url(path("app_mention_legale"))}}">conditions générales d'utilisation</a></label>
+                    </div> #}
+                      <button
+                        type="submit"
+                        class="btn btn-primary btn-user btn-block"
+                      >
+                        m'inscrire
+                      </button>
+                      <hr />
+                    {{form_end(form)}}
+                    <hr />
+                    <div class="text-center">
+                      <a class="small" href="{{absolute_url(path("security_register"))}}"
+                        >Create account?</a
+                      >
+                    </div>
+                    <div class="text-center">
+                      <a class="small" href="{{absolute_url(path("app_forgotten_password"))}}"
+                        >Forgot Password?</a
+                      >
+                    </div>
+                    <script src="https://www.google.com/recaptcha/api.js?render=6Lc96AYfAAAAAAJsKTsNdyF4yBBWVnt5rWll8Dbe"></script>
+                    <script>
+                        console.log(document.getElementById("user_captcha"));
+                    grecaptcha.ready(function () {
+                        grecaptcha
+                        .execute("6Lc96AYfAAAAAAJsKTsNdyF4yBBWVnt5rWll8Dbe", {
+                            action: "homepage",
+                        })
+                        .then(function (token) {
+                            document.getElementById("user_captcha").value = token;
+                        });
+                    });
+                    </script>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{{ asset('assetB/') }}vendor/jquery/jquery.min.js"></script>
+    <script src="{{
+        asset('assetB/')
+      }}vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{{
+        asset('assetB/')
+      }}vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{{ asset('assetB/') }}js/sb-admin-2.min.js"></script>
+    
+  </body>
+</html>

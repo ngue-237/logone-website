@@ -44,7 +44,7 @@
                   <div class="p-5">
                     <div class="text-center">
                       <h1 class="h4 text-gray-900 mb-4">
-                        LOGONE ADMIN INTERFACE
+                        SE CONNECTER
                       </h1>
                     </div>
                     {% if errors %}
@@ -92,14 +92,25 @@
                         type="submit"
                         class="btn btn-primary btn-user btn-block"
                       >
-                        Login
+                        me connecter
                       </button>
                       <hr />
                     </form>
                     <hr />
                     <div class="text-center">
-                      <a class="small" href="forgot-password.html"
+                      <a class="small" href="{{absolute_url(path("security_register"))}}"
+                        >Create account?</a
+                      >
+                    </div>
+                    
+                    <div class="text-center">
+                      <a class="small" href="{{absolute_url(path("app_forgotten_password"))}}"
                         >Forgot Password?</a
+                      >
+                    </div>
+                    <div class="text-center">
+                      <a class="small" href="{{absolute_url(path("home"))}}"
+                        >Go back to home</a
                       >
                     </div>
                   </div>
