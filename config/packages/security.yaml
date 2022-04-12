@@ -19,7 +19,9 @@ security:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
       security: false
     main:
-      
+      login_throttling:
+        max_attempts: 3
+        interval: "15 minutes"
       lazy: true
       provider: in_database
 
