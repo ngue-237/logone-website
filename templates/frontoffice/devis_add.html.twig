@@ -5,7 +5,7 @@
 {% endblock %} {% block content %}
 
 <!--================Contact Area =================-->
-<section class="contact_area section_gap" style="margin-bottom: 250px">
+<section class="contact_area section_gap">
   <div class="container">
     <div class="row">
       <div class="col-lg-4">
@@ -128,70 +128,33 @@
           </div>
         </div>
         {{ form_end(form) }}
-        <script src="https://www.google.com/recaptcha/api.js?render=6Lc96AYfAAAAAAJsKTsNdyF4yBBWVnt5rWll8Dbe"></script>
-        <script>
-          grecaptcha.ready(function () {
-            grecaptcha
-              .execute("6Lc96AYfAAAAAAJsKTsNdyF4yBBWVnt5rWll8Dbe", {
-                action: "homepage",
-              })
-              .then(function (token) {
-                document.getElementById("form_captcha").value = token;
-              });
-          });
-        </script>
       </div>
     </div>
   </div>
+  <div class="row" style="margin-bottom: 200px"></div>
 </section>
 {{ include("include/frontoffice/footer.html.twig") }}
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+<script src="https://www.google.com/recaptcha/api.js?render=6Lc96AYfAAAAAAJsKTsNdyF4yBBWVnt5rWll8Dbe"></script>
+<script>
+  grecaptcha.ready(function () {
+    grecaptcha
+      .execute("6Lc96AYfAAAAAAJsKTsNdyF4yBBWVnt5rWll8Dbe", {
+        action: "homepage",
+      })
+      .then(function (token) {
+        document.getElementById("form_captcha").value = token;
+      });
+  });
+</script>
 <script type="text/JavaScript">
-  // window.onload = () => {
-  //   console
-  // var $countries = $("#devis_categories");
 
-  // $countries.change(function () {
-  //   // ... retrieve the corresponding form.
-
-  //   var $form = $(this).closest("form");
-  //   //Simulate form data, but only include the selected sport value.
-  //   var data = {};
-  //   data[$countries.attr("name")] = $countries.val();
-  //   console.log(data);
-  //   // Submit data via AJAX to the form's action path.
-  //   $.ajax({
-  //     url: $form.attr("action"),
-  //     type: $form.attr("method"),
-  //     data: data,
-  //     complete: function (html) {
-  //       // Replace current position field ...
-  //       $("#devis_services").replaceWith(
-  //         // ... with the returned one from the AJAX response.
-  //         $(html.responseText).find("#devis_services")
-  //       );
-  //       // Position field now displays the appropriate positions.
-  //     },
-  //   });
-  // });
-  // };
   window.onload = () => {
-    // console.log("je suis là")
-    //     $(document).ready(function() {
-    //     $('.nice-select').select2();
-    // });
-
     let categories = document.querySelector("#devis_categories");
-    // categories.addEventListener("change", function(){
-    //   console.log("hello")
-    // })
     $("#devis_categories").change(function () {
       let form = this.closest("form");
       let data = this.name + "=" + this.value;
-
-
       fetch(form.action, {
         method: form.getAttribute("method"),
         body: data,

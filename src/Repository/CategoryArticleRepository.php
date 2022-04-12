@@ -53,6 +53,15 @@ class CategoryArticleRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+    public function findAllByDateF()
+    {
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.updatedAt', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     // /**
     //  * @return CategoryArticle[] Returns an array of CategoryArticle objects

@@ -84,27 +84,21 @@
           </div>
         </div>
         {{ form_end(form) }}
-        <script src="https://www.google.com/recaptcha/api.js?render=6Lc96AYfAAAAAAJsKTsNdyF4yBBWVnt5rWll8Dbe"></script>
+        
+      </div>
+    </div>
+  </div>
+  <div class="row" style="margin-bottom: 200px;"></div>
+</section>
+{{ include("include/frontoffice/footer.html.twig") }}
+{% block javascripts %}
+  <script src="https://www.google.com/recaptcha/api.js?render=6Lc96AYfAAAAAAJsKTsNdyF4yBBWVnt5rWll8Dbe"></script>
         <script>
         grecaptcha.ready(function() {
             grecaptcha.execute('6Lc96AYfAAAAAAJsKTsNdyF4yBBWVnt5rWll8Dbe', {action: 'homepage'}).then(function(token) {
                 document.getElementById('contact_captcha').value = token
             });
         });
-        </script>
-      </div>
-    </div>
-    {# <div
-      id="mapBox"
-      class="mapBox"
-      data-lat="40.701083"
-      data-lon="-74.1522848"
-      data-zoom="13"
-      data-info="PO Box CT16122 Collins Street West, Victoria 8007, Australia."
-      data-mlat="40.701083"
-      data-mlon="-74.1522848"
-    ></div> #}
-  </div>
-</section>
-{{ include("include/frontoffice/footer.html.twig") }}
+  </script>
+{% endblock %}
 {% endblock %}

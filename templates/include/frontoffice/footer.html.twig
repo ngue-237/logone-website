@@ -3,18 +3,22 @@
 <footer class="footer_area">
   <div class="container">
     
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" >
       <div class="col-2">
         <h5>Nos solutions</h5>
         <ul class="nav flex-column">
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+          {% for catg in catgs.getCategoriesService %}
+            <li class="nav-item mb-2"><a title="lien vers tous nos services dans liés au {{catg.slug}} " href="{{absolute_url(path('services', { slug: catg.slug }))}}" class="nav-link p-0 text-muted">{{catg.designation}}</a></li>
+          {% endfor %}
         </ul>
       </div>
 
       <div class="col-2">
         <h5>Nos actulités</h5>
         <ul class="nav flex-column">
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+          {% for catgArticle in catgsArticle.getCategoriesArticle %}
+            <li class="nav-item mb-2"><a title="lien vers tous nos services dans liés au {{catgArticle.slug}} " href="{{absolute_url(path('blog_by_categorie', { slug: catgArticle.slug }))}}" class="nav-link p-0 text-muted">{{catgArticle.title}}</a></li>
+          {% endfor %}
         </ul>
       </div>
 
