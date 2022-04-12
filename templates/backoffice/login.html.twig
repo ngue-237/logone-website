@@ -57,6 +57,13 @@
                       method="post"
                       action="{{ path('security_login') }}"
                     >
+                      {% if redirect %}
+                      <input
+                        name="_target_path"
+                        type="hidden"
+                        value="{{ redirect }}"
+                      />
+                      {% endif %}
                       <div class="form-group">
                         <input
                           type="email"

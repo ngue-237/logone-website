@@ -29,6 +29,7 @@ security:
         login_path: security_login
         check_path: security_login
         enable_csrf: true
+        use_referer: true
 
       logout:
         path: security_logout

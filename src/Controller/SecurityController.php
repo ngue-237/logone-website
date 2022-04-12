@@ -218,11 +218,11 @@ class SecurityController extends AbstractController
     public function login(AuthenticationUtils $auth, Request $req):Response{
         $errors = $auth->getLastAuthenticationError();
         $lastUsername = $auth->getLastUsername();
-        // $email = $req->get("_username");
-        // dd($email);
+        
         return $this->render('backoffice/login.html.twig', [
             'last_username'=>$lastUsername,
-            'errors'=>$errors
+            'errors'=>$errors,
+            'redirect'=>$req->headers->get("referer")
         ]);
     }
 
@@ -233,7 +233,6 @@ class SecurityController extends AbstractController
      * @Route("/se-deconnecter", name="security_logout")
      */
     public function logout(){
-
     }
 
     /**
