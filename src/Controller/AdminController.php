@@ -8,13 +8,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminController extends AbstractController
-{
+{   
     /**
      * @Route("/admin-logone", name="admin_dashboard")
      */
     public function index(): Response
     {
-        return $this->render('backoffice/index.html.twig', [
-        ]);
+        return $this->render('backoffice/index.html.twig');
     }
 }

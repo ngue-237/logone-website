@@ -19,16 +19,19 @@ security:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
       security: false
     main:
+      
       lazy: true
       provider: in_database
 
       form_login:
         login_path: security_login
         check_path: security_login
+        enable_csrf: true
 
       logout:
         path: security_logout
         target: home
+
       # activate different ways to authenticate
       # https://symfony.com/doc/current/security.html#the-firewall
 

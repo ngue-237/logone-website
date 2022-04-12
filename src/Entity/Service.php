@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\CategoryService;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ServiceRepository;
 use Gedmo\Mapping\Annotation as Gedmo;
