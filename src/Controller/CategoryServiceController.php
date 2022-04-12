@@ -8,6 +8,7 @@ use App\Form\CategoryServiceType;
 use App\services\CategoryServices;
 use App\services\ImageManagerService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 use App\Repository\CategoryServiceRepository;
 use Symfony\Component\HttpFoundation\Request;
 use MercurySeries\FlashyBundle\FlashyNotifier;
@@ -15,10 +16,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Contracts\Cache\ItemInterface;
 
 class CategoryServiceController extends AbstractController
 {
@@ -86,7 +87,10 @@ class CategoryServiceController extends AbstractController
                  'download_uri' => false,
                  'image_uri' => true,
                  "constraints"=>[
-                     new NotNull()
+                     new NotNull(),
+                     new Image([
+                         "maxSize" => "1024k"
+                     ])
                  ]
                  ]);
         $form->handleRequest($req);

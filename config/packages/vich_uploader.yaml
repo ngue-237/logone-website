@@ -17,11 +17,15 @@ vich_uploader:
     category_service_images:
       uri_prefix: /images/categories_service
       upload_destination: "%kernel.project_dir%/public/uploads/images/categories_service"
-      namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+      namer:
+        service: Vich\UploaderBundle\Naming\PropertyNamer
+        options: { property: "slug" }
     jobs_images:
       uri_prefix: /images/jobs_images
       upload_destination: "%kernel.project_dir%/public/uploads/images/jobs_images"
-      namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+      namer:
+        service: Vich\UploaderBundle\Naming\PropertyNamer
+        options: { property: "slug" }
 
     candidature_cv:
       uri_prefix: "%app.path.candidature_cv%"

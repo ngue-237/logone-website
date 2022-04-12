@@ -3,13 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Gedmo\Sluggable\Util\Urlizer;
+use Gedmo\Mapping\Annotation as Gedmo;
 use App\Repository\OffreEmploiRepository;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
-use Gedmo\Mapping\Annotation as Gedmo;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 /**
  * @ORM\Entity(repositoryClass=OffreEmploiRepository::class)
  * @Vich\Uploadable
@@ -223,6 +224,9 @@ class OffreEmploi
 
     public function getSlug(): ?string
     {
+        if (!$this->slug) {
+            return Urlizer::urlize($this->getTitre());
+        }
         return $this->slug;
     }
 }

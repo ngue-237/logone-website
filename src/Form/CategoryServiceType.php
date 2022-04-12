@@ -23,9 +23,9 @@ class CategoryServiceType extends AbstractType
                 "constraints"=>[
                     new NotBlank(),
                     new Length([
-                        'min' => 2,
+                        'min' => 4,
                         "minMessage"=>"Your title must be at least {{ limit }} characters long",
-                        "max" => 34,
+                        "max" => 50,
                         "maxMessage"=>"Your title name cannot be longer than {{ limit }} characters",
                         ])
                 ]
