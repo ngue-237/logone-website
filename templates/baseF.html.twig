@@ -78,6 +78,7 @@
     <!-- main css -->
     <link rel="stylesheet" href="{{ asset('assetF/') }}css/style.css" />
     <link rel="icon" href="{{ asset('assetF') }}/img/Logone-logo-fav.png" />
+    <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
     {% block stylesheets %} {#
     <link
       rel="icon"
@@ -155,7 +156,6 @@
       }}"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-    {{ include("@MercurySeriesFlashy/flashy.html.twig") }}
     {% block javascripts %} {% endblock %}
 
     <!-- Go to www.addthis.com/dashboard to customize your tools -->
@@ -163,5 +163,7 @@
       type="text/javascript"
       src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-6248b3a954a9f1c6"
     ></script>
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    {{ include("@MercurySeriesFlashy/flashy.html.twig") }}
   </body>
 </html>
