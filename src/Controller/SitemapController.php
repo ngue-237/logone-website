@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\ArticleRepository;
 use App\Repository\CategoryArticleRepository;
 use App\Repository\CategoryServiceRepository;
 use App\Repository\OffreEmploiRepository;
@@ -21,7 +22,8 @@ class SitemapController extends AbstractController
         CategoryServiceRepository $categoryServiceRepo,
         ServiceRepository $serviceRepo,
         OffreEmploiRepository $offreEmploiRepo,
-        CategoryArticleRepository $catgArticleRepo
+        CategoryArticleRepository $catgArticleRepo,
+        ArticleRepository $articleRepo
         ): Response
     {
         $hostname =  $req->getSchemeAndHttpHost();
@@ -48,17 +50,13 @@ class SitemapController extends AbstractController
                 "images" => $images,
             ];
         }
-        
-         foreach($categoryServiceRepo->findAll() as $catgService){
-            foreach($catgService->getServices() as $service){
-                $urls []= [
+         foreach($serviceRepo->findAll() as $service){
+            $urls []= [
                 "loc"=>$this->generateUrl("services", [
                     "slug"=>$service->getSlug()
                 ]),
                 "lastmod" =>$service->getUpdatedAt()->format('Y-m-d')
             ];
-            }
-            
         }
 
         
@@ -75,7 +73,6 @@ class SitemapController extends AbstractController
                 "loc" => "/public/uploads/images/categories_article/".$catgArticle->getImage(),
                 "title"=>$catgService->getSlug()
             ];
-            //dd($catgArticle);
             $urls []= [
                 "loc"=>$this->generateUrl("blog", [
                     "slug"=>$catgArticle->getSlug()
@@ -83,8 +80,18 @@ class SitemapController extends AbstractController
                 "lastmod" =>$catgArticle->getUpdatedAt()->format('Y-m-d')
             ];
         }
-        // dd($urls);
-
+        foreach($articleRepo->findAll() as $article){
+            $images = [
+                "loc" => "/public/uploads/images/categories_article/".$article->getImage(),
+                "title"=>$catgService->getSlug()
+            ];
+            $urls []= [
+                "loc"=>$this->generateUrl("blog", [
+                    "slug"=>$article->getSlug()
+                ]),
+                "lastmod" =>$article->getCreatedAt()->format('Y-m-d')
+            ];
+        }
         $response = new Response(
             $this->renderView('sitemap/index.html.twig', compact(
             "hostname",
