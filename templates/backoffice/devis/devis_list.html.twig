@@ -36,18 +36,22 @@ endblock %} {% block content %}
                 <thead>
                   <tr>
                     <th>Nom</th>
-                    <th>Prénom</th>
                     <th>Email</th>
                     <th>Service</th>
+                    <th>Confirmation</th>
+                    <th>Accepter</th>
+                    <th>Etat du projet</th>
                     <th>Options</th>
                   </tr>
                 </thead>
                 <tfoot>
                   <tr>
                     <th>Nom</th>
-                    <th>Prénom</th>
                     <th>Email</th>
                     <th>Service</th>
+                    <th>Confirmation</th>
+                    <th>Accepter</th>
+                    <th>Etat du projet<</th>
                     <th>Options</th>
                   </tr>
                 </tfoot>
@@ -57,11 +61,90 @@ endblock %} {% block content %}
                     <td>
                       {{ devis.lastName }}
                     </td>
-                    <td>
-                      {{ devis.firstName }}
-                    </td>
                     <td>{{ devis.email }}</td>
                     <td>{{ devis.categories.designation }}</td>
+                    <td>
+                      {% if devis.confirm %}
+                      <i class="fas fa-times-circle" style="color: red"></i> {%
+                      else %}
+                      <i
+                        class="fas fa-check-circle"
+                        style="color: rgb(12, 231, 12)"
+                      ></i>
+                      {% endif %}
+                    </td>
+                    <td>
+                      {% if devis.closingStatus == 0 %}
+                      <form
+                        action="{{
+                          path('admin_closing_status', { id: devis.id })
+                        }}"
+                        method="post"
+                      >
+                        <input
+                          type="hidden"
+                          name="token"
+                          value="{{ csrf_token('devis-closed') }}"
+                        />
+
+                        <button
+                          type="submit"
+                          style="background: none; border: none; outline: none"
+                        >
+                          <div class="custom-control custom-checkbox small">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              name="flexRadioDefault"
+                              id="flexRadioDefault1"
+                            />
+                          </div>
+                        </button>
+                      </form>
+                      {% else %}
+                      <i
+                        class="fas fa-check-circle"
+                        style="color: rgb(12, 231, 12)"
+                      ></i>
+                      {% endif %}
+                    </td>
+                    <td>
+                      {% if devis.jobDone == 0 %}
+                      <form
+                        action="{{ path('admin_job_done', { id: devis.id }) }}"
+                        method="post"
+                      >
+                        <input
+                          type="hidden"
+                          name="token"
+                          value="{{ csrf_token('job-done') }}"
+                        />
+
+                        <button
+                          type="submit"
+                          style="background: none; border: none; outline: none"
+                        >
+                          <div class="custom-control custom-checkbox small">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              name="flexRadioDefault"
+                              id="flexRadioDefault1"
+                            />
+                            <label
+                              class="custom-control-label{{ loop.index }}"
+                              for="customCheck"
+                            ></label>
+                          </div>
+                        </button>
+                      </form>
+                      {% else %}
+                      <i
+                        class="fas fa-check-circle"
+                        style="color: rgb(12, 231, 12)"
+                      ></i>
+                      {% endif %}
+                    </td>
                     <td>
                       <a href="{{ path('devis_delete', { id: devis.id }) }}">
                         <i class="fas fa-trash-alt"></i></a
@@ -70,13 +153,13 @@ endblock %} {% block content %}
                         type="button"
                         class="btn"
                         data-toggle="modal"
-                        data-target="#exampleModalLong"
+                        data-target="#exampleModalLong{{ loop.index }}"
                       >
                         <i class="fas fa-eye"></i>
                       </button>
                       <div
                         class="modal fade"
-                        id="exampleModalLong"
+                        id="exampleModalLong{{ loop.index }}"
                         tabindex="-1"
                         role="dialog"
                         aria-labelledby="exampleModalLongTitle"
@@ -89,7 +172,7 @@ endblock %} {% block content %}
                                 class="modal-title"
                                 id="exampleModalLongTitle"
                               >
-                                Modal title
+                                Demande devis
                               </h5>
                               <button
                                 type="button"
@@ -103,11 +186,53 @@ endblock %} {% block content %}
                             <div class="modal-body">
                               <div class="row">
                                 <div class="col-lg-3">
+                                  <h6>Nom & Prenom</h6>
+                                </div>
+                                <div class="col-lg-9">
+                                  <p>
+                                    {{ devis.lastName }}&nbsp;{{
+                                      devis.firstName
+                                    }}
+                                  </p>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-lg-3">
+                                  <h6>email</h6>
+                                </div>
+                                <div class="col-lg-9">
+                                  <p>
+                                    {{ devis.email }}
+                                  </p>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-lg-3">
                                   <h6>Téléphone</h6>
                                 </div>
                                 <div class="col-lg-9">
                                   <p>
                                     {{ devis.phoneNumber }}
+                                  </p>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-lg-3">
+                                  <h6>Entreprise</h6>
+                                </div>
+                                <div class="col-lg-9">
+                                  <p>
+                                    {{ devis.company }}
+                                  </p>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-lg-3">
+                                  <h6>Pays</h6>
+                                </div>
+                                <div class="col-lg-9">
+                                  <p>
+                                    {{ devis.country }}
                                   </p>
                                 </div>
                               </div>

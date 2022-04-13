@@ -83,6 +83,15 @@ class ArticleRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+    public function findAllByPub()
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.isPublished = :val')
+            ->setParameter('val', 1)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
     
 
     // public function findByisPublished($val): ?Article

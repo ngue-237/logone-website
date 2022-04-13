@@ -188,10 +188,52 @@ class DevisController extends AbstractController
         $em->persist($devis);
         $em->flush();
 
-        //message flash
         $flash->success("Votre demande à bien été confirmé !", "");
         return $this->redirectToRoute('home');
         
+    }
+
+    /**
+     * set devis closing status
+     *@Route("/admin/devis/is-sale/{id}" ,name="admin_closing_status")
+     * @return void
+     */
+    public function devisAccepted(
+        EntityManagerInterface $em,
+        Devis $devis,
+        Request $req
+    ){
+        $submittedToken = $req->request->get('token');
+      
+        if ($this->isCsrfTokenValid('devis-closed', $submittedToken)) {
+            
+             $devis->setClosingStatus(true);
+             $em->flush();
+            //  dd("hello boy");
+            return $this->redirectToRoute('devis_lists');
+        }
+        return $this->redirectToRoute('devis_lists');
+    }
+    /**
+     * set devis closing status
+     *@Route("/admin/devis/job-is-ok/{id}" ,name="admin_job_done")
+     * @return void
+     */
+    public function jobDone(
+        EntityManagerInterface $em,
+        Devis $devis,
+        Request $req
+    ){
+        $submittedToken = $req->request->get('token');
+      
+        if ($this->isCsrfTokenValid('job-done', $submittedToken)) {
+            
+             $devis->setJobDone(true);
+             $em->flush();
+
+            return $this->redirectToRoute('devis_lists');
+        }
+        return $this->redirectToRoute('devis_lists');
     }
 
     /**

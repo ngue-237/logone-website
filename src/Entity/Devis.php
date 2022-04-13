@@ -78,14 +78,16 @@ class Devis
     private $confirm;
 
     /**
-     * @ORM\Column(type="string", length=60, nullable=true)
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $closingStatus;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="boolean", nullable=true)
      */
-    private $jobStatus;
+    private $jobDone;
+
+    
     
     public function getId(): ?int
     {
@@ -224,27 +226,29 @@ class Devis
         return $this;
     }
 
-    public function getClosing(): ?bool
+    public function getClosingStatus(): ?bool
     {
-        return $this->closing;
+        return $this->closingStatus;
     }
 
-    public function setClosing(?bool $closing): self
+    public function setClosingStatus(?bool $closingStatus): self
     {
-        $this->closing = $closing;
+        $this->closingStatus = $closingStatus;
 
         return $this;
     }
 
-    public function getJobStatus(): ?string
+    public function getJobDone(): ?bool
     {
-        return $this->jobStatus;
+        return $this->jobDone;
     }
 
-    public function setJobStatus(?string $jobStatus): self
+    public function setJobDone(?bool $jobDone): self
     {
-        $this->jobStatus = $jobStatus;
+        $this->jobDone = $jobDone;
 
         return $this;
     }
+
+    
 }

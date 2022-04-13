@@ -58,6 +58,32 @@ class DevisRepository extends ServiceEntityRepository
         ;
     }
     
+    /**
+     * @return Devis[] Returns an array of Devis objects
+     */
+    
+    public function findAllAccepted()
+    {
+        return $this->createQueryBuilder('d')
+            ->andWhere('d.closingStatus = :isClosed')
+            ->setParameter('isClosed', 1)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    /**
+     * @return Devis[] Returns an array of Devis objects
+     */
+    
+    public function findAllJobDone()
+    {
+        return $this->createQueryBuilder('d')
+            ->andWhere('d.jobDone = :isDone')
+            ->setParameter('isDone', 1)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     /*
     public function findOneBySomeField($value): ?Devis

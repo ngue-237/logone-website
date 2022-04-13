@@ -19,7 +19,7 @@
       <div class="container-fluid">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+          <h1 class="h3 mb-0 text-gray-800">Statistique</h1>
           <a
             href="#"
             class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
@@ -39,7 +39,7 @@
                     <div
                       class="text-xs font-weight-bold text-primary text-uppercase mb-1"
                     >
-                      Devis (Mois)
+                      Demande Devis
                     </div>
                     <div class="h5 mb-0 font-weight-bold text-gray-800">
                       {{ devis | length }}
@@ -53,30 +53,6 @@
             </div>
           </div>
 
-          <!-- Earnings (Monthly) Card Example -->
-          <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
-              <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                  <div class="col mr-2">
-                    <div
-                      class="text-xs font-weight-bold text-success text-uppercase mb-1"
-                    >
-                      nombre de vente (Année)
-                    </div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                      $215,000
-                    </div>
-                  </div>
-                  <div class="col-auto">
-                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Earnings (Monthly) Card Example -->
           <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-info shadow h-100 py-2">
               <div class="card-body">
@@ -85,14 +61,14 @@
                     <div
                       class="text-xs font-weight-bold text-info text-uppercase mb-1"
                     >
-                      Total Article De Blog
+                      Projet livrer
                     </div>
                     <div class="row no-gutters align-items-center">
                       <div class="col-auto">
                         <div
                           class="h5 mb-0 mr-3 font-weight-bold text-gray-800"
                         >
-                          {{ articles | length }}
+                          {{ devisDone | length }} &#47; {{ devis | length }}
                         </div>
                       </div>
                       <div class="col">
@@ -100,10 +76,10 @@
                           <div
                             class="progress-bar bg-info"
                             role="progressbar"
-                            style="width: {{ articles | length }}%"
-                            aria-valuenow="{{ articles | length }}"
+                            style="width: {{ devisDone | length }}%"
+                            aria-valuenow="{{ devisDone | length }}"
                             aria-valuemin="0"
-                            aria-valuemax="100"
+                            aria-valuemax="{{ devis | length }}"
                           ></div>
                         </div>
                       </div>
@@ -116,6 +92,29 @@
               </div>
             </div>
           </div>
+          <!-- Earnings (Monthly) Card Example -->
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div
+                      class="text-xs font-weight-bold text-success text-uppercase mb-1"
+                    >
+                      Devis accepter
+                    </div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                      {{ devisAccepted | length }} &#47; {{ devis | length }}
+                    </div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Earnings (Monthly) Card Example -->
 
           <!-- Pending Requests Card Example -->
           <div class="col-xl-3 col-md-6 mb-4">
@@ -140,7 +139,48 @@
             </div>
           </div>
         </div>
-
+        <div class="row">
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div
+                      class="text-xs font-weight-bold text-info text-uppercase mb-1"
+                    >
+                      article de blog postés
+                    </div>
+                    <div class="row no-gutters align-items-center">
+                      <div class="col-auto">
+                        <div
+                          class="h5 mb-0 mr-3 font-weight-bold text-gray-800"
+                        >
+                          {{ articlesPublished | length }} &#47;
+                          {{ articles | length }}
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="progress progress-sm mr-2">
+                          <div
+                            class="progress-bar bg-info"
+                            role="progressbar"
+                            style="width: {{ articlesPublished | length }}%"
+                            aria-valuenow="{{ articlesPublished | length }}"
+                            aria-valuemin="0"
+                            aria-valuemax="{{ articles | length }}"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <!-- Content Row -->
 
         <div class="row">

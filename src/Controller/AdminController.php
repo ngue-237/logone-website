@@ -22,7 +22,10 @@ class AdminController extends AbstractController
     {
         return $this->render('backoffice/index.html.twig',[
             "articles" => $articleRepo->findAll(),
+            "articlesPublished" =>$articleRepo->findAllByPub(),
             "devis"=>$devisRepo->findAll(),
+            "devisAccepted" => $devisRepo->findAllAccepted(),
+            "devisDone" => $devisRepo->findAllJobDone(),
             "contactRequest" =>$contactRepo->findAll()
         ]);
     }

@@ -80,7 +80,7 @@ class ContactController extends AbstractController
                     $flashy->success("Votre demande a été bien prise en compte vous serez recontactez dans les prochaines 24h!",'');
                     return $this->redirectToRoute('contact');
                 }else{
-                    dd("contact error");
+                    
                     $flashy->error("Confirm you are not robot!",'');
                     return $this->redirectToRoute('contact');
                 }
@@ -99,7 +99,7 @@ class ContactController extends AbstractController
     public function contactList(ContactRepository $rep):Response{
        
         return $this->render('backoffice/contact/contactList.html.twig', [
-            'contacts'=>$rep->findAll()
+            'contacts'=>$rep->findBy([], ["createdAt" => "ASC"])
         ]);
     }
 
