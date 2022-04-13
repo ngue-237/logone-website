@@ -47,7 +47,7 @@ class ContactController extends AbstractController
         $form->handleRequest($req);
 
         if($form->isSubmitted() and $form->isValid()){
-            //url de vérification google recaptcha
+            
             $url = "https://www.google.com/recaptcha/api/siteverify?secret=6Lc96AYfAAAAAEP84ADjdx5CBfEpgbTyYqgemO5n&response={$_POST['contact']["captcha"]}";
 
             $response = $client->curlManager($url);
@@ -58,8 +58,11 @@ class ContactController extends AbstractController
                 return $this->redirectToRoute('contact');
             }
             else{
+                
                 $data = json_decode($response);
+
                 if($data->success){
+                    
                     $em->persist($contact);
                     $em->flush();
                     $mailer->send(
@@ -73,9 +76,11 @@ class ContactController extends AbstractController
                         ],
                         "emmanuelbenjamin.nguetoungoum@esprit.tn"
                     );
+                    $this->addFlash("success", "Votre demande a été bien prise en compte vous serez recontactez dans les prochaines 24h!");
                     $flashy->success("Votre demande a été bien prise en compte vous serez recontactez dans les prochaines 24h!",'');
                     return $this->redirectToRoute('contact');
                 }else{
+                    dd("contact error");
                     $flashy->error("Confirm you are not robot!",'');
                     return $this->redirectToRoute('contact');
                 }

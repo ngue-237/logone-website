@@ -17,7 +17,7 @@ public function __construct(CategoryServiceRepository $categoryServiceRepo)
 public function getFunctions() : array
 {
     return [
-        new TwigFunction("catgs", [$this, "getCategoriesService"])
+        new TwigFunction("catgServ", [$this, "getCategoriesService"])
     ];
 }
 

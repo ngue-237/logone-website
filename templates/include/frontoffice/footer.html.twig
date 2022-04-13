@@ -5,16 +5,16 @@
     
     <div class="row justify-content-center" >
       <div class="col-2">
-        <h5>Nos solutions</h5>
+        <h5 class="mb-20">Nos solutions</h5>
         <ul class="nav flex-column">
-          {% for catg in catgs.getCategoriesService %}
+          {% for catg in catgServ.getCategoriesService %}
             <li class="nav-item mb-2"><a title="lien vers tous nos services dans liés au {{catg.slug}} " href="{{absolute_url(path('services', { slug: catg.slug }))}}" class="nav-link p-0 text-muted">{{catg.designation}}</a></li>
           {% endfor %}
         </ul>
       </div>
 
       <div class="col-2">
-        <h5>Nos actulités</h5>
+        <h5 class="mb-20">Nos actulités</h5>
         <ul class="nav flex-column">
           {% for catgArticle in catgsArticle.getCategoriesArticle %}
             <li class="nav-item mb-2"><a title="lien vers tous nos services dans liés au {{catgArticle.slug}} " href="{{absolute_url(path('blog_by_categorie', { slug: catgArticle.slug }))}}" class="nav-link p-0 text-muted">{{catgArticle.title}}</a></li>
@@ -23,40 +23,45 @@
       </div>
 
       <div class="col-2">
-        <h5>Qui sommes nous ?</h5>
+        <h5 class="mb-20">Qui sommes nous ?</h5>
         <ul class="nav flex-column">
           <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
         </ul>
       </div>
-
+      
       <div class="col-4 ">
-        <p class="sample-text">
-          LOGONE est une agence de communication digitale qui vous accompagne dans votre stratégie digitale, e-réputation et l'augmentation de votre chiffre d'affaires. Notre expertise s'étend aux leviers majeurs liés au développement de votre visibilité digitale et à la gestion de la relation client, à savoir: la création de votre site internet, l'optimisation de votre visibilité Google à travers le référencement naturel (SEO) et référencement payant (Google Ads et Google Shopping), 
-          l'amélioration de votre présence sur les réseaux sociaux, et le suivie virtuel de vos clients (tout au long de leur processus d'achat)
-        </p>
+        <div class="single-defination">
+					<h4 class="mb-20">Que faisons-nous ?</h4>
+					<p class="sample-text">
+            Nous accompagnons votre entreprise dans son développement  à travers l’optimisation des principaux leviers 
+            du <span style="color: #4cd3e3; font-weight: bold">marketing digital</span> et la <span style="color: #4cd3e3; font-weight: bold">gestion de la relation client </span>
+            afin de vous faire acquérir de nouveaux clients, générer de nouvelles ventes, améliorer votre relation client et  votre e-réputation. 
+            Selon votre besoin nos experts digitaux construisent votre stratégie et vous accompagnent en continu.
+             
+          </p>
+				</div>
       </div>
     </div>
-    <div class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-    <div class="col-lg-6">
-        <a href="{{absolute_url(absolute_url(path("app_mention_legale")))}}" title="lien vers nos mentions légales">mentions légales</a>
-        <p class="col-lg-8 col-sm-12 footer-text" style="display: inline-block;">
-        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-        Copyright &copy;
-        <script>
-          document.write(new Date().getFullYear());
-        </script>
-        All rights reserved
-        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-      </p>
+    <div class="row d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+      <div class="col-lg-8">
+        <a style="color: #777777;" href="{{absolute_url(absolute_url(path("app_mention_legale")))}}" title="lien vers nos mentions légales">mentions  légales</a>
+          <p class="col-lg-8 col-sm-12 footer-text" style="display: inline;">
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            Copyright &copy;
+            <script>
+              document.write(new Date().getFullYear());
+            </script>
+            All rights reserved
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+          </p>
       </div>
-
-    <div class="col-lg-6">
+      <div class="col-lg-4">
         <div class="footer_social">
 					<a href="#"><i class="fa fa-facebook"></i></a>
 					<a href="#"><i class="fab fa-linkedin"></i></a>
       </div>
-  </div>
-  </div>
+      </div>
+    </div>
 </footer>
 
 
