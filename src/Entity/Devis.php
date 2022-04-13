@@ -77,10 +77,15 @@ class Devis
      */
     private $confirm;
 
-    
+    /**
+     * @ORM\Column(type="string", length=60, nullable=true)
+     */
+    private $closingStatus;
 
-    
-
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $jobStatus;
     
     public function getId(): ?int
     {
@@ -215,6 +220,30 @@ class Devis
     public function setConfirm(?string $confirm): self
     {
         $this->confirm = $confirm;
+
+        return $this;
+    }
+
+    public function getClosing(): ?bool
+    {
+        return $this->closing;
+    }
+
+    public function setClosing(?bool $closing): self
+    {
+        $this->closing = $closing;
+
+        return $this;
+    }
+
+    public function getJobStatus(): ?string
+    {
+        return $this->jobStatus;
+    }
+
+    public function setJobStatus(?string $jobStatus): self
+    {
+        $this->jobStatus = $jobStatus;
 
         return $this;
     }
