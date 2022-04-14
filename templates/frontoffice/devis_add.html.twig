@@ -100,7 +100,18 @@
                 form_row(form.categories, {
                   attr: {
                     class: "form-select form-select-sm",
-                    value: categoryService.id
+                    
+                  }
+                })
+              }}
+            </div>
+            <div class="form-group">
+              {{
+                form_row(form.services, {
+                  label: false,
+                  attr: {
+                    class: "form-select form-select-sm js-example-basic-single",
+                    multiple: "multiple"
                   }
                 })
               }}
@@ -159,7 +170,11 @@
         document.getElementById("form_captcha").value = token;
       });
   });
+  $(document).ready(function () {
+    $(".js-example-basic-single").select2();
+  });
 </script>
+
 <script type="text/JavaScript">
 
   window.onload = () => {

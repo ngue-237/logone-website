@@ -7,6 +7,7 @@ use App\Entity\Service;
 use App\services\CurlService;
 use App\services\DevisService;
 use App\Entity\CategoryService;
+use App\Form\ServiceType;
 use App\services\MaillerService;
 use App\Repository\DevisRepository;
 use App\Repository\ServiceRepository;
@@ -29,6 +30,13 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
+
 
 class DevisController extends AbstractController
 {
@@ -54,7 +62,9 @@ class DevisController extends AbstractController
         ):Response{
         $devis = new Devis();
         $services = $serviceRepo->findByCategoryService($categoryService->getId());
-        $form = $this->createFormBuilder(['categories'=>$categoryService])
+        
+        //dd($entityAsArray);
+        $form = $this->createFormBuilder(['categories'=>$categoryService, "services"=>$services])
             -> add('lastname', TextType::class,
             [   
             'constraints' => [new Length([
@@ -129,6 +139,13 @@ class DevisController extends AbstractController
                     new NotBlank(),
                 ]
             ])
+            ->add('services', ChoiceType::class,[
+                "choices"=>$services,
+                'choice_label' => 'designation',
+                "constraints"=>[
+                    new NotBlank(),
+                ]
+            ])
             ->add("captcha", HiddenType::class, [
             "constraints"=>[
                 new NotNull(),
@@ -136,6 +153,7 @@ class DevisController extends AbstractController
             ]
         ])
             ->getForm();
+
         $devisRoute = $this->generateUrl("devis_add",["slug"=>$slug],UrlGeneratorInterface::ABSOLUTE_URL);
         //dd($devisRoute);
         $form->handleRequest($req);
@@ -152,6 +170,7 @@ class DevisController extends AbstractController
                 if($data->success){    
                     $devisSet = new Devis();
                     $devisSet = $devisHelper->setDevis($devis, $form);
+                    
                             
                     $flashy->success("Un email de confirmation vous a-été envoyé à l'adresse ".$form->get("email")->getData(),'');
 

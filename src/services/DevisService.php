@@ -24,6 +24,7 @@ class DevisService{
 
    
     public function setDevis(Devis $devis, $form){
+            
             $devis->setFirstname($form->get("firstname")->getData());
             $devis->setLastname($form->get("lastname")->getData());
             $devis->setEmail($form->get("email")->getData());
@@ -31,8 +32,10 @@ class DevisService{
             $devis->setCompany($form->get("company")->getData());
             $devis->setCountry($form->get("country")->getData());
             $devis->setSubject($form->get("subject")->getData());
-            $devis->setCategories($form->get("categories")->getData());
             $devis->setConfirm($this->tokenGenarator->generateToken());
+            $devis->setCategories($form->get("categories")->getData());
+            $devis->setServices($form->get("services")->getData());
+            $devis->setCategories($form->get("categories")->getData());
             $devis->setRgpd(true);
             $devis->setCreatedAt(new \DateTime());
             $this->em->persist($devis);

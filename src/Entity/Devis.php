@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\DevisRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -86,6 +88,11 @@ class Devis
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $jobDone;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Service::class, inversedBy="devis")
+     */
+    private $services;   
 
     
     
@@ -249,6 +256,22 @@ class Devis
 
         return $this;
     }
+
+    public function getServices(): ?Service
+    {
+        return $this->services;
+    }
+
+    public function setServices(?Service $services): self
+    {
+        $this->services = $services;
+
+        return $this;
+    }
+
+   
+
+    
 
     
 }
