@@ -33,7 +33,7 @@ class HomeController extends AbstractController
             return $paginator->paginate($catgServiceRepo->findAllByDate(), $req->query->getInt('page', 1), 4);
         });
 
-        $catgoriesArticle = $cache->get("categorie-article", function(ItemInterface $item) use($paginator, $req,$categoryArtRepo){
+        $catgoriesArticle = $cache->get("categorie-article-home", function(ItemInterface $item) use($paginator, $req,$categoryArtRepo){
              $item->expiresAfter(DateInterval::createFromDateString('3 hour'));
             return $paginator->paginate($categoryArtRepo->findAllByDate(), $req->query->getInt('page', 1), 3);
         });

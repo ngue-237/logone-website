@@ -44,7 +44,7 @@ class CategoryServiceController extends AbstractController
     public function allCategoriesService(CategoryServices $categoryService, Request $req):Response{
         $cache = new FilesystemAdapter();
 
-         $categoriesService = $cache->get("categorie-service", function(ItemInterface $item) use ($categoryService, $req){
+         $categoriesService = $cache->get("categorie-service-page", function(ItemInterface $item) use ($categoryService, $req){
              $item->expiresAfter(DateInterval::createFromDateString('3 hour'));   
             return $categoryService->getAllCategoryService($req);
         });
