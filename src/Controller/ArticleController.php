@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateInterval;
 use App\Entity\Like;
 use App\Entity\Article;
 use App\Entity\Comments;
@@ -102,18 +103,18 @@ class ArticleController extends AbstractController
 
              //mis en cache des données
              $article = $cache->get("article-article-detail-page".$article->getSlug(), function(ItemInterface $item) use($article){
-                $item->expiresAfter(2); 
+                $item->expiresAfter(DateInterval::createFromDateString('3 hour')); 
                 return $article;
              });
             //je prende le cache de la page blog-by-category
              $articleOrderByView= $cache->get("article-order-by-view-blog-by-categorie-page",function(ItemInterface $item) use($articleRepo, $paginator,$req){
-                $item->expiresAfter(200000); 
+                $item->expiresAfter(DateInterval::createFromDateString('3 hour')); 
                 
                 return $paginator->paginate($articleRepo->findAllOderByDate(), $req->query->getInt('page', 1),3);
              });
 
              $comments = $cache->get("article-comments-article-detail-page".$article->getSlug(), function(ItemInterface $item) use($commentRepo, $article){
-                $item->expiresAfter(2); 
+                $item->expiresAfter(DateInterval::createFromDateString('3 hour')); 
                 return $commentRepo->findByAllComment($article->getId());
              });
 

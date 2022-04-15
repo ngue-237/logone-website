@@ -1,7 +1,11 @@
 {% extends 'baseF.html.twig'%} {% block title %} Blog | Logone {% endblock %} {%
 block meta %}
-<meta name="description" content="" />
-<meta name="keywords" content="" />
+<meta
+  name="description"
+  content="Suivez nos dernières actualités sur le marketing digital, la gestion de la relation client. Au programme : SEO, SEA, google Ads, Social
+  Media et CRM (Customer Relationship Management)"
+/>
+<meta name="keywords" content=" SEO, SEA, google Ads, Social Media et CRM" />
 {% endblock %} {% block content %} {% block bodyClass %} blog_version{% endblock
 %}
 
@@ -12,11 +16,12 @@ block meta %}
       <div class="col-lg-8 text-center">
         <div class="main_title">
           <h2>Nos actualités</h2>
-          <p>
-            Suivez les dernières actualités du marketing digital et du growth
-            hacking. Au programme : SEO, SEA, Google Ads, Amazon et Social
-            Media. Le blog de l'Agence 90 a pour vocation de partager les
-            dernières évolutions relatives au webmarketing.
+          <p class="sample-text">
+            Suivez nos dernières actualités sur le marketing digital, la gestion
+            de la relation client. Au programme : SEO, SEA, google Ads, Social
+            Media et CRM (Customer Relationship Management). Notre blog à pour
+            vocation de partager les dernières évolutions relatives au web
+            marketing, CRM.
           </p>
         </div>
       </div>
@@ -32,7 +37,11 @@ block meta %}
           <div class="categories_details">
             <div class="categories_text">
               <a
-                href="{{ absolute_url(path('blog_by_categorie', { slug: category.slug }))}}"
+                href="{{
+                  absolute_url(
+                    path('blog_by_categorie', { slug: category.slug })
+                  )
+                }}"
               >
                 <h5>{{ category.title }}</h5>
               </a>
@@ -40,7 +49,11 @@ block meta %}
               <p>{{ category.content | raw }}</p>
               <a
                 title="lien vers notre article sur : {{ category.slug }}"
-                href="{{ absolute_url(path('blog_by_categorie', { slug: category.slug })) }}"
+                href="{{
+                  absolute_url(
+                    path('blog_by_categorie', { slug: category.slug })
+                  )
+                }}"
                 class="genric-btn success circle"
               >
                 <span>Voir plus</span>

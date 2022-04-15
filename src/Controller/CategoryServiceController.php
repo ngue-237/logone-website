@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateInterval;
 use App\Entity\Images;
 use App\Entity\CategoryService;
 use App\Form\CategoryServiceType;
@@ -43,8 +44,13 @@ class CategoryServiceController extends AbstractController
     public function allCategoriesService(CategoryServices $categoryService, Request $req):Response{
         $cache = new FilesystemAdapter();
 
+         $categoriesService = $cache->get("categorie-service", function(ItemInterface $item) use ($categoryService, $req){
+             $item->expiresAfter(DateInterval::createFromDateString('3 hour'));   
+            return $categoryService->getAllCategoryService($req);
+        });
+
         return $this->render('frontoffice/category_services.html.twig', [
-            'catgs' => $categoryService->getAllCategoryService($req),
+            'catgs' => $categoriesService,
         ]);
     }
 

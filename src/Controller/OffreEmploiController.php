@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateInterval;
 use App\Entity\Candidature;
 use App\Entity\OffreEmploi;
 use App\Form\CandidatureType;
@@ -13,8 +14,8 @@ use Symfony\Contracts\Cache\ItemInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\CategoryArticleRepository;
 use App\Repository\CategoryServiceRepository;
-use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Component\HttpFoundation\Request;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Vich\UploaderBundle\Form\Type\VichImageType;
@@ -47,7 +48,8 @@ class OffreEmploiController extends AbstractController
 
         
         $cache = new FilesystemAdapter();
-        $offres = $cache->get("jobs-join-us-page", function() use($rep, $request, $pag){
+        $offres = $cache->get("jobs-join-us-page", function(ItemInterface $item) use($rep, $request, $pag){
+            $item->expiresAfter(DateInterval::createFromDateString('3 hour')); 
             return $pag->paginate($rep->findAll(), $request->query->getInt('page', 1), 4);
         });
       
@@ -122,19 +124,23 @@ class OffreEmploiController extends AbstractController
         $form = $this->createForm(CandidatureType::class,$candidature);
         
         $cache = new FilesystemAdapter();
-        $job = $cache->get("offre-emploi-join-us-page".$offreEmploi->getSlug(), function() use($offreEmploi) {
+        $job = $cache->get("offre-emploi-join-us-page".$offreEmploi->getSlug(), function(ItemInterface $item) use($offreEmploi) {
+            $item->expiresAfter(DateInterval::createFromDateString('3 hour')); 
             return $offreEmploi;
         });
 
-        $allJobs = $cache->get("all-job-join-us-page", function() use($req, $paginator, $offreEmploiRepo){
+        $allJobs = $cache->get("all-job-join-us-page", function(ItemInterface $item) use($req, $paginator, $offreEmploiRepo){
+            $item->expiresAfter(DateInterval::createFromDateString('3 hour')); 
             return $paginator->paginate($offreEmploiRepo->findAll(), $req->query->getInt('page', 1), 5);
         });
         
-        $allCatgService = $cache->get("categorie-service", function() use($req, $paginator,$catgServiceRepo){
+        $allCatgService = $cache->get("categorie-service", function(ItemInterface $item) use($req, $paginator,$catgServiceRepo){
+            $item->expiresAfter(DateInterval::createFromDateString('3 hour')); 
             return $paginator->paginate($catgServiceRepo->findAll(), $req->query->getInt('page', 1), 5);
         });
 
         $allCatgsArticle = $cache->get("categorie-article", function(ItemInterface $item) use($paginator, $req,$catgArticleRepo){
+            $item->expiresAfter(DateInterval::createFromDateString('3 hour')); 
             return $paginator->paginate($catgArticleRepo->findAll(), $req->query->getInt('page', 1), 3);
         });
 

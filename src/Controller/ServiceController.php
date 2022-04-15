@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateInterval;
 use App\Entity\Service;
 use App\Form\ServiceType;
 use App\Repository\ServiceRepository;
@@ -45,20 +46,18 @@ class ServiceController extends AbstractController
         $cache = new FilesystemAdapter();
         
         $categories = $cache->get("service-page-categorie".$slug, function(ItemInterface $item) use ($rep, $slug){
-             $item->expiresAfter(2);
+             $item->expiresAfter(DateInterval::createFromDateString('3 hour'));
             return $rep->findOneBy(['slug'=>$slug]);
         });
 
-        if(!$categories){
-            throw $this->createNotFoundException("cette cathégorie n'existe pas");
-        }
+       
         
         $services = $em->createQuery("select s From App\Entity\Service s where s.category = :id")
             ->setParameter("id", $categories->getId())
             ->getResult();
         
         $services = $cache->get("service-page-service-".$slug, function(ItemInterface $item) use($services){
-            $item->expiresAfter(2);
+            $item->expiresAfter(DateInterval::createFromDateString('3 hour'));
             return $services;
         });
 

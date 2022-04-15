@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+use DateInterval;
 use Symfony\Contracts\Cache\ItemInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\CategoryArticleRepository;
@@ -28,19 +29,14 @@ class HomeController extends AbstractController
         $cache = new FilesystemAdapter();
         
         $categoriesService = $cache->get("categorie-service", function(ItemInterface $item) use ($catgServiceRepo,$paginator, $req){
-             $item->expiresAfter(2);   
+             $item->expiresAfter(DateInterval::createFromDateString('3 hour'));   
             return $paginator->paginate($catgServiceRepo->findAllByDate(), $req->query->getInt('page', 1), 4);
         });
 
         $catgoriesArticle = $cache->get("categorie-article", function(ItemInterface $item) use($paginator, $req,$categoryArtRepo){
-             $item->expiresAfter(2);
+             $item->expiresAfter(DateInterval::createFromDateString('3 hour'));
             return $paginator->paginate($categoryArtRepo->findAllByDate(), $req->query->getInt('page', 1), 3);
         });
-
-        // $seoPage
-        //         ->setTitle("")
-        //         ->addMeta('property', 'og:title', "")
-        //     ;
 
         return $this->render('frontoffice/index.html.twig', [
            'categoriesService'=>$paginator->paginate($catgServiceRepo->findAll(), $req->query->getInt('page', 1), 4) ,

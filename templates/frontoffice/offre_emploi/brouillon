@@ -1,130 +1,47 @@
-{% extends 'baseF.html.twig'%} {% block title %}Details offre emplois | LOGONE
-{% endblock %} {% block meta %}
-<meta
-  name="description"
-  content="{{ job.description|u.truncate(250,true)|raw }}"
-/>
-<meta
-  name="keywords"
-  content="MARKETING DIGITAL, RELATION CLIENT, OFFRE EMPLOIS"
-/>
-{% endblock %} {% block content %} {%
-include('include/frontoffice/header.html.twig')%}
-<!--================Start Portfolio Details Area =================-->
-<section class="portfolio_details_area section_gap">
+<div class="whole-wrap">
   <div class="container">
-    <div class="portfolio_details_inner">
+    <div class="section-top-border text-right">
+      <h3 class="mb-30 title_color">Right Aligned</h3>
       <div class="row">
-        <div class="col-lg-6">
-          <div class="left_img">
-            <img
-              class="img-fluid"
-              src="{{ asset('assetF/') }}img/portfolio/portfolio-details.jpg"
-              alt=""
-            />
-          </div>
-        </div>
-        <div class="offset-lg-1 col-lg-5">
-          <div class="portfolio_right_text mt-30">
-            <h4 class="text-uppercase">{{ job.titre }}</h4>
-            <ul class="list">
-              <li>
-                <span>Lieu</span>:<span class="fa fa-map-marker"></span
-                >{{ job.location }}
-              </li>
-              <li><span>Poste disponible</span>: {{ job.nombrePoste }}</li>
-              <li>
-                <span>Salaire</span>: {{ job.min_salary }} DT -
-                {{ job.max_salary }} DT
-              </li>
-              <li>
-                <span>Valable jusqu'au</span>:
-                {{ job.date_expiration |date("m/d/Y") }}
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <p>{{ job.description | raw }}</p>
-      <p>
-        Voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-        sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus
-        error sit voluptatem accusantium doloremque laudantium, totam rem
-        aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
-        beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
-        voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni
-        dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam
-        est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit,
-        sed quia non numquam eius modi tempora incidunt ut labore et dolore
-        magnam aliquam quaerat voluptatem.
-      </p>
-    </div>
-  </div>
-</section>
-<!--================End Portfolio Details Area =================-->
-
-<!--================ Start Newsletter Area =================-->
-<section class="newsletter_area">
-  <div class="container">
-    <div class="row justify-content-center align-items-center">
-      <div class="col-lg-12">
-        <div class="subscription_box text-center">
-          <h2 class="text-uppercase text-white">get update from anywhere</h2>
-          <p class="text-white">
-            Bearing Void gathering light light his eavening unto dont afraid.
-          </p>
-          <div class="subcribe-form" id="mc_embed_signup">
-            <form
-              target="_blank"
-              novalidate="true"
-              action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-              method="get"
-              class="subscription relative"
-            >
-              <input
-                name="EMAIL"
-                placeholder="Email address"
-                onfocus="this.placeholder = ''"
-                onblur="this.placeholder = 'Email address'"
-                required=""
-                type="email"
-              />
-              <div style="position: absolute; left: -5000px">
-                <input
-                  name="b_36c4fd991d266f23781ded980_aefe40901a"
-                  tabindex="-1"
-                  value=""
-                  type="text"
-                />
+        <div class="col-md-9">
+          {% set i= 0 %} {% for service in services%} {% set i= i+1 %}
+          <div class="accordion col-lg-8 mt-2" id="accordionExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingThree">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseThree{{ i }}"
+                  aria-expanded="false"
+                  aria-controls="collapseThree"
+                >
+                  {{ service.designation }}
+                </button>
+              </h2>
+              <div
+                id="collapseThree{{ i }}"
+                class="accordion-collapse collapse"
+                aria-labelledby="headingThree"
+                data-bs-parent="#accordionExample"
+              >
+                <div class="accordion-body">
+                  {{ service.description | raw }}
+                </div>
               </div>
-              <button class="primary-btn hover d-inline">Get Started</button>
-              <div class="info"></div>
-            </form>
+            </div>
           </div>
+          {% endfor %}
+        </div>
+        <div class="col-md-3">
+          <img src="img/elements/d.jpg" alt="" class="img-fluid" />
         </div>
       </div>
     </div>
-  </div>
-</section>
-{{ include("include/frontoffice/footer.html.twig") }}
-{% endblock %} {% for job in list %} {% if job.nombrePoste > 0 %}
-
-<div class="col-lg-3">
-  <div class="feature_item">
-    <h4>
-      <a href="{{ path('jobdetails', { slug: job.slug }) }}">
-        {{ job.titre }}</a
-      >
-    </h4>
-    <span>{{ job.nombrePoste }} Poste disponibles</span>
-
-    <p>{{ job.description|u.truncate(250,true)|raw }}...</p>
-    <a
-      class="genric-btn success-border circle"
-      href="{{ path('jobdetails', { slug: job.slug }) }}"
-      ><span>Voir plus</span></a
-    >
   </div>
 </div>
-{% else %} {% endif %} {% endfor %}
+<img
+  src="{{ asset('/uploads/images/categories_service/' ~ categories.image) }}"
+  class="rounded"
+  alt="images"
+/>

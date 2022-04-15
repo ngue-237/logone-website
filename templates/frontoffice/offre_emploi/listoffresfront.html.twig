@@ -23,9 +23,8 @@
                 <div class="col-lg-8 text-center">
                     <div class="main_title">
                         <h2>Toute nos offres d'emplois</h2>
-                        <p>
-                            Is give may shall likeness made yielding spirit a itself togeth created 
-                            after sea <br> is in beast beginning signs open god you're gathering ithe
+                        <p class="sample-text">
+                          Retrouver ici tout nos dernières offres d'emplois  
                         </p>
                     </div>
                 </div>
@@ -38,11 +37,11 @@
 							{{ job.titre }}
 						</h4>
 						
-						{% autoescape  %}
+						
 						<span class="d-inline-block text-truncate" style="max-width: 150px; max-height: 300px;">
 						{{ job.description|raw }}  ...
 						</span>
-						{% endautoescape %}
+						
 							<a
 							class="genric-btn success-border circle"
 							href="{{ path('jobdetails', { slug: job.slug }) }}"

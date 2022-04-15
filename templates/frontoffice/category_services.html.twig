@@ -15,7 +15,7 @@ endblock %} {% block meta %}
         <div class="main_title">
           <h2>Nos services</h2>
           <p class="sample-text">
-            Nous sommes une agence de marketing et communication experte dans
+            Nous sommes une agence de marketing et de communication experte dans
             les principaux canaux de
             <span style="color: #4cd3e3; font-weight: bold"
               >communication digitale</span
@@ -48,6 +48,7 @@ endblock %} {% block meta %}
               {{ catg.description|u.truncate(150,true)|raw }}
               ...
             </p>
+
             <a
               title="lien nos services de la catégorie : {{ catg.slug }}"
               href="{{ absolute_url(path('services', { slug: catg.slug })) }}"
