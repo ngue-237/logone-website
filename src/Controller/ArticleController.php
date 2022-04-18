@@ -18,7 +18,6 @@ use Sonata\SeoBundle\Seo\SeoPageInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\CategoryArticleRepository;
-use MercurySeries\Flashy\Flashy;
 use Symfony\Component\HttpFoundation\Request;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Component\HttpFoundation\Response;
@@ -256,7 +255,7 @@ class ArticleController extends AbstractController
             $em->flush();
             $flashy->success("Added successfully!");
             $cache->delete("article-order-by-view-blog-by-categorie-page");
-             $cache->delete("article-article-detail-page");
+            $cache->delete("article-article-detail-page");
             return $this->redirectToRoute('article_list_admin');
         }
 

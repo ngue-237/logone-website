@@ -59,27 +59,24 @@ class BlogController extends AbstractController
         CacheInterface $cache
         ): Response
     {
-       
 
-        $articles = $cache->get("articles-blog-by-categorie-page-".$slug, function(ItemInterface $item) use($paginator, $articleRepo, $req,$slug,$catgArticle){
-            $item->expiresAfter(DateInterval::createFromDateString('3 hour'));
-            return $paginator->paginate($articleRepo->findAllByPublished($catgArticle->getId()), $req->query->getInt('page', 1),5);
-        });
         $articleOrderByView = $cache->get("article-order-by-view-blog-by-categorie-page", function(ItemInterface $item) use($paginator, $articleRepo, $req){
             $item->expiresAfter(DateInterval::createFromDateString('3 hour'));
             return $paginator->paginate($articleRepo->findAllByView(), $req->query->getInt('page', 1),3);
         });
+
         $categoriesArticle = $cache->get("categories-article-blog-by-categorie-page", function(ItemInterface $item) use($paginator, $categoryArtRepo, $req){
             $item->expiresAfter(DateInterval::createFromDateString('3 hour'));
             return $paginator->paginate($categoryArtRepo->findAll(), $req->query->getInt('page', 1),3);
         });
+        
         $categoriesService = $cache->get("categories-service-blog-by-categorie-page", function(ItemInterface $item) use($paginator, $categServiceRepo, $req){
             $item->expiresAfter(DateInterval::createFromDateString('3 hour'));
             return $paginator->paginate($categServiceRepo->findAll(), $req->query->getInt('page', 1),6);
         });
         
         return $this->render('frontoffice/blog_by_categorie.html.twig', [
-            'articles' => $articles,
+            'articles' => $paginator->paginate($articleRepo->findAllByPublished($catgArticle->getId()), $req->query->getInt('page', 1),5),
             "articleOrderByView"=>$articleOrderByView,
             "categoriesArticle" => $categoriesArticle,
             "categoriesService"=>$categoriesService,

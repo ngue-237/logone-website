@@ -37,6 +37,7 @@ endblock %} {% block content %}
                   <tr>
                     <th>Nom</th>
                     <th>Email</th>
+                    <th>Catégorie service</th>
                     <th>Service</th>
                     <th>Confirmation</th>
                     <th>Accepter</th>
@@ -48,6 +49,7 @@ endblock %} {% block content %}
                   <tr>
                     <th>Nom</th>
                     <th>Email</th>
+                    <th>Catégorie service</th>
                     <th>Service</th>
                     <th>Confirmation</th>
                     <th>Accepter</th>
@@ -63,6 +65,7 @@ endblock %} {% block content %}
                     </td>
                     <td>{{ devis.email }}</td>
                     <td>{{ devis.categories.designation }}</td>
+                    <td>{{ devis.services.designation }}</td>
                     <td>
                       {% if devis.confirm %}
                       <i class="fas fa-times-circle" style="color: red"></i> {%

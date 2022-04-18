@@ -75,7 +75,7 @@ class DevisRepository extends ServiceEntityRepository
     {
         
         return $this->createQueryBuilder('d')
-            ->andWhere('d.categoryService = :idCategoryService')
+            ->andWhere('d.categories = :idCategoryService')
             ->setParameter('idCategoryService', $idCategoryService)
             ->getQuery()
             ->getResult()

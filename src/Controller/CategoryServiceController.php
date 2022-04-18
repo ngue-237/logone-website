@@ -6,6 +6,7 @@ use DateInterval;
 use App\Entity\Images;
 use App\Entity\CategoryService;
 use App\Form\CategoryServiceType;
+use App\Repository\ArticleRepository;
 use App\services\CategoryServices;
 use App\services\ImageManagerService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -68,11 +69,15 @@ class CategoryServiceController extends AbstractController
         FlashyNotifier $flashy,
         CacheInterface $cache,
         ServiceRepository $serviceRepo,
-        DevisRepository $devisRepo
+        DevisRepository $devisRepo,
+        ArticleRepository $articleRepo
         ):Response
     {
         try {
-            if(count($serviceRepo->findByCategoryService($catg->getId())) == 0 || count($devisRepo->findAllDevisByCategoryService($catg->getId())) ){
+            if(count($serviceRepo->findByCategoryService($catg->getId())) == 0 ||
+             count($devisRepo->findAllDevisByCategoryService($catg->getId())) ||
+             count($articleRepo->findAllByCategoryService($catg->getId())) 
+             ){
 
             $em->remove($catg);
             $em->flush();
@@ -82,7 +87,7 @@ class CategoryServiceController extends AbstractController
             return $this->redirectToRoute('category_service_list');
         }
         } catch (\Exception $e) {
-            $flashy->error("impossible de supprimez ce catégorie car elle est ratachée à un devis ou à un service","");
+            $flashy->error("impossible de supprimez ce catégorie car elle est ratachée à un devis , un article ou à un service","");
             return $this->redirectToRoute('category_service_list');
         }
         // $flashy->error("impossible de supprimez ce catégorie car elle est ratachée à un devis ou à un service","");
