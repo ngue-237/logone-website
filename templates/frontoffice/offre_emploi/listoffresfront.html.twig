@@ -17,7 +17,7 @@
 
 	{% include('include/frontoffice/header.html.twig')%}
 	<!--================ Start Features Area =================-->
-	<section class="features_area section_gap_top">
+	<section class="features_area section_gap_top" style="margin-bottom: 250px;">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8 text-center">
@@ -29,18 +29,17 @@
                     </div>
                 </div>
             </div>
-            <div class="row feature_inner">
+            {% if list is empty %}
+				<p class="sample-text" style="text-align: center;"> Aucune Offre d'emplois pour l'instant</p>
+			{% else %}
+				<div class="row feature_inner">
                 {% for job in list %}
 				<div class="col-lg-3 col-md-6">
                     <div class="feature_item">
                         <h4 style="color: #3fe1ff;">
 							{{ job.titre }}
 						</h4>
-						
-						
-						<span class="d-inline-block text-truncate" style="max-width: 150px; max-height: 300px;">
-						{{ job.description|raw }}  ...
-						</span>
+						<p>{{ job.description | striptags | slice(0,90)  | raw  }}</p>
 						
 							<a
 							class="genric-btn success-border circle"
@@ -54,6 +53,7 @@
 			<div class="blog-pagination justify-content-center d-flex">
 			{{ knp_pagination_render(list) }}
 			</div>
+			{% endif %}
         </div>
     </section>
 </div>

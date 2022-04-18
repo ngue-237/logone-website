@@ -21,7 +21,7 @@ class CategoryServices {
         $categories= $this->paginator->paginate(
             $this->categoryServiceRepo->findAll(), 
             $req->query->getInt('page', 1), 
-            4/*limit per page*/
+            8/*limit per page*/
         );
         return $categories;
     }

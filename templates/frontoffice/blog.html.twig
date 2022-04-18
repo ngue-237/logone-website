@@ -46,7 +46,9 @@ block meta %}
                 <h5>{{ category.title }}</h5>
               </a>
               <div class="border_line"></div>
-              <p>{{ category.content | raw }}</p>
+              <p>
+                {{ category.content | striptags | slice(0,90)  | raw  }}
+              </p>
               <a
                 title="lien vers notre article sur : {{ category.slug }}"
                 href="{{

@@ -41,17 +41,6 @@ endblock %} {% block content %}
                     </div>
                     <div class="form-group">
                       {{
-                        form_row(form.description, {
-                          label: false,
-                          attr: {
-                            class: "form-control form-control-user",
-                            placeholder: "Description Détaillée du service"
-                          }
-                        })
-                      }}
-                    </div>
-                    <div class="form-group">
-                      {{
                         form_row(form.category, {
                           label: false,
                           attr: {
@@ -61,6 +50,18 @@ endblock %} {% block content %}
                         })
                       }}
                     </div>
+                    <div class="form-group">
+                      {{
+                        form_row(form.description, {
+                          label: false,
+                          attr: {
+                            class: "form-control form-control-user",
+                            placeholder: "Description Détaillée du service"
+                          }
+                        })
+                      }}
+                    </div>
+
                     <button
                       type="submit"
                       href="login.html"

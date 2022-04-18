@@ -4,10 +4,10 @@ endblock %} {% block meta %}
 {% endblock %} {% block content %}
 
 <!--================ Start Header Area =================-->
-{% block bodyClass %} blog_version{% endblock %}
+
 
 <!--================Blog Area =================-->
-<section class="blog_area single-post-area section_gap">
+<section class="blog_area single-post-area section_gap" style="margin-bottom: 250px;">
   <div class="container">
     <div class="row">
       <div class="col-lg-8 posts-list">
@@ -72,7 +72,7 @@ endblock %} {% block meta %}
               </ul>
 
               <!-- Go to www.addthis.com/dashboard to customize your tools -->
-              <div class="addthis_inline_share_toolbox"></div>
+          
             </div>
           </div>
           <div class="col-lg-9 col-md-9 blog_details">
@@ -214,11 +214,13 @@ endblock %} {% block meta %}
             <h3 class="widget_title">Notre solution</h3>
             <div class="card" style="width: 18rem">
               <div class="card-body">
-                <h4>{{ article.categoryService.designation }}</h4>
-                <p class="card-text sample-text">
-                  {{ article.categoryService.description|u.truncate(150,true)|raw
-                  }}...
+                <img src="{{ asset('/uploads/images/categories_service/' ~ article.categoryService.image) }}" class="card-img-top" alt="...">
+                <div class="card-body">
+    <h5 class="card-title">{{ article.categoryService.designation }}</h5>
+    <p class="card-text sample-text">{{ article.categoryService.description | striptags | slice(0,100)  | raw  }}
+                  ...
                 </p>
+              </div>
                 <a href="{{absolute_url(path("services", {slug: article.categoryService.slug}))}}" class="card-link">Voir plus</a>
               </div>
             </div>

@@ -54,8 +54,8 @@ class CommentService extends AbstractController
         $this->flashy->success('Success delete !','');
     }
 
-    public function allCommentPublished():array{
+    public function allCommentPublished($id):array{
         
-        return $this->commentRepo->findByAllComment();
+        return $this->commentRepo->findByAllComment($id);
     }
 }

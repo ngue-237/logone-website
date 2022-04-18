@@ -40,7 +40,7 @@ class HomeController extends AbstractController
 
         return $this->render('frontoffice/index.html.twig', [
            'categoriesService'=>$paginator->paginate($catgServiceRepo->findAll(), $req->query->getInt('page', 1), 4) ,
-           "catgoriesArticle" => $catgoriesArticle,
+           "catgoriesArticle" => $paginator->paginate($categoryArtRepo->findAllByDate(), $req->query->getInt('page', 1), 3),
         ]);
     }
 

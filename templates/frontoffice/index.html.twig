@@ -163,15 +163,11 @@ l'amélioration de votre présence sur les réseaux sociaux, et une assistance v
           class="text-font"
         >
           <div class="feature_item">
-            <img
-              src="{{ asset('/uploads/images/categories_service/' ~ catg.image) }}"
-              alt="image parlant de {{ catg.designation }}"
-            />
             <h4>
               {{ catg.designation }}
             </h4>
             <p>
-              {{ catg.description|u.truncate(150,true)|raw }}
+              {{ catg.description | striptags | slice(0,200)  | raw  }}
               ...
             </p>
             <a
@@ -230,7 +226,7 @@ l'amélioration de votre présence sur les réseaux sociaux, et une assistance v
                 <h5>{{ category.title }}</h5>
               </a>
               <div class="border_line"></div>
-              <p>{{ category.content | raw }}</p>
+              <p>{{ category.content | striptags | slice(0,90)  | raw  }}</p>
               <a
                 title="lien vers notre article sur : {{ category.slug }}"
                 href="{{ absolute_url(path('blog_by_categorie', { slug: category.slug })) }}"

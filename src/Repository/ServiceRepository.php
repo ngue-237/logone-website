@@ -56,6 +56,21 @@ class ServiceRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * @return Service[] Returns an array of Service objects
+     */
+    
+    public function findByCategoryServiceId($id)
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.category = :val')
+            ->setParameter('val', $id)
+            ->orderBy('s.designation', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Service[] Returns an array of Service objects
     //  */

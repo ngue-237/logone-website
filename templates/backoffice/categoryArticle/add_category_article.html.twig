@@ -94,5 +94,12 @@ Logone {% endblock %} {% block content %}
 <a class="scroll-to-top rounded" href="#page-top">
   <i class="fas fa-angle-up"></i>
 </a>
+<script type="text/javascript">
+  $(".custom-file input").change(function (e) {
+    if (e.target.files.length) {
+      $(this).next(".custom-file-label").html(e.target.files[0].name);
+    }
+  });
+</script>
 
 {% endblock %}

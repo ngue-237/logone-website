@@ -27,13 +27,13 @@ class BlogController extends AbstractController
         ): Response
     {
         $cache = new FilesystemAdapter();
-        $categoriesArticle = $cache->get("categories-article-blog-page",function(ItemInterface $item) use($categoryArtRepo, $req, $paginator){
-            $item->expiresAfter(DateInterval::createFromDateString('3 hour'));   
+        $categoriesArticle = $cache->get("categories-article-blog-page2",function(ItemInterface $item) use($categoryArtRepo, $req, $paginator){
+            $item->expiresAfter(DateInterval::createFromDateString('1 hour'));   
             return $paginator->paginate($categoryArtRepo->findAllByDate(),$req->query->getInt('page', 1),3);
         });
-        //dd($categoryArtRepo->findAllByDate());
+        
         return $this->render('frontoffice/blog.html.twig', [
-            'catgoriesArticle'=>$categoriesArticle,
+            'catgoriesArticle'=>$paginator->paginate($categoryArtRepo->findAllByDate(),$req->query->getInt('page', 1),3),
         ]);
     }
 
@@ -78,7 +78,7 @@ class BlogController extends AbstractController
 
         // dd($articleRepo->findAllByPublished($catgArticle->getId()));
         return $this->render('frontoffice/blog_by_categorie.html.twig', [
-            'articles' => $articles,
+            'articles' => $paginator->paginate($articleRepo->findAllByPublished($catgArticle->getId()), $req->query->getInt('page', 1),5),
             "articleOrderByView"=>$articleOrderByView,
             "categoriesArticle" => $categoriesArticle,
             "categoriesService"=>$categoriesService,

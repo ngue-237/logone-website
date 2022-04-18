@@ -18,6 +18,7 @@ use Sonata\SeoBundle\Seo\SeoPageInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\CategoryArticleRepository;
+use MercurySeries\Flashy\Flashy;
 use Symfony\Component\HttpFoundation\Request;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Component\HttpFoundation\Response;
@@ -102,10 +103,10 @@ class ArticleController extends AbstractController
             //dd($commentRepo->findByAllComment($article->getId()));
 
              //mis en cache des données
-             $article = $cache->get("article-article-detail-page".$article->getSlug(), function(ItemInterface $item) use($article){
-                $item->expiresAfter(DateInterval::createFromDateString('3 hour')); 
-                return $article;
-             });
+            //  $article = $cache->get("article-article-detail-page".$article->getSlug(), function(ItemInterface $item) use($article){
+            //     $item->expiresAfter(DateInterval::createFromDateString('3 hour')); 
+            //     return $article;
+            //  });
             //je prende le cache de la page blog-by-category
              $articleOrderByView= $cache->get("article-order-by-view-blog-by-categorie-page",function(ItemInterface $item) use($articleRepo, $paginator,$req){
                 $item->expiresAfter(DateInterval::createFromDateString('3 hour')); 
@@ -158,7 +159,7 @@ class ArticleController extends AbstractController
              $comment = new Comments();//Créer un model de commentaire pour le formulaire
              $categoryArticle = $categoryArtRepo->find($article->getCategoryArticle());
              
-             $comments = $commentService->allCommentPublished();
+             $comments = $commentService->allCommentPublished($article->getId());
              $categoriesArticle = $categoryArtRepo->findAll();
              //dd($categoryArticle);
             
@@ -246,7 +247,7 @@ class ArticleController extends AbstractController
      * @return void
      * @Route("/admin/article_add", name="article_add", methods={"GET","POST"} )
      */
-    public function addArticle(Request $req, EntityManagerInterface $em ){
+    public function addArticle(Request $req, EntityManagerInterface $em , FlashyNotifier $flashy){
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
         $form->add('imageFile', VichImageType::class,[
@@ -266,6 +267,7 @@ class ArticleController extends AbstractController
             $article->setIsPublished(false);     
             $em->persist($article);
             $em->flush();
+            $flashy->success("Added successfully!");
             return $this->redirectToRoute('article_list_admin');
         }
 
@@ -281,7 +283,11 @@ class ArticleController extends AbstractController
      * @return Response
      * @Route("/admin/article/article_edit/{slug}", name="article_edit")
      */
-    public function editArticle(Request $req, EntityManagerInterface $em, Article $article):Response{
+    public function editArticle(Request $req, 
+    EntityManagerInterface $em, 
+    Article $article, 
+    FlashyNotifier $flashy
+    ):Response{
         $form = $this->createForm(ArticleType::class, $article);
         $form->add('imageFile', VichImageType::class,[
                 'label'=>false,
@@ -293,6 +299,7 @@ class ArticleController extends AbstractController
         $form->handleRequest($req);
         if($form->isSubmitted() and $form->isValid()){
             $em->flush();
+            $flashy->success("Added successfully!");
             return $this->redirectToRoute('article_list_admin');
         }
         return $this->renderForm("backoffice/article/article_edit.html.twig", compact('form','article'));
@@ -307,10 +314,10 @@ class ArticleController extends AbstractController
      * @return Response
      * @Route("/admin/article/article_delete/{slug}", name="article_delete")
      */
-    public function articleDelete(Article $article, EntityManagerInterface $em):Response{
+    public function articleDelete(Article $article, EntityManagerInterface $em, FlashyNotifier $flashy):Response{
         $em->remove($article);
         $em->flush();
-
+        $flashy->success("Deleted successfully!");
         return $this->redirectToRoute('article_list_admin');
     }
 

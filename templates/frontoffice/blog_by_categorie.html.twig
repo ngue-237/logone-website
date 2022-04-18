@@ -10,7 +10,7 @@ block content %}
 
 
 <!--================Blog Area =================-->
-<section class="blog_area single-post-area section_gap"  >
+<section class="blog_area single-post-area section_gap" style="margin-bottom: 250px;">
   <div class="container">
     <div class="row" >
       <div class="col-lg-8">
@@ -68,7 +68,7 @@ block content %}
                     <h2>{{ article.title | title }}</h2>
                   </a>
                   <p>
-                    {{ article.content |u.truncate(280,true)|raw  }}...
+                    {{ article.content | striptags | slice(0,300)  | raw  }}...
                   </p>
                   <a title="lien vers notre article sur : {{ article.slug }}"
                     href="{{ absolute_url(path('article_detail', { slug: article.slug })) }}"

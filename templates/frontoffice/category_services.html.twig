@@ -37,19 +37,16 @@ endblock %} {% block meta %}
       <div class="col-lg-3 col-md-6">
         <a class="text-font" title="lien vers le service : {{ catg.slug }} ">
           <div class="feature_item">
-            <img
-              src="{{ asset('/uploads/images/categories_service/' ~ catg.image) }}"
-              alt="image parlant de {{ catg.designation }}"
-            />
             <h4>
               {{ catg.designation }}
             </h4>
             <p>
-              {{ catg.description|u.truncate(150,true)|raw }}
+              {{ catg.description | striptags | slice(0,200)  | raw  }}
               ...
             </p>
 
             <a
+              style="margin-top: 20px"
               title="lien nos services de la catégorie : {{ catg.slug }}"
               href="{{ absolute_url(path('services', { slug: catg.slug })) }}"
               class="genric-btn success circle"

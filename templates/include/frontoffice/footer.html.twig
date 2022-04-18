@@ -1,10 +1,10 @@
 
 
-<footer class="footer_area">
-  <div class="container">
+<footer class="footer_area" >
+  <div class="container ">
     
-    <div class="row justify-content-center" >
-      <div class="col-2">
+    <div class="row d-flex justify-content-center" >
+      <div class="col-lg-4">
         <h5 class="mb-20">Nos solutions</h5>
         <ul class="nav flex-column">
           {% for catg in catgServ.getCategoriesService %}
@@ -13,7 +13,7 @@
         </ul>
       </div>
 
-      <div class="col-2">
+      <div class="col-lg-4">
         <h5 class="mb-20">Nos actulités</h5>
         <ul class="nav flex-column">
           {% for catgArticle in catgsArticle.getCategoriesArticle %}
@@ -22,28 +22,19 @@
         </ul>
       </div>
 
-      <div class="col-2">
+      <div class="col-lg-4">
         <h5 class="mb-20">Plan du site</h5>
         <ul class="nav flex-column">
           <li class="nav-item mb-2"><a href="{{ absolute_url(path('home')) }}" class="nav-link p-0 text-muted">Accueil</a></li>
           <li class="nav-item mb-2"><a href="{{ absolute_url(path('about')) }}" class="nav-link p-0 text-muted">Logone</a></li>
           <li class="nav-item mb-2"><a href="{{ absolute_url(path('categorie_service_all')) }}" class="nav-link p-0 text-muted">Services</a></li>
-          <li class="nav-item mb-2"><a href="{{ absolute_url(path('blog')) }}" class="nav-link p-0 text-muted">Rejoignez-nous</a></li>
+          <li class="nav-item mb-2"><a href="{{ absolute_url(path('blog')) }}" class="nav-link p-0 text-muted">blog</a></li>
+          <li class="nav-item mb-2"><a href="{{ absolute_url(path('jobslist_front')) }}" class="nav-link p-0 text-muted">Rejoignez-nous</a></li>
+          <li class="nav-item mb-2"><a href="{{ absolute_url(path('contact')) }}" class="nav-link p-0 text-muted">Contact</a></li>
         </ul>
       </div>
       
-      <div class="col-4 ">
-        <div class="single-defination">
-					<h4 class="mb-20">Que faisons-nous ?</h4>
-					<p class="sample-text">
-            Nous accompagnons votre entreprise dans son développement  à travers l’optimisation des principaux leviers 
-            du <span style="color: #4cd3e3; font-weight: bold">marketing digital</span> et la <span style="color: #4cd3e3; font-weight: bold">gestion de la relation client </span>
-            afin de vous faire acquérir de nouveaux clients, générer de nouvelles ventes, améliorer votre relation client et  votre E-réputation. 
-            Selon votre besoin nos experts digitaux construisent votre stratégie et vous accompagnent en continu.
-             
-          </p>
-				</div>
-      </div>
+     
     </div>
     <div class="row d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
       <div class="col-lg-8">

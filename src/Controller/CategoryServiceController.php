@@ -50,7 +50,7 @@ class CategoryServiceController extends AbstractController
         });
 
         return $this->render('frontoffice/category_services.html.twig', [
-            'catgs' => $categoriesService,
+            'catgs' => $categoryService->getAllCategoryService($req),
         ]);
     }
 

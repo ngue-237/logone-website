@@ -2,23 +2,7 @@
 <html>
   <head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-LQF0N89JD9"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-LQF0N89JD9");
-    </script>
-    <script
-      type="text/javascript"
-      src="https://platform-api.sharethis.com/js/sharethis.js#property=623c3ba1cdbe0200193e19de&product=inline-share-buttons"
-      async="async"
-    ></script>
+
     <meta charset="UTF-8" />
     <meta
       name="viewport"
@@ -28,7 +12,6 @@
     <title>{% block title %}{% endblock %}</title>
     {# Run `composer require symfony/webpack-encore-bundle` to start using
     Symfony UX #}
-
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
@@ -105,6 +88,25 @@
       encore_entry_script_tags("app")
     }}
     #}
+    <!-- Matomo -->
+    <script>
+      var _paq = (window._paq = window._paq || []);
+      /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+      _paq.push(["trackPageView"]);
+      _paq.push(["enableLinkTracking"]);
+      (function () {
+        var u = "//localhost/matomo-latest/matomo/";
+        _paq.push(["setTrackerUrl", u + "matomo.php"]);
+        _paq.push(["setSiteId", "1"]);
+        var d = document,
+          g = d.createElement("script"),
+          s = d.getElementsByTagName("script")[0];
+        g.async = true;
+        g.src = u + "matomo.js";
+        s.parentNode.insertBefore(g, s);
+      })();
+    </script>
+    <!-- End Matomo Code -->
   </head>
 
   <body class="{% block bodyClass %} {% endblock %}">

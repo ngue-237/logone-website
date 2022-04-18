@@ -39,27 +39,34 @@ class ServiceController extends AbstractController
         EntityManagerInterface $em, 
         $slug, 
         CategoryServiceRepository $rep,
-        SeoPageInterface $seoPage
-
+        SeoPageInterface $seoPage,
+        ServiceRepository $serviceRepo
         ): Response
     {
         $cache = new FilesystemAdapter();
         
-        $categories = $cache->get("service-page-categorie".$slug, function(ItemInterface $item) use ($rep, $slug){
-             $item->expiresAfter(DateInterval::createFromDateString('3 hour'));
-            return $rep->findOneBy(['slug'=>$slug]);
-        });
+        // $categories = $cache->get("service-page-categorie".$slug, function(ItemInterface $item) use ($rep, $slug){
+        //      $item->expiresAfter(DateInterval::createFromDateString('3 hour'));
+        //     return $rep->findOneBy(['slug'=>$slug]);
+        // });
+
+        $categories = $rep->findOneBy(['slug'=>$slug]);
 
        
         
-        $services = $em->createQuery("select s From App\Entity\Service s where s.category = :id")
-            ->setParameter("id", $categories->getId())
-            ->getResult();
+        // $services = $em->createQuery("select s From App\Entity\Service s where s.category = :id")
+        //     ->setParameter("id", $categories->getId())
+        //     ->getResult();
+        //dd($categories->getId());
+        $services = $serviceRepo->findByCategoryServiceId($categories->getId());
+
+
+
         
-        $services = $cache->get("service-page-service-".$slug, function(ItemInterface $item) use($services){
-            $item->expiresAfter(DateInterval::createFromDateString('3 hour'));
-            return $services;
-        });
+        // $services = $cache->get("service-page-service-".$slug, function(ItemInterface $item) use($services){
+        //     $item->expiresAfter(DateInterval::createFromDateString('3 hour'));
+        //     return $services;
+        // });
 
         $seoPage
                 ->setTitle($categories->getSlug())
