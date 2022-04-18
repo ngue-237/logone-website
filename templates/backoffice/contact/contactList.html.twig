@@ -38,6 +38,7 @@ endblock %}{% block content %}
                     <th>Nom</th>
                     <th>Prénom</th>
                     <th>Email</th>
+                    <th>Site client</th>
                     <th>Options</th>
                   </tr>
                 </thead>
@@ -46,6 +47,7 @@ endblock %}{% block content %}
                     <th>Nom</th>
                     <th>Prénom</th>
                     <th>Email</th>
+                    <th>Site client</th>
                     <th>Options</th>
                   </tr>
                 </tfoot>
@@ -58,7 +60,13 @@ endblock %}{% block content %}
                     <td>
                       {{ contact.firstName }}
                     </td>
+
                     <td>{{ contact.email }}</td>
+                    <td>
+                      <a href="{{ contact.urlCustomWebsite }}" target="blank">{{
+                        contact.urlCustomWebsite
+                      }}</a>
+                    </td>
                     <td>
                       <a
                         href="{{ path('contact_delete', { id: contact.id }) }}"

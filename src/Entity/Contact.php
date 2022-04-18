@@ -79,6 +79,11 @@ class Contact
      */
     private $createdAt;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $urlCustomWebsite;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -165,6 +170,18 @@ class Contact
     public function setCreatedAt(): self
     {
         $this->createdAt = new DateTime('now');
+
+        return $this;
+    }
+
+    public function getUrlCustomWebsite(): ?string
+    {
+        return $this->urlCustomWebsite;
+    }
+
+    public function setUrlCustomWebsite(?string $urlCustomWebsite): self
+    {
+        $this->urlCustomWebsite = $urlCustomWebsite;
 
         return $this;
     }
