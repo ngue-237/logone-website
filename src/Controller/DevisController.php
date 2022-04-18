@@ -63,7 +63,7 @@ class DevisController extends AbstractController
         $devis = new Devis();
         $services = $serviceRepo->findByCategoryService($categoryService->getId());
         
-        //dd($entityAsArray);
+
         $form = $this->createFormBuilder(['categories'=>$categoryService, "services"=>$services])
             -> add('lastname', TextType::class,
             [   
@@ -155,12 +155,12 @@ class DevisController extends AbstractController
             ->getForm();
 
         $devisRoute = $this->generateUrl("devis_add",["slug"=>$slug],UrlGeneratorInterface::ABSOLUTE_URL);
-        //dd($devisRoute);
+   
         $form->handleRequest($req);
         if($form->isSubmitted() and $form->isValid()){
             $url = "https://www.google.com/recaptcha/api/siteverify?secret=6Lc96AYfAAAAAEP84ADjdx5CBfEpgbTyYqgemO5n&response={$form->get("captcha")->getData()}";
             $response = $client->curlManager($url);
-            //dd("hellp");
+      
             if(empty($response) || is_null($response)){
                 $flashy->error("Something wrong!",'');
                 return $this->redirect($devisRoute);

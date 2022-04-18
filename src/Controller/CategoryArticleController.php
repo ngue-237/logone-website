@@ -4,15 +4,16 @@ namespace App\Controller;
 
 use App\Entity\CategoryArticle;
 use App\Form\CategoryArticleType;
-use App\services\ImageManagerService;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\CategoryArticleRepository;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Contracts\Cache\CacheInterface;
 
 class CategoryArticleController extends AbstractController
 {
@@ -32,7 +33,9 @@ class CategoryArticleController extends AbstractController
 
     public function addCategoryArticle(
         EntityManagerInterface $em,
-        Request $req
+        Request $req,
+        CacheInterface $cache,
+        FlashyNotifier $flashy
     ):Response{
 
         $categoryArticle = new CategoryArticle();
@@ -51,7 +54,10 @@ class CategoryArticleController extends AbstractController
         if($form->isSubmitted() and $form->isValid()){
             $em->persist($categoryArticle);
             $em->flush();
-
+            $cache->delete("categorie-article-home");
+            $cache->delete("categories-article-blog-by-categorie-page");
+            $cache->delete("categories-article-blog-page");
+            $flashy->success("Edited Successfully!");
             return $this->redirectToRoute('admin_category_article');
         }
 
@@ -67,13 +73,17 @@ class CategoryArticleController extends AbstractController
      */
     public function categoryArticleDelete(
         EntityManagerInterface $em, 
-        CategoryArticle $categoryArticle
-        
+        CategoryArticle $categoryArticle,
+        CacheInterface $cache,
+        FlashyNotifier $flashy
     ):Response{
 
         $em->remove($categoryArticle);
         $em->flush();
-
+        $cache->delete("categorie-article-home");
+        $cache->delete("categories-article-blog-by-categorie-page");
+        $cache->delete("categories-article-blog-page");
+        $flashy->success("Edited Successfully!");
         return $this->redirectToRoute('admin_category_article');
     }
 
@@ -85,7 +95,8 @@ class CategoryArticleController extends AbstractController
         EntityManagerInterface $em, 
         CategoryArticle $categoryArticle,
         Request $req,
-        ImageManagerService $imageManager  
+        CacheInterface $cache,
+        FlashyNotifier $flashy
     ):Response{
 
         $form = $this->createForm(CategoryArticleType::class, $categoryArticle);
@@ -100,7 +111,10 @@ class CategoryArticleController extends AbstractController
         if($form->isSubmitted() and $form->isValid()){
             $em->persist($categoryArticle);
             $em->flush();
-
+            $cache->delete("categorie-article-home");
+            $cache->delete("categories-article-blog-by-categorie-page");
+            $cache->delete("categories-article-blog-page");
+            $flashy->success("Edited Successfully!");
             return $this->redirectToRoute('admin_category_article');
         }
 

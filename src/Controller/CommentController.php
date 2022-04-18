@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Contracts\Cache\CacheInterface;
 
 class CommentController extends AbstractController
 {
@@ -21,7 +22,7 @@ class CommentController extends AbstractController
      */
     public function index(CommentsRepository $commentRepo): Response
     {
-        //dd($commentRepo->findAll());
+    
         return $this->render('backoffice/comments/list_comment.html.twig', [
             'comments' => $commentRepo->findAllByDate(),
         ]);
@@ -38,7 +39,8 @@ class CommentController extends AbstractController
     public function publish(
         EntityManagerInterface $em,
         Comments $comment,
-        Request $req
+        Request $req,
+        CacheInterface $cache
     ){
         $submittedToken = $req->request->get('token');
       
@@ -47,6 +49,7 @@ class CommentController extends AbstractController
              $comment->setIsPublished(true);
              $em->flush();
             //  dd("hello boy");
+            $cache->delete("article-comments-article-detail-page");
             return $this->redirectToRoute('admin_comments_list');
         }
         return $this->redirectToRoute('admin_comments_list');
@@ -109,14 +112,12 @@ class CommentController extends AbstractController
         Comments $comment,
         EntityManagerInterface $em
     ):JsonResponse{
-        //dd();
+    
         dd($this->denyAccessUnlessGranted('POST_DELETE',$comment));
         $data = json_decode($req->getContent(),true);
-        //dd($data);
-        // $validToken = $req->request->get('token');
-        // dd($validToken);
+     
         if($this->isCsrfTokenValid('comment-delete', $data['_token'])){
-            //dd($comment);
+      
           $commentService->removeComment($comment);
           return new JsonResponse([
                         'commentaires'=>$commentService->allCommentPublished(),

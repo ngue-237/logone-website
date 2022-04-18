@@ -14,8 +14,8 @@ use Symfony\Component\HttpFoundation\Request;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Contracts\Cache\CacheInterface;
 
 class ServiceController extends AbstractController
 {
@@ -40,33 +40,27 @@ class ServiceController extends AbstractController
         $slug, 
         CategoryServiceRepository $rep,
         SeoPageInterface $seoPage,
-        ServiceRepository $serviceRepo
+        ServiceRepository $serviceRepo,
+        CacheInterface $cache
         ): Response
     {
-        $cache = new FilesystemAdapter();
         
-        // $categories = $cache->get("service-page-categorie".$slug, function(ItemInterface $item) use ($rep, $slug){
-        //      $item->expiresAfter(DateInterval::createFromDateString('3 hour'));
-        //     return $rep->findOneBy(['slug'=>$slug]);
-        // });
+        $categories = $cache->get("service-page-categorie".$slug, function(ItemInterface $item) use ($rep, $slug){
+             $item->expiresAfter(DateInterval::createFromDateString('3 hour'));
+            return $rep->findOneBy(['slug'=>$slug]);
+        });
 
         $categories = $rep->findOneBy(['slug'=>$slug]);
 
-       
-        
-        // $services = $em->createQuery("select s From App\Entity\Service s where s.category = :id")
-        //     ->setParameter("id", $categories->getId())
-        //     ->getResult();
-        //dd($categories->getId());
         $services = $serviceRepo->findByCategoryServiceId($categories->getId());
 
 
 
         
-        // $services = $cache->get("service-page-service-".$slug, function(ItemInterface $item) use($services){
-        //     $item->expiresAfter(DateInterval::createFromDateString('3 hour'));
-        //     return $services;
-        // });
+        $services = $cache->get("service-page-service-".$slug, function(ItemInterface $item) use($services){
+            $item->expiresAfter(DateInterval::createFromDateString('3 hour'));
+            return $services;
+        });
 
         $seoPage
                 ->setTitle($categories->getSlug())
@@ -122,11 +116,14 @@ class ServiceController extends AbstractController
     public function deleteService(
         Service $service, 
         EntityManagerInterface $em,
-        FlashyNotifier $flashy
+        FlashyNotifier $flashy,
+        CacheInterface $cache
         ):Response{
        
         $em->remove($service);
         $em->flush();
+        $cache->delete("articles-blog-by-categorie-page-".$service->getSlug());
+        $cache->delete("service-page-service-".$service->getSlug());
         $flashy->success("Deleted successfully ! ",'');
     return $this->redirectToRoute('service_list');
     }
@@ -143,7 +140,8 @@ class ServiceController extends AbstractController
         Service $service,
         Request $req, 
         EntityManagerInterface $em,
-        FlashyNotifier $flashy
+        FlashyNotifier $flashy, 
+        CacheInterface $cache
         ):Response{
        
         $form= $this->createForm(ServiceType::class, $service);
@@ -152,6 +150,8 @@ class ServiceController extends AbstractController
         if($form->isSubmitted() and $form->isValid()){
             $service->setUpdatedAt(new \DateTime('now'));
             $em->flush();
+            $cache->delete("articles-blog-by-categorie-page-".$service->getSlug());
+            $cache->delete("service-page-service-".$service->getSlug());
             $flashy->success("Edited successfully! ",'');
             return $this->redirectToRoute('service_list');
         }

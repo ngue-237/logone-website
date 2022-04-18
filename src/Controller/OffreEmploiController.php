@@ -16,6 +16,7 @@ use App\Repository\CategoryArticleRepository;
 use App\Repository\CategoryServiceRepository;
 use Symfony\Component\HttpFoundation\Request;
 use MercurySeries\FlashyBundle\FlashyNotifier;
+use Psr\Cache\CacheItemInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Vich\UploaderBundle\Form\Type\VichImageType;
@@ -23,6 +24,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Contracts\Cache\CacheInterface;
 
 class OffreEmploiController extends AbstractController
 {
@@ -40,14 +42,17 @@ class OffreEmploiController extends AbstractController
     /**
      * @Route("/rejoingnez-nous", name="jobslist_front")
      */
-    public function readjobsFront(Request $request, PaginatorInterface $pag, OffreEmploiRepository $rep)
+    public function readjobsFront(
+        Request $request, 
+        PaginatorInterface $pag, 
+        OffreEmploiRepository $rep,
+        CacheInterface $cache)
     {
     
         $candidature = new Candidature();
         $form = $this->createForm(CandidatureType::class,$candidature);
 
         
-        $cache = new FilesystemAdapter();
         $offres = $cache->get("jobs-join-us-page", function(ItemInterface $item) use($rep, $request, $pag){
             $item->expiresAfter(DateInterval::createFromDateString('3 hour')); 
             return $pag->paginate($rep->findAll(), $request->query->getInt('page', 1), 4);
@@ -66,7 +71,8 @@ class OffreEmploiController extends AbstractController
     public function addoffer(
         Request $request, 
         EntityManagerInterface $em,
-        FlashyNotifier $flashy
+        FlashyNotifier $flashy,
+        CacheInterface $cache
         )
     {
         $offre = new OffreEmploi();
@@ -86,6 +92,7 @@ class OffreEmploiController extends AbstractController
         if ($form->isSubmitted() and $form->isValid()) {
             $em->persist($offre);
             $em->flush();
+            $cache->delete("jobs-join-us-page");
             $flashy->success("Added successfully!");
             return $this->redirectToRoute('jobslist_back');
         }
@@ -97,13 +104,18 @@ class OffreEmploiController extends AbstractController
     /**
      * @Route("/admin/delete_job/{id}", name="delete_job")
      */
-    public function deletejob($id, EntityManagerInterface $em)
+    public function deletejob(
+        $id,
+     EntityManagerInterface $em,
+    CacheInterface $cache
+    )
     {
         $job = $em->getRepository(OffreEmploi::class)->find($id);
         
         $em->remove($job);
-        dd($job);
+       
         $em->flush();
+        $cache->delete("jobs-join-us-page");
         return $this->redirectToRoute('jobslist_back');
     }
 
@@ -164,7 +176,12 @@ class OffreEmploiController extends AbstractController
     /**
      * @Route("/admin/edit_offre/{id}", name="edit_job")
      */
-    public function modifyjob(Request $request, OffreEmploi $job, EntityManagerInterface $em)
+    public function modifyjob(
+        Request $request, 
+        OffreEmploi $job, 
+        EntityManagerInterface $em,
+        CacheInterface $cache
+        )
     {
         $form = $this->createForm(OffreEmploiType::class, $job);
         $form->add('imageFile', VichImageType::class,[
@@ -180,6 +197,7 @@ class OffreEmploiController extends AbstractController
             if ($form->isValid()) {
                 $em->persist($job);
                 $em->flush();
+                $cache->delete("jobs-join-us-page");
                 return $this->redirectToRoute('jobslist_back');
             } else {
                 return $this->render('backoffice/offre_emploi/add_offre.html.twig', [

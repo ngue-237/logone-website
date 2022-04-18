@@ -4,12 +4,12 @@ namespace App\Controller;
 use DateInterval;
 use Symfony\Contracts\Cache\ItemInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Contracts\Cache\CacheInterface;
 use App\Repository\CategoryArticleRepository;
 use App\Repository\CategoryServiceRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
@@ -23,13 +23,15 @@ class HomeController extends AbstractController
         Request $req, 
         PaginatorInterface $paginator,
         CategoryServiceRepository $catgServiceRepo,
-        CategoryArticleRepository $categoryArtRepo
+        CategoryArticleRepository $categoryArtRepo,
+        CacheInterface $cache
     ): Response
     {
-        $cache = new FilesystemAdapter();
         
-        $categoriesService = $cache->get("categorie-service", function(ItemInterface $item) use ($catgServiceRepo,$paginator, $req){
+        //$cache->delete("categorie-service");
+        $categoriesService = $cache->get("categorie-service-home", function(ItemInterface $item) use ($catgServiceRepo,$paginator, $req){
              $item->expiresAfter(DateInterval::createFromDateString('3 hour'));   
+             
             return $paginator->paginate($catgServiceRepo->findAllByDate(), $req->query->getInt('page', 1), 4);
         });
 
@@ -39,8 +41,8 @@ class HomeController extends AbstractController
         });
 
         return $this->render('frontoffice/index.html.twig', [
-           'categoriesService'=>$paginator->paginate($catgServiceRepo->findAll(), $req->query->getInt('page', 1), 4) ,
-           "catgoriesArticle" => $paginator->paginate($categoryArtRepo->findAllByDate(), $req->query->getInt('page', 1), 3),
+           'categoriesService'=>$categoriesService,
+           "catgoriesArticle" => $catgoriesArticle,
         ]);
     }
 

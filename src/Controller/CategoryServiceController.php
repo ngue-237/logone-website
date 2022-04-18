@@ -19,8 +19,8 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\NotNull;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Contracts\Cache\CacheInterface;
 
 class CategoryServiceController extends AbstractController
 {
@@ -41,8 +41,7 @@ class CategoryServiceController extends AbstractController
      * @return Response
      * @Route("/categories-services", name="categorie_service_all")
      */
-    public function allCategoriesService(CategoryServices $categoryService, Request $req):Response{
-        $cache = new FilesystemAdapter();
+    public function allCategoriesService(CategoryServices $categoryService, Request $req, CacheInterface $cache):Response{
 
          $categoriesService = $cache->get("categorie-service-page", function(ItemInterface $item) use ($categoryService, $req){
              $item->expiresAfter(DateInterval::createFromDateString('3 hour'));   
@@ -50,7 +49,7 @@ class CategoryServiceController extends AbstractController
         });
 
         return $this->render('frontoffice/category_services.html.twig', [
-            'catgs' => $categoryService->getAllCategoryService($req),
+            'catgs' => $categoriesService,
         ]);
     }
 
@@ -64,11 +63,14 @@ class CategoryServiceController extends AbstractController
     public function deleteCategoryService(
         CategoryService $catg,
         EntityManagerInterface $em,
-        FlashyNotifier $flashy
+        FlashyNotifier $flashy,
+        CacheInterface $cache
         ):Response
     {
         $em->remove($catg);
         $em->flush();
+        $cache->delete("categorie-service");
+        $cache->delete("categorie-service-page");
         $flashy->success("Deleted successfully","");
         return $this->redirectToRoute('category_service_list');
     }
@@ -82,7 +84,8 @@ class CategoryServiceController extends AbstractController
     public function addCategoryService(
         EntityManagerInterface $em, 
         Request $req,
-        FlashyNotifier $flashy
+        FlashyNotifier $flashy,
+        CacheInterface $cache
     ):Response{
         $catg = new CategoryService();
         $form = $this->createForm(CategoryServiceType::class, $catg);
@@ -103,6 +106,8 @@ class CategoryServiceController extends AbstractController
         if($form->isSubmitted() and $form->isValid()){
             $em->persist($catg);
             $em->flush();
+            $cache->delete("categorie-service");
+            $cache->delete("categorie-service-page");
             $flashy->success("Added successfully !","");
             return $this->redirectToRoute('category_service_list');
         }
@@ -123,7 +128,8 @@ class CategoryServiceController extends AbstractController
         CategoryService $catg, 
         EntityManagerInterface $em, 
         Request $req,
-        FlashyNotifier $flashy
+        FlashyNotifier $flashy,
+        CacheInterface $cache
     ):Response
     {
         $form = $this->createForm(CategoryServiceType::class, $catg);
@@ -138,39 +144,14 @@ class CategoryServiceController extends AbstractController
         if($form->isSubmitted() and $form->isValid()){
             $em->flush();
             $flashy->success("Edited successfully !","");
+            $cache->delete("categorie-service");
+            $cache->delete("categorie-service-page");
             return $this->redirectToRoute('category_service_list');
         }
         return $this->render('backoffice/category/modify_category_service.html.twig',[
             'form'=>$form->createView(),
             'categories'=>$catg
         ]);
-    }
-
-    /**
-     * @param Images $image
-     * @Route("/admin/delete/images_category_service/{id}", name="category_service_delete_images", methods={"DELETE"})
-     */
-    public function deleteImageCategory(Images $image, Request $req){
-        $data = json_decode($req->getContent(), true);
-        //dd($data);
-        // On vérifie si le token est valide
-        if($this->isCsrfTokenValid('delete'.$image->getId(), $data['_token'])){
-            // On récupère le nom de l'image
-            $nom = $image->getName();
-            // On supprime le fichier 
-            unlink($this->getParameter('images_directory').'/'.$nom);
-
-            // On supprime l'entrée de la base
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($image);
-            $em->flush();
-
-            // On répond en json
-            return new JsonResponse(['success' => 1]);
-        }else{
-            return new JsonResponse(['error' => 'Token Invalide'], 400);
-        }
-
     }
 
 }

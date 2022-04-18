@@ -25,9 +25,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\Validator\Constraints\NotNull;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Contracts\Cache\CacheInterface;
 
 class ArticleController extends AbstractController
 {
@@ -60,13 +60,10 @@ class ArticleController extends AbstractController
          CurlService $curl,
          FlashyNotifier $flashy,
          $slug,
-         SeoPageInterface $seoPage
+         SeoPageInterface $seoPage, 
+         CacheInterface $cache
          ):Response
          {
-
-            
-
-             $cache  = new FilesystemAdapter();
              $comment = new Comments();
              $categoryArticle = $categoryArtRepo->find($article->getCategoryArticle());
              
@@ -100,13 +97,12 @@ class ArticleController extends AbstractController
 
             $article->setView($article->getView() + 1);   
             $em->flush();
-            //dd($commentRepo->findByAllComment($article->getId()));
 
              //mis en cache des données
-            //  $article = $cache->get("article-article-detail-page".$article->getSlug(), function(ItemInterface $item) use($article){
-            //     $item->expiresAfter(DateInterval::createFromDateString('3 hour')); 
-            //     return $article;
-            //  });
+             $article = $cache->get("article-article-detail-page".$article->getSlug(), function(ItemInterface $item) use($article){
+                $item->expiresAfter(DateInterval::createFromDateString('3 hour')); 
+                return $article;
+             });
             //je prende le cache de la page blog-by-category
              $articleOrderByView= $cache->get("article-order-by-view-blog-by-categorie-page",function(ItemInterface $item) use($articleRepo, $paginator,$req){
                 $item->expiresAfter(DateInterval::createFromDateString('3 hour')); 
@@ -161,14 +157,14 @@ class ArticleController extends AbstractController
              
              $comments = $commentService->allCommentPublished($article->getId());
              $categoriesArticle = $categoryArtRepo->findAll();
-             //dd($categoryArticle);
+           
             
 
             
              $form = $this->createForm(CommentType::class, $comment);
              $form->handleRequest($req);
              if($form->isSubmitted() and $form->isValid()){
-                // dd($form->getData());
+                
                 $comment = $form->getData();
                 $commentService->persistComment($form->getData(), $article);
 
@@ -202,7 +198,8 @@ class ArticleController extends AbstractController
     public function publish(
         EntityManagerInterface $em,
         Article $article,
-        Request $req
+        Request $req,
+        CacheInterface $cache
     ){
         $submittedToken = $req->request->get('token');
         
@@ -215,29 +212,14 @@ class ArticleController extends AbstractController
             }else{
              $article->setIsPublished(true);
              $em->flush();
+             $cache->delete("article-order-by-view-blog-by-categorie-page");
+             $cache->delete("article-article-detail-page");
             }
             return $this->redirectToRoute('article_list_admin');
         }
 
         return $this->redirectToRoute('article_list_admin');
     }
-
-    // /**
-    //  * Undocumented function
-    //  *
-    //  * @param Comments $comment
-    //  * @param Request $req
-    //  * @param EntityManagerInterface $em
-    //  * @return void
-    //  * @Route("/blog/{slug}/comment", name="article_comment_add")
-    //  */
-    // public function addComment (Article $article , Request $req, EntityManagerInterface $em){
-    //     $validToken = $req->request->get('csrf_token');
-    //     if($this->isCsrfTokenValid('comment', $validToken)){
-            
-    //     }
-    //     return $this->json(['code'=>200, 'message'=>'ça marche bien!']);
-    // }
 
      /**
      * permet d'ajouter un article de blog
@@ -247,7 +229,12 @@ class ArticleController extends AbstractController
      * @return void
      * @Route("/admin/article_add", name="article_add", methods={"GET","POST"} )
      */
-    public function addArticle(Request $req, EntityManagerInterface $em , FlashyNotifier $flashy){
+    public function addArticle(
+        Request $req, 
+        EntityManagerInterface $em , 
+        FlashyNotifier $flashy, 
+        CacheInterface $cache
+        ){
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
         $form->add('imageFile', VichImageType::class,[
@@ -268,6 +255,8 @@ class ArticleController extends AbstractController
             $em->persist($article);
             $em->flush();
             $flashy->success("Added successfully!");
+            $cache->delete("article-order-by-view-blog-by-categorie-page");
+             $cache->delete("article-article-detail-page");
             return $this->redirectToRoute('article_list_admin');
         }
 
@@ -286,7 +275,8 @@ class ArticleController extends AbstractController
     public function editArticle(Request $req, 
     EntityManagerInterface $em, 
     Article $article, 
-    FlashyNotifier $flashy
+    FlashyNotifier $flashy,
+    CacheInterface $cache
     ):Response{
         $form = $this->createForm(ArticleType::class, $article);
         $form->add('imageFile', VichImageType::class,[
@@ -300,6 +290,8 @@ class ArticleController extends AbstractController
         if($form->isSubmitted() and $form->isValid()){
             $em->flush();
             $flashy->success("Added successfully!");
+            $cache->delete("article-order-by-view-blog-by-categorie-page");
+             $cache->delete("article-article-detail-page");
             return $this->redirectToRoute('article_list_admin');
         }
         return $this->renderForm("backoffice/article/article_edit.html.twig", compact('form','article'));
@@ -314,10 +306,17 @@ class ArticleController extends AbstractController
      * @return Response
      * @Route("/admin/article/article_delete/{slug}", name="article_delete")
      */
-    public function articleDelete(Article $article, EntityManagerInterface $em, FlashyNotifier $flashy):Response{
+    public function articleDelete(
+    Article $article, 
+    EntityManagerInterface $em, 
+    FlashyNotifier $flashy,
+    CacheInterface $cache
+    ):Response{
         $em->remove($article);
         $em->flush();
         $flashy->success("Deleted successfully!");
+        $cache->delete("article-order-by-view-blog-by-categorie-page");
+             $cache->delete("article-article-detail-page");
         return $this->redirectToRoute('article_list_admin');
     }
 
