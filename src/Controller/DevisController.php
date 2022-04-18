@@ -31,10 +31,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 
 
@@ -62,6 +58,13 @@ class DevisController extends AbstractController
         ):Response{
         $devis = new Devis();
         $services = $serviceRepo->findByCategoryService($categoryService->getId());
+        
+        // $servicess[] = new Service();
+        // dd($servicess instanceof Service);
+        // for($i=0; $i<count($services); $i++){
+        //     $servicess[$i]->setDesignation($services[$i]->getDesignation()) ;
+        // }
+       
         
 
         $form = $this->createFormBuilder(['categories'=>$categoryService, "services"=>$services])

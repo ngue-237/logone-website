@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sonata\SeoBundle\Seo\SeoPageInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use App\Repository\CategoryServiceRepository;
+use App\Repository\DevisRepository;
 use Symfony\Component\HttpFoundation\Request;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,7 +37,6 @@ class ServiceController extends AbstractController
      * 
      */
     public function serviceList(
-        EntityManagerInterface $em, 
         $slug, 
         CategoryServiceRepository $rep,
         SeoPageInterface $seoPage,
@@ -86,7 +86,8 @@ class ServiceController extends AbstractController
     public function addService(
         EntityManagerInterface $em, 
         Request $req,
-        FlashyNotifier $flashy
+        FlashyNotifier $flashy,
+        CacheInterface $cache
         ):Response{
         $service = new Service();
         $form= $this->createForm(ServiceType::class, $service);
@@ -117,15 +118,22 @@ class ServiceController extends AbstractController
         Service $service, 
         EntityManagerInterface $em,
         FlashyNotifier $flashy,
-        CacheInterface $cache
+        CacheInterface $cache,
+        ServiceRepository $serviceRepo
         ):Response{
-       
-        $em->remove($service);
-        $em->flush();
-        $cache->delete("articles-blog-by-categorie-page-".$service->getSlug());
-        $cache->delete("service-page-service-".$service->getSlug());
-        $flashy->success("Deleted successfully ! ",'');
-    return $this->redirectToRoute('service_list');
+       try {
+           if(count($serviceRepo->findByCategoryService($service->getId())) == 0 ){
+            $em->remove($service);
+            $em->flush();
+            $cache->delete("service-page-service-".$service->getSlug());
+             $cache->delete("categorie-service");
+            $flashy->success("Deleted successfully","");
+            return $this->redirectToRoute('category_service_list');
+        }
+       } catch (\Throwable $th) {
+        $flashy->error("Vous ne pouvez pas supprimer ce service car il est relié à un devis","");
+        return $this->redirectToRoute('service_list');
+       }
     }
 
     /**
@@ -150,8 +158,8 @@ class ServiceController extends AbstractController
         if($form->isSubmitted() and $form->isValid()){
             $service->setUpdatedAt(new \DateTime('now'));
             $em->flush();
-            $cache->delete("articles-blog-by-categorie-page-".$service->getSlug());
             $cache->delete("service-page-service-".$service->getSlug());
+             $cache->delete("categorie-service");
             $flashy->success("Edited successfully! ",'');
             return $this->redirectToRoute('service_list');
         }

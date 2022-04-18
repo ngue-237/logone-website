@@ -69,6 +69,7 @@ endblock %} {% block content %}
                         <i class="far fa-edit"></i></a
                       >&nbsp;
                       <a
+                        title="Vueillez-vous rassurer que cette élément ne soit pas relier à un de devis ou à un service"
                         href="{{
                           path('category_service_delete', { slug: catg.slug })
                         }}"

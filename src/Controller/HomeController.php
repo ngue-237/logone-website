@@ -29,7 +29,7 @@ class HomeController extends AbstractController
     {
         
         //$cache->delete("categorie-service");
-        $categoriesService = $cache->get("categorie-service-home", function(ItemInterface $item) use ($catgServiceRepo,$paginator, $req){
+        $categoriesService = $cache->get("categorie-service", function(ItemInterface $item) use ($catgServiceRepo,$paginator, $req){
              $item->expiresAfter(DateInterval::createFromDateString('3 hour'));   
              
             return $paginator->paginate($catgServiceRepo->findAllByDate(), $req->query->getInt('page', 1), 4);

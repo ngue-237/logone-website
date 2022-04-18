@@ -56,7 +56,7 @@ class Service
     private $updatedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Devis::class, mappedBy="services")
+     * @ORM\OneToMany(targetEntity=Devis::class, mappedBy="services", orphanRemoval=false)
      */
     private $devis;
 

@@ -11,6 +11,8 @@ use App\services\ImageManagerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use App\Repository\CategoryServiceRepository;
+use App\Repository\DevisRepository;
+use App\Repository\ServiceRepository;
 use Symfony\Component\HttpFoundation\Request;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Component\HttpFoundation\Response;
@@ -64,15 +66,28 @@ class CategoryServiceController extends AbstractController
         CategoryService $catg,
         EntityManagerInterface $em,
         FlashyNotifier $flashy,
-        CacheInterface $cache
+        CacheInterface $cache,
+        ServiceRepository $serviceRepo,
+        DevisRepository $devisRepo
         ):Response
     {
-        $em->remove($catg);
-        $em->flush();
-        $cache->delete("categorie-service");
-        $cache->delete("categorie-service-page");
-        $flashy->success("Deleted successfully","");
-        return $this->redirectToRoute('category_service_list');
+        try {
+            if(count($serviceRepo->findByCategoryService($catg->getId())) == 0 || count($devisRepo->findAllDevisByCategoryService($catg->getId())) ){
+
+            $em->remove($catg);
+            $em->flush();
+            $cache->delete("categorie-service");
+            $cache->delete("categorie-service-page");
+            $flashy->success("Deleted successfully","");
+            return $this->redirectToRoute('category_service_list');
+        }
+        } catch (\Exception $e) {
+            $flashy->error("impossible de supprimez ce catégorie car elle est ratachée à un devis ou à un service","");
+            return $this->redirectToRoute('category_service_list');
+        }
+        // $flashy->error("impossible de supprimez ce catégorie car elle est ratachée à un devis ou à un service","");
+        // return $this->redirectToRoute('category_service_list');
+        
     }
 
     /**

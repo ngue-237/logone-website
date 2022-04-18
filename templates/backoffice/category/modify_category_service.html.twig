@@ -55,7 +55,14 @@
                       }}
                     </div>
                     <div class="form-group">
-                      {{ form_row(form.imageFile) }}
+                      {{
+                        form_row(form.imageFile, {
+                          attr: {
+                            class: "form-control form-control-user",
+                            placeholder: "upload image"
+                          }
+                        })
+                      }}
                     </div>
                     <div class="text-center">
                       <img

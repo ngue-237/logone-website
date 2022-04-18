@@ -26,6 +26,7 @@ endblock %} {% block content %}
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Ajouter un service !</h1>
                   </div>
+                  {% form_theme form 'bootstrap_4_layout.html.twig' %}
                   {{ form_start(form) }}
                   <div class="user">
                     <div class="form-group">

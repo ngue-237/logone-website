@@ -71,6 +71,16 @@ class DevisRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+    public function findAllDevisByCategoryService($idCategoryService)
+    {
+        
+        return $this->createQueryBuilder('d')
+            ->andWhere('d.categoryService = :idCategoryService')
+            ->setParameter('idCategoryService', $idCategoryService)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
     /**
      * @return Devis[] Returns an array of Devis objects
      */
