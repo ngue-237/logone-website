@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryArticleRepository;
 use App\Repository\CategoryServiceRepository;
+use App\Repository\CommentsRepository;
 use App\Repository\OffreEmploiRepository;
 use App\Repository\ServiceRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +24,8 @@ class SitemapController extends AbstractController
         ServiceRepository $serviceRepo,
         OffreEmploiRepository $offreEmploiRepo,
         CategoryArticleRepository $catgArticleRepo,
-        ArticleRepository $articleRepo
+        ArticleRepository $articleRepo,
+        CommentsRepository $commentsRepo
         ): Response
     {
         $hostname =  $req->getSchemeAndHttpHost();
@@ -90,6 +92,15 @@ class SitemapController extends AbstractController
                     "slug"=>$article->getSlug()
                 ]),
                 "lastmod" =>$article->getCreatedAt()->format('Y-m-d')
+            ];
+        }
+        foreach($commentsRepo->findAll() as $comment){
+            
+            $urls []= [
+                "loc"=>$this->generateUrl("blog", [
+                    "slug"=>$comment->getContent()
+                ]),
+                "lastmod" =>$comment->getCreatedAt()->format('Y-m-d')
             ];
         }
         $response = new Response(

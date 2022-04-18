@@ -41,7 +41,7 @@ class SecurityController extends AbstractController
 
     /**
      * permet à un visiteur de s'inscrire via un formulaire d'inscription
-     * @Route("/s-incrire", name="security_register")
+     * @Route("/s-inscrire", name="security_register")
      */
     public function register(
         UserService $helper,
