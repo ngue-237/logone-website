@@ -176,7 +176,7 @@ class DevisController extends AbstractController
 
                     return $this->redirect($devisRoute);
                 }else{
-                    $flashy->error("Confirm you are not robot!",'');
+                    $flashy->error("Un problème est survenu lors de l'envoi du formulaire, svp veuillez remplir le formulaire une fois de plus",'');
                     return $this->redirect($devisRoute);
                 }
             }

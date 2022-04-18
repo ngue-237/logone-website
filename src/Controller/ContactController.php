@@ -61,22 +61,9 @@ class ContactController extends AbstractController
                 
                 $data = json_decode($response);
 
-                if($data->success){
-                    
+                if($data->success){  
                     $em->persist($contact);
                     $em->flush();
-                    $mailer->send(
-                        "Demande contact",
-                        $form->get('email')->getData(),
-                        "email/contact.html.twig",
-                        [
-                        "message"=> $message = $form->get('msg')->getData(), 
-                        "lastname"=> $form->get('lastName')->getData(), 
-                        "firstname"=> $form->get('firstName')->getData()
-                        ],
-                        "emmanuelbenjamin.nguetoungoum@esprit.tn"
-                    );
-                    $this->addFlash("success", "Votre demande a été bien prise en compte vous serez recontactez dans les prochaines 24h!");
                     $flashy->success("Votre demande a été bien prise en compte vous serez recontactez dans les prochaines 24h!",'');
                     return $this->redirectToRoute('contact');
                 }else{

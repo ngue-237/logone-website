@@ -45,14 +45,27 @@ class DevisService{
             $this->mailer->send(
                 "Demande de devis",
                 $form->get("email")->getData(),
-                "email/devis.html.twig",
+                "email/devis-confirm.html.twig",
                 [
                 "message"=> $form->get("subject")->getData(), 
                 "lastname"=> $form->get("lastname")->getData(), 
                 "firstname"=> $form->get("firstname")->getData(),
                 "confirm" => $devis->getConfirm()
                 ],
-                "emmanuelbenjamin.nguetoungoum@esprit.tn"
+                "no-reply@logonedigital.com"
+            );
+            $this->mailer->send(
+                "Nouvelle Demande de devis",
+                "ngueemmanuel.prof@gmail.com",
+                "email/devis.html.twig",
+                [
+                "message"=> $form->get("subject")->getData(), 
+                "lastname"=> $form->get("lastname")->getData(), 
+                "firstname"=> $form->get("firstname")->getData(),
+                "email" => $form->get("email")->getData(),
+                "confirm" => $devis->getConfirm()
+                ],
+                $form->get("email")->getData()
             );
             return $devis;
     }
