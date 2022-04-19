@@ -65,7 +65,7 @@ class DevisService{
                 "email" => $form->get("email")->getData(),
                 "confirm" => $devis->getConfirm()
                 ],
-                $form->get("email")->getData()
+                "no-reply@logonedigital.com"
             );
             return $devis;
     }

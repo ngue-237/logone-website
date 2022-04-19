@@ -92,7 +92,7 @@ class SecurityController extends AbstractController
                      $form->get("email")->getData(), 
                      "email/activation.html.twig", 
                      ["activationToken" => $user->getActivationToken() ],
-                     "emmanuelbenjamin.nguetoungoum@esprit.tn"
+                     "no-reply@logonedigital.com"
                     );
                     $authenticatorManager->authenticateUser($user, $this->authenticator, $req, [new RememberMeBadge()]);
                     $flashy->success("Sucess Registration", "");
@@ -297,7 +297,7 @@ class SecurityController extends AbstractController
                      $user->getEmail(), 
                      "email/reset_password.html.twig", 
                      ["token" => $token ],
-                     "emmanuelbenjamin.nguetoungoum@esprit.tn"
+                     "no-reply@logonedigital.com"
                     );
             //$this->addFlash("success", "un email de réinitialisation du mot de passe vous a été envoyé!");
             $flashy->success("un email de réinitialisation du mot de passe vous a été envoyé !", "");
